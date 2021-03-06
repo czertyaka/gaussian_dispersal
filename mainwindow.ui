@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>874</width>
-    <height>602</height>
+    <width>862</width>
+    <height>520</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,41 +21,120 @@
        <attribute name="title">
         <string>Climatic variables</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
-         <widget class="QRadioButton" name="radioButton">
-          <property name="text">
-           <string>Load from CSV file</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="1" column="0">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="1">
+           <widget class="QPushButton" name="pushButton_2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Save as...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QGraphicsView" name="graphicsView"/>
+          </item>
+          <item row="0" column="0">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>408</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
-        <item row="0" column="1">
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="radioButton">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Load from CSV file</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
            <widget class="QRadioButton" name="radioButton_2">
             <property name="text">
              <string>Choose preset</string>
             </property>
            </widget>
           </item>
-          <item>
+          <item row="1" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QLineEdit" name="lineEdit">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>60</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>60</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Browse...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="1">
            <widget class="QComboBox" name="comboBox">
             <property name="enabled">
              <bool>false</bool>
             </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <item>
+             <property name="text">
+              <string>None</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Another region</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>South Ural</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Syberia</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>
-        </item>
-        <item row="1" column="0" colspan="2">
-         <widget class="QGraphicsView" name="graphicsView">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-         </widget>
         </item>
        </layout>
       </widget>
@@ -73,7 +152,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>874</width>
+     <width>862</width>
      <height>20</height>
     </rect>
    </property>
@@ -89,12 +168,44 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>495</x>
+     <x>492</x>
      <y>74</y>
     </hint>
     <hint type="destinationlabel">
-     <x>496</x>
-     <y>98</y>
+     <x>493</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lineEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>224</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>181</x>
+     <y>100</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>pushButton</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>286</x>
+     <y>74</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>376</x>
+     <y>103</y>
     </hint>
    </hints>
   </connection>
