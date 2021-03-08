@@ -14,51 +14,21 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+   <layout class="QVBoxLayout" name="verticalLayout_4">
+    <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
         <string>Climatic variables</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_5">
-        <item row="1" column="0">
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="1">
-           <widget class="QPushButton" name="pushButton_2">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Save as...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QGraphicsView" name="graphicsView"/>
-          </item>
-          <item row="0" column="0">
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>408</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
          <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="0">
            <widget class="QRadioButton" name="radioButton">
@@ -139,6 +109,36 @@
              </property>
             </item>
            </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="1">
+           <widget class="QPushButton" name="pushButton_2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Save as...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QGraphicsView" name="graphicsView"/>
+          </item>
+          <item row="0" column="0">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>408</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </item>
@@ -643,6 +643,24 @@
       </widget>
      </widget>
     </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QPushButton" name="pushButton_6">
+        <property name="text">
+         <string>Start</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QProgressBar" name="progressBar">
+        <property name="value">
+         <number>24</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -702,8 +720,8 @@
      <y>74</y>
     </hint>
     <hint type="destinationlabel">
-     <x>376</x>
-     <y>103</y>
+     <x>356</x>
+     <y>110</y>
     </hint>
    </hints>
   </connection>
@@ -718,8 +736,8 @@
      <y>72</y>
     </hint>
     <hint type="destinationlabel">
-     <x>165</x>
-     <y>119</y>
+     <x>156</x>
+     <y>130</y>
     </hint>
    </hints>
   </connection>
@@ -730,12 +748,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>362</x>
-     <y>72</y>
+     <x>243</x>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
-     <x>377</x>
-     <y>123</y>
+     <x>242</x>
+     <y>129</y>
     </hint>
    </hints>
   </connection>
@@ -750,8 +768,8 @@
      <y>75</y>
     </hint>
     <hint type="destinationlabel">
-     <x>487</x>
-     <y>122</y>
+     <x>471</x>
+     <y>130</y>
     </hint>
    </hints>
   </connection>
@@ -778,12 +796,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>722</x>
-     <y>72</y>
+     <x>700</x>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
-     <x>715</x>
-     <y>96</y>
+     <x>700</x>
+     <y>101</y>
     </hint>
    </hints>
   </connection>
@@ -798,8 +816,8 @@
      <y>72</y>
     </hint>
     <hint type="destinationlabel">
-     <x>529</x>
-     <y>90</y>
+     <x>471</x>
+     <y>101</y>
     </hint>
    </hints>
   </connection>
@@ -830,8 +848,8 @@
      <y>116</y>
     </hint>
     <hint type="destinationlabel">
-     <x>114</x>
-     <y>183</y>
+     <x>127</x>
+     <y>155</y>
     </hint>
    </hints>
   </connection>
@@ -842,12 +860,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>388</x>
-     <y>117</y>
+     <x>357</x>
+     <y>126</y>
     </hint>
     <hint type="destinationlabel">
-     <x>381</x>
-     <y>183</y>
+     <x>310</x>
+     <y>154</y>
     </hint>
    </hints>
   </connection>
@@ -862,8 +880,8 @@
      <y>117</y>
     </hint>
     <hint type="destinationlabel">
-     <x>479</x>
-     <y>191</y>
+     <x>506</x>
+     <y>216</y>
     </hint>
    </hints>
   </connection>
@@ -878,8 +896,8 @@
      <y>121</y>
     </hint>
     <hint type="destinationlabel">
-     <x>623</x>
-     <y>227</y>
+     <x>551</x>
+     <y>244</y>
     </hint>
    </hints>
   </connection>
@@ -894,8 +912,8 @@
      <y>112</y>
     </hint>
     <hint type="destinationlabel">
-     <x>664</x>
-     <y>163</y>
+     <x>551</x>
+     <y>187</y>
     </hint>
    </hints>
   </connection>
@@ -906,12 +924,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>768</x>
-     <y>120</y>
+     <x>700</x>
+     <y>126</y>
     </hint>
     <hint type="destinationlabel">
-     <x>763</x>
-     <y>192</y>
+     <x>596</x>
+     <y>216</y>
     </hint>
    </hints>
   </connection>
@@ -944,6 +962,22 @@
     <hint type="destinationlabel">
      <x>637</x>
      <y>119</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_6</sender>
+   <signal>clicked()</signal>
+   <receiver>progressBar</receiver>
+   <slot>reset()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>42</x>
+     <y>466</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>116</x>
+     <y>472</y>
     </hint>
    </hints>
   </connection>
