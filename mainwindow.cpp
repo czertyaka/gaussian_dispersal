@@ -11,6 +11,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , m_climateTab(nullptr)
 {
     ui->setupUi(this);
     m_CustomSetupUi();
@@ -23,6 +24,10 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    if (m_climateTab)
+    {
+        delete m_climateTab;
+    }
 }
 
 /**
@@ -38,17 +43,18 @@ void MainWindow::m_CustomSetupUi()
  */
 void MainWindow::m_SetCustomUiConnections()
 {
-    // file finder dialogues
+    // climate tab
     connect(ui->pushButton, &QPushButton::clicked, this, [=](){ this->m_BrowseFileHandler(ui->lineEdit, "*csv"); });
-    connect(ui->pushButton_4, &QPushButton::clicked, this, [=](){ this->m_BrowseFileHandler(ui->lineEdit_2, "*csv"); });
-    connect(ui->pushButton_5, &QPushButton::clicked, this, [=](){ this->m_BrowseFileHandler(ui->lineEdit_3, "*.jpg *.jpeg *.png *.bmp"); });
-
-    // reset comboboxes
     connect(ui->pushButton_7, &QPushButton::clicked, ui->comboBox, [=](){ ui->comboBox->setCurrentIndex(0); });
+    connect(ui->pushButton_8, &QPushButton::clicked, this, &MainWindow::m_ClimateAcceptButtonHandler);
+
+    // geospatial data tab
+    connect(ui->pushButton_4, &QPushButton::clicked, this, [=](){ this->m_BrowseFileHandler(ui->lineEdit_2, "*csv"); });
     connect(ui->pushButton_10, &QPushButton::clicked, ui->comboBox_2, [=](){ ui->comboBox_2->setCurrentIndex(0); });
     connect(ui->pushButton_10, &QPushButton::clicked, ui->comboBox_3, [=](){ ui->comboBox_3->setCurrentIndex(0); });
 
-    // reset boundaries
+    // background image tab
+    connect(ui->pushButton_5, &QPushButton::clicked, this, [=](){ this->m_BrowseFileHandler(ui->lineEdit_3, "*.jpg *.jpeg *.png *.bmp"); });
     connect(ui->pushButton_12, &QPushButton::clicked, this, &MainWindow::m_ResetSpinBoxes);
 }
 
@@ -75,4 +81,35 @@ void MainWindow::m_ResetSpinBoxes()
     ui->doubleSpinBox_2->setValue(0);
     ui->doubleSpinBox_3->setValue(0);
     ui->doubleSpinBox_4->setValue(0);
+}
+
+void MainWindow::m_StartButtonHandler()
+{
+    if (m_climateTab && m_climateTab->GetStatus() == tabStatus_t::READY)
+    {}
+}
+
+void MainWindow::m_ClimateAcceptButtonHandler()
+{
+    if (!m_climateTab)
+    {
+        m_climateTab = new ClimateTabManager;
+    }
+
+    try
+    {
+        if (ui->radioButton->isChecked())
+        {
+            m_climateTab->Init(ui->lineEdit->text());
+        }
+        else
+        {
+            ClimatePresets_t preset = static_cast<ClimatePresets_t>(ui->comboBox->currentIndex());
+            m_climateTab->Init(preset);
+        }
+    }
+    catch(...) //TODO
+    {
+
+    }
 }
