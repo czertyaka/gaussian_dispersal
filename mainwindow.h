@@ -8,6 +8,9 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+/**
+ * @brief The MainWindow class. Also implements custom connections and GUI setups
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

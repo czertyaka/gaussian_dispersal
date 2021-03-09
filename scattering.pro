@@ -17,10 +17,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    tabdatamanager.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    tabdatamanager.h
 
 FORMS += \
     mainwindow.ui
