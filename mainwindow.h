@@ -20,11 +20,9 @@ private:
     Ui::MainWindow *ui;
     void m_CustomSetupUi();
     void m_SetCustomUiConnections();
-    void m_BrowseFileHandler(QLineEdit* lineEdit, const QString& filter);
 
 private slots:
-    void m_BrowseFileHandlerClimate();
-    void m_BrowseFileHandlerGeo();
-    void m_BrowseFileHandlerImage();
+    void m_BrowseFileHandler(QLineEdit* lineEdit, const QString& filter);
+    void m_ResetSpinBoxes();
 };
 #endif // MAINWINDOW_H
