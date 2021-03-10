@@ -3,7 +3,7 @@
 
 #include <QString>
 
-#include "tabdatamanager.h"
+#include "tabmanager.h"
 
 enum ClimatePresets_t
 {
@@ -13,15 +13,12 @@ enum ClimatePresets_t
     SYBERIA = 3
 };
 
-class ClimateTabManager : public TabDataManager
+class ClimateTabManager : public TabManager
 {
 public:
     ClimateTabManager();
-    virtual ~ClimateTabManager() {}
     void Init(const QString& filename);
     void Init(const ClimatePresets_t preset);
-private:
-    void m_UpdateStatus() final;
 };
 
 #endif // CLIMATETABMANAGER_H

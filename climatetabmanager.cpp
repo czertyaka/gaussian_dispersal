@@ -1,21 +1,19 @@
 #include "climatetabmanager.h"
 
 ClimateTabManager::ClimateTabManager()
+    : TabManager()
 {
 
 }
 
 void ClimateTabManager::Init(const QString& filename)
 {
-
+    m_status = READY; //TODO
+    emit StatusChanged();
 }
 
 void ClimateTabManager::Init(const ClimatePresets_t preset)
 {
-
-}
-
-void ClimateTabManager::m_UpdateStatus()
-{
-    m_status = tabStatus_t::READY; //TODO
+    m_status = READY; //TODO
+    emit StatusChanged();
 }

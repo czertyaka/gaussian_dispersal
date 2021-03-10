@@ -11,7 +11,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , m_climateTab(nullptr)
+    , m_climateTab(new ClimateTabManager)
 {
     ui->setupUi(this);
     m_CustomSetupUi();
@@ -36,6 +36,7 @@ MainWindow::~MainWindow()
 void MainWindow::m_CustomSetupUi()
 {
     ui->label_3->setVisible(false);
+    ui->progressBar->reset();
 }
 
 /**
@@ -43,6 +44,9 @@ void MainWindow::m_CustomSetupUi()
  */
 void MainWindow::m_SetCustomUiConnections()
 {
+    // common
+    connect(m_climateTab, &ClimateTabManager::StatusChanged, this, &MainWindow::m_StartButtonUpdater);
+
     // climate tab
     connect(ui->pushButton, &QPushButton::clicked, this, [=](){ this->m_BrowseFileHandler(ui->lineEdit, "*csv"); });
     connect(ui->pushButton_7, &QPushButton::clicked, ui->comboBox, [=](){ ui->comboBox->setCurrentIndex(0); });
@@ -72,6 +76,19 @@ void MainWindow::m_BrowseFileHandler(QLineEdit* lineEdit, const QString& filter)
     }
 }
 
+void MainWindow::m_StartButtonUpdater()
+{
+    bool enabled = false;
+
+    if (m_climateTab && m_climateTab->GetStatus() == tabStatus_t::READY)
+    {
+        enabled = true;
+    }
+
+    ui->pushButton_6->setEnabled(enabled);
+    ui->progressBar->setEnabled(enabled);
+}
+
 /**
  * @brief MainWindow::m_ResetSpinBoxes Resets spinboxes for image boundaries
  */
@@ -85,17 +102,11 @@ void MainWindow::m_ResetSpinBoxes()
 
 void MainWindow::m_StartButtonHandler()
 {
-    if (m_climateTab && m_climateTab->GetStatus() == tabStatus_t::READY)
-    {}
+
 }
 
 void MainWindow::m_ClimateAcceptButtonHandler()
 {
-    if (!m_climateTab)
-    {
-        m_climateTab = new ClimateTabManager;
-    }
-
     try
     {
         if (ui->radioButton->isChecked())

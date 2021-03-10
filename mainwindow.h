@@ -29,6 +29,7 @@ private slots:
 
     // common
     void m_BrowseFileHandler(QLineEdit* lineEdit, const QString& filter);
+    void m_StartButtonUpdater();
     void m_StartButtonHandler();
     void m_ClimateAcceptButtonHandler();
 

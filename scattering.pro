@@ -19,12 +19,12 @@ SOURCES += \
     climatetabmanager.cpp \
     main.cpp \
     mainwindow.cpp \
-    tabdatamanager.cpp
+    tabmanager.cpp
 
 HEADERS += \
     climatetabmanager.h \
     mainwindow.h \
-    tabdatamanager.h
+    tabmanager.h
 
 FORMS += \
     mainwindow.ui
