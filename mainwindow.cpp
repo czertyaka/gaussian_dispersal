@@ -1,8 +1,16 @@
 #include <QFileDialog>
 #include <QSignalMapper>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QDebug>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
+#ifndef DB_CONNECTION
+#define DB_CONNECTION "QSQLITE"
+#endif /* _DB_CONNECTION_NAME */
 
 /**
  * @brief MainWindow::MainWindow
@@ -16,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     m_CustomSetupUi();
     m_SetCustomUiConnections();
+    m_DatabaseSetup();
 }
 
 /**
@@ -28,6 +37,10 @@ MainWindow::~MainWindow()
     {
         delete m_climateTab;
     }
+
+    QSqlDatabase::removeDatabase(DB_CONNECTION);
+    QFile file("db.sqlite");
+    file.remove();
 }
 
 /**
@@ -60,6 +73,15 @@ void MainWindow::m_SetCustomUiConnections()
     // background image tab
     connect(ui->pushButton_5, &QPushButton::clicked, this, [=](){ this->m_BrowseFileHandler(ui->lineEdit_3, "*.jpg *.jpeg *.png *.bmp"); });
     connect(ui->pushButton_12, &QPushButton::clicked, this, &MainWindow::m_ResetSpinBoxes);
+}
+
+/**
+ * @brief MainWindow::m_DatabaseSetup Creates tables and etc
+ */
+void MainWindow::m_DatabaseSetup()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase(DB_CONNECTION);
+    db.setDatabaseName("db.sqlite");
 }
 
 /**

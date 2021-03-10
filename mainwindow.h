@@ -24,6 +24,7 @@ public:
 private:
     void m_CustomSetupUi();
     void m_SetCustomUiConnections();
+    void m_DatabaseSetup();
 
 private slots:
 
