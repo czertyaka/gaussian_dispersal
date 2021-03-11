@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QLineEdit>
+#include <QString>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,6 +22,7 @@ public:
 
 private slots:
     void ResetSpinBoxes();
+    void BrowseFile(QLineEdit* lineEdit, const QString& file);
 
 private:
     void CustomUiSettings();
