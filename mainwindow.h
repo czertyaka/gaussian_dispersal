@@ -18,7 +18,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void ResetSpinBoxes();
+
 private:
+    void CustomUiSettings();
     Ui::MainWindow* m_ui;
 };
 #endif // MAINWINDOW_H

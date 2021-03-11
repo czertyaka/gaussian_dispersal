@@ -1,16 +1,5 @@
-#include <QFileDialog>
-#include <QSignalMapper>
-#include <QSqlDatabase>
-#include <QSqlError>
-#include <QSqlQuery>
-#include <QDebug>
-
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
-#ifndef DB_CONNECTION
-#define DB_CONNECTION "QSQLITE"
-#endif /* _DB_CONNECTION_NAME */
 
 /**
  * @brief MainWindow::MainWindow
@@ -21,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     , m_ui(new Ui::MainWindow)
 {
     m_ui->setupUi(this);
+    CustomUiSettings();
 }
 
 /**
@@ -29,4 +19,20 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete m_ui;
+}
+
+void MainWindow::CustomUiSettings()
+{
+    m_ui->youChoseGeoProfileLabel->setVisible(false);
+    m_ui->progressBar->reset();
+
+    connect(m_ui->imageResetButton, SIGNAL(clicked()), this, SLOT(ResetSpinBoxes()));
+}
+
+void MainWindow::ResetSpinBoxes()
+{
+    m_ui->northSpinBox->setValue(0);
+    m_ui->eastSpinBox->setValue(0);
+    m_ui->southSpinBox->setValue(0);
+    m_ui->westSpinBox->setValue(0);
 }

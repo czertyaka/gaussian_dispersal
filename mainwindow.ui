@@ -16,22 +16,22 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="QTabWidget" name="tabs">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="climateTab">
        <attribute name="title">
         <string>Climatic variables</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <layout class="QGridLayout" name="gridLayout_4">
+         <layout class="QGridLayout" name="climateOptionsLayout">
           <item row="1" column="1">
-           <widget class="QComboBox" name="comboBox">
+           <widget class="QComboBox" name="climatePresetsComboBox">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -64,16 +64,16 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QRadioButton" name="radioButton_2">
+           <widget class="QRadioButton" name="climatePresetsRadioButton">
             <property name="text">
              <string>Choose climatic variables preset</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout">
+           <layout class="QHBoxLayout" name="climateBrowseLayout">
             <item>
-             <widget class="QLineEdit" name="lineEdit">
+             <widget class="QLineEdit" name="climateLineEdit">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                 <horstretch>60</horstretch>
@@ -83,7 +83,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="climateBrowseButton">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>60</horstretch>
@@ -98,7 +98,7 @@
            </layout>
           </item>
           <item row="0" column="0">
-           <widget class="QRadioButton" name="radioButton">
+           <widget class="QRadioButton" name="climateLoadRadioButton">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -113,9 +113,9 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <layout class="QHBoxLayout" name="climateAcceptLayout">
           <item>
-           <spacer name="horizontalSpacer_6">
+           <spacer name="climateAcceptSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -128,14 +128,14 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_8">
+           <widget class="QPushButton" name="climateAcceptButton">
             <property name="text">
              <string>Accept</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_7">
+           <widget class="QPushButton" name="climateResetButton">
             <property name="text">
              <string>Reset</string>
             </property>
@@ -144,16 +144,16 @@
          </layout>
         </item>
         <item>
-         <widget class="Line" name="line">
+         <widget class="Line" name="climateLine">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
         <item>
-         <layout class="QGridLayout" name="gridLayout_2">
+         <layout class="QGridLayout" name="climateOutputLayout">
           <item row="0" column="1">
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="climateSaveButton">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -163,10 +163,10 @@
            </widget>
           </item>
           <item row="1" column="0" colspan="2">
-           <widget class="QGraphicsView" name="graphicsView"/>
+           <widget class="QGraphicsView" name="climateGraphics"/>
           </item>
           <item row="0" column="0">
-           <spacer name="horizontalSpacer">
+           <spacer name="climateOutputSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -182,15 +182,15 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="geoTab">
        <attribute name="title">
         <string>Geospatial data</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <layout class="QGridLayout" name="gridLayout_10">
+         <layout class="QGridLayout" name="geoOptionsLayout">
           <item row="0" column="0">
-           <widget class="QRadioButton" name="radioButton_3">
+           <widget class="QRadioButton" name="geoLoadRadioButton">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -209,7 +209,7 @@
            </widget>
           </item>
           <item row="0" column="1" colspan="2">
-           <widget class="QRadioButton" name="radioButton_4">
+           <widget class="QRadioButton" name="geoProfileradioButton">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -222,23 +222,23 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLabel" name="label">
+           <widget class="QLabel" name="geoElevationLabel">
             <property name="text">
              <string>Elevation</string>
             </property>
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QLabel" name="label_2">
+           <widget class="QLabel" name="geoSurfaceLabel">
             <property name="text">
              <string>Surface microrelief</string>
             </property>
            </widget>
           </item>
           <item row="2" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <layout class="QHBoxLayout" name="geoBrowseLayout">
             <item>
-             <widget class="QLineEdit" name="lineEdit_2">
+             <widget class="QLineEdit" name="geoLineEdit">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                 <horstretch>60</horstretch>
@@ -248,7 +248,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_4">
+             <widget class="QPushButton" name="geoBrowseButton">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                 <horstretch>60</horstretch>
@@ -263,7 +263,7 @@
            </layout>
           </item>
           <item row="2" column="1">
-           <widget class="QComboBox" name="comboBox_2">
+           <widget class="QComboBox" name="geoElevationComboBox">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -296,7 +296,7 @@
            </widget>
           </item>
           <item row="2" column="2">
-           <widget class="QComboBox" name="comboBox_3">
+           <widget class="QComboBox" name="geoSurfaceComboBox">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -346,9 +346,9 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <layout class="QHBoxLayout" name="geoAcceptLayout">
           <item>
-           <spacer name="horizontalSpacer_7">
+           <spacer name="geoAcceptSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -361,14 +361,14 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_9">
+           <widget class="QPushButton" name="geoAcceptButton">
             <property name="text">
              <string>Accept</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_10">
+           <widget class="QPushButton" name="geoResetButton">
             <property name="text">
              <string>Reset</string>
             </property>
@@ -377,16 +377,16 @@
          </layout>
         </item>
         <item>
-         <widget class="Line" name="line_2">
+         <widget class="Line" name="geoLine">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
         <item>
-         <layout class="QGridLayout" name="gridLayout_6">
+         <layout class="QGridLayout" name="geoOutputLayout">
           <item row="0" column="0">
-           <spacer name="horizontalSpacer_2">
+           <spacer name="geoOutputSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -399,7 +399,7 @@
            </spacer>
           </item>
           <item row="0" column="1">
-           <widget class="QPushButton" name="pushButton_3">
+           <widget class="QPushButton" name="geoSaveButton">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -409,21 +409,21 @@
            </widget>
           </item>
           <item row="1" column="0" colspan="2">
-           <widget class="QGraphicsView" name="graphicsView_2"/>
+           <widget class="QGraphicsView" name="geoGraphics"/>
           </item>
          </layout>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_3">
+      <widget class="QWidget" name="imageTab">
        <attribute name="title">
         <string>Background image</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <layout class="QGridLayout" name="gridLayout">
+         <layout class="QGridLayout" name="imageOptionsLayout">
           <item row="0" column="0">
-           <widget class="QLabel" name="label_5">
+           <widget class="QLabel" name="imageLabel">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
               <horstretch>0</horstretch>
@@ -436,14 +436,14 @@
            </widget>
           </item>
           <item row="0" column="2" colspan="2">
-           <widget class="QLabel" name="label_4">
+           <widget class="QLabel" name="imageBoundariesLabel">
             <property name="text">
              <string>Image boundaries coordiantes</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QRadioButton" name="radioButton_7">
+           <widget class="QRadioButton" name="imageDefaultRadioButton">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
               <horstretch>0</horstretch>
@@ -454,12 +454,12 @@
              <string>Use default</string>
             </property>
             <attribute name="buttonGroup">
-             <string notr="true">buttonGroup</string>
+             <string notr="true">imageButtonGroup</string>
             </attribute>
            </widget>
           </item>
           <item row="1" column="2" colspan="2">
-           <widget class="QRadioButton" name="radioButton_6">
+           <widget class="QRadioButton" name="imageAutomaticallyRadioButton">
             <property name="text">
              <string>Automatically</string>
             </property>
@@ -467,12 +467,12 @@
              <bool>true</bool>
             </property>
             <attribute name="buttonGroup">
-             <string notr="true">buttonGroup_2</string>
+             <string notr="true">BoundariesButtonGroup</string>
             </attribute>
            </widget>
           </item>
           <item row="2" column="0" colspan="2">
-           <widget class="QRadioButton" name="radioButton_8">
+           <widget class="QRadioButton" name="imageLoadRadioButton">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -489,22 +489,22 @@
              <bool>true</bool>
             </property>
             <attribute name="buttonGroup">
-             <string notr="true">buttonGroup</string>
+             <string notr="true">imageButtonGroup</string>
             </attribute>
            </widget>
           </item>
           <item row="2" column="2">
-           <widget class="QRadioButton" name="radioButton_5">
+           <widget class="QRadioButton" name="imageCustomizeRadioButton">
             <property name="text">
              <string>Customize</string>
             </property>
             <attribute name="buttonGroup">
-             <string notr="true">buttonGroup_2</string>
+             <string notr="true">BoundariesButtonGroup</string>
             </attribute>
            </widget>
           </item>
           <item row="2" column="3">
-           <widget class="QLabel" name="label_3">
+           <widget class="QLabel" name="youChoseGeoProfileLabel">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -523,9 +523,9 @@
            </widget>
           </item>
           <item row="3" column="0" colspan="2">
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <layout class="QHBoxLayout" name="imageBrowseLayout">
             <item>
-             <widget class="QLineEdit" name="lineEdit_3">
+             <widget class="QLineEdit" name="imageLineEdit">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                 <horstretch>60</horstretch>
@@ -535,7 +535,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_5">
+             <widget class="QPushButton" name="imageBrowseButton">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>60</horstretch>
@@ -548,7 +548,7 @@
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_5">
+             <spacer name="imageBrowseSpacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -566,9 +566,9 @@
            </layout>
           </item>
           <item row="3" column="2" rowspan="2" colspan="2">
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <layout class="QHBoxLayout" name="imageBordersLayout">
             <item>
-             <spacer name="horizontalSpacer_3">
+             <spacer name="imageBordersLeftSpacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -584,9 +584,9 @@
              </spacer>
             </item>
             <item>
-             <layout class="QGridLayout" name="gridLayout_3">
+             <layout class="QGridLayout" name="imageBordersInnerLayout">
               <item row="0" column="1">
-               <widget class="QDoubleSpinBox" name="doubleSpinBox">
+               <widget class="QDoubleSpinBox" name="northSpinBox">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -608,7 +608,7 @@
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+               <widget class="QDoubleSpinBox" name="westSpinBox">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -630,7 +630,7 @@
                </widget>
               </item>
               <item row="1" column="2">
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+               <widget class="QDoubleSpinBox" name="eastSpinBox">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -652,7 +652,7 @@
                </widget>
               </item>
               <item row="2" column="1">
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+               <widget class="QDoubleSpinBox" name="southSpinBox">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -676,7 +676,7 @@
              </layout>
             </item>
             <item>
-             <spacer name="horizontalSpacer_4">
+             <spacer name="imageBordersRightSpacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -694,7 +694,7 @@
            </layout>
           </item>
           <item row="4" column="1">
-           <spacer name="verticalSpacer_2">
+           <spacer name="imageSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -712,9 +712,9 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <layout class="QHBoxLayout" name="imageAcceptLayout">
           <item>
-           <spacer name="horizontalSpacer_8">
+           <spacer name="imageAcceptSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -727,14 +727,14 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_11">
+           <widget class="QPushButton" name="imageAcceptButton">
             <property name="text">
              <string>Accept</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_12">
+           <widget class="QPushButton" name="imageResetButton">
             <property name="text">
              <string>Reset</string>
             </property>
@@ -743,14 +743,14 @@
          </layout>
         </item>
         <item>
-         <widget class="Line" name="line_3">
+         <widget class="Line" name="imageLine">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QGraphicsView" name="graphicsView_3">
+         <widget class="QGraphicsView" name="imageGraphics">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
             <horstretch>0</horstretch>
@@ -761,7 +761,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_4">
+      <widget class="QWidget" name="sourcesTab">
        <attribute name="title">
         <string>Sources</string>
        </attribute>
@@ -769,9 +769,9 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <layout class="QHBoxLayout" name="startLayout">
       <item>
-       <widget class="QPushButton" name="pushButton_6">
+       <widget class="QPushButton" name="startButton">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -809,9 +809,9 @@
  <resources/>
  <connections>
   <connection>
-   <sender>radioButton_2</sender>
+   <sender>climatePresetsRadioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>comboBox</receiver>
+   <receiver>climatePresetsComboBox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -825,9 +825,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton</sender>
+   <sender>climateLoadRadioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>lineEdit</receiver>
+   <receiver>climateLineEdit</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -841,9 +841,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton</sender>
+   <sender>climateLoadRadioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>pushButton</receiver>
+   <receiver>climateBrowseButton</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -857,9 +857,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_3</sender>
+   <sender>geoLoadRadioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>lineEdit_2</receiver>
+   <receiver>geoLineEdit</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -873,9 +873,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_3</sender>
+   <sender>geoLoadRadioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>pushButton_4</receiver>
+   <receiver>geoBrowseButton</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -889,9 +889,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_4</sender>
+   <sender>geoProfileradioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>comboBox_2</receiver>
+   <receiver>geoElevationComboBox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -905,9 +905,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_4</sender>
+   <sender>geoProfileradioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>comboBox_3</receiver>
+   <receiver>geoSurfaceComboBox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -921,9 +921,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_4</sender>
+   <sender>geoProfileradioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>label_2</receiver>
+   <receiver>geoSurfaceLabel</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -937,9 +937,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_4</sender>
+   <sender>geoProfileradioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>label</receiver>
+   <receiver>geoElevationLabel</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -953,9 +953,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_4</sender>
+   <sender>geoProfileradioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>label_3</receiver>
+   <receiver>youChoseGeoProfileLabel</receiver>
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -969,9 +969,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_8</sender>
+   <sender>imageLoadRadioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>lineEdit_3</receiver>
+   <receiver>imageLineEdit</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -985,9 +985,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_8</sender>
+   <sender>imageLoadRadioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>pushButton_5</receiver>
+   <receiver>imageBrowseButton</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1001,9 +1001,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_5</sender>
+   <sender>imageCustomizeRadioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>doubleSpinBox_2</receiver>
+   <receiver>westSpinBox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1017,9 +1017,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_5</sender>
+   <sender>imageCustomizeRadioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>doubleSpinBox_4</receiver>
+   <receiver>southSpinBox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1033,9 +1033,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_5</sender>
+   <sender>imageCustomizeRadioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>doubleSpinBox</receiver>
+   <receiver>northSpinBox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1049,9 +1049,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_5</sender>
+   <sender>imageCustomizeRadioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>doubleSpinBox_3</receiver>
+   <receiver>eastSpinBox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1065,9 +1065,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_4</sender>
+   <sender>geoProfileradioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>radioButton_6</receiver>
+   <receiver>imageAutomaticallyRadioButton</receiver>
    <slot>setChecked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1081,9 +1081,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_4</sender>
+   <sender>geoProfileradioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>radioButton_5</receiver>
+   <receiver>imageCustomizeRadioButton</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1097,7 +1097,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_6</sender>
+   <sender>startButton</sender>
    <signal>clicked()</signal>
    <receiver>progressBar</receiver>
    <slot>reset()</slot>
@@ -1113,9 +1113,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_7</sender>
+   <sender>climateResetButton</sender>
    <signal>clicked()</signal>
-   <receiver>lineEdit</receiver>
+   <receiver>climateLineEdit</receiver>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1129,9 +1129,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_10</sender>
+   <sender>geoResetButton</sender>
    <signal>clicked()</signal>
-   <receiver>lineEdit_2</receiver>
+   <receiver>geoLineEdit</receiver>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1145,9 +1145,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_12</sender>
+   <sender>imageResetButton</sender>
    <signal>clicked()</signal>
-   <receiver>lineEdit_3</receiver>
+   <receiver>imageLineEdit</receiver>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1162,7 +1162,7 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="imageButtonGroup"/>
+  <buttongroup name="BoundariesButtonGroup"/>
  </buttongroups>
 </ui>
