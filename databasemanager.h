@@ -9,6 +9,7 @@ class DataBaseManager
 public:
     static DataBaseManager& GetInstance();
     ~DataBaseManager();
+    bool AddClimateJournal(const QString& filename);
 private:
     DataBaseManager();
     QSqlDatabase m_db;

@@ -1,13 +1,42 @@
 #include "connector.h"
+#include "ui_mainwindow.h"
+
+#include <QPushButton>
+
+#ifndef UI
+    #define UI m_window->Ui()
+#else
+    #error
+#endif
 
 /**
  * @brief Connector::Connector
  * @param window
  * @param data
  */
-Connector::Connector(const MainWindow& window, const DataInterface& data)
-    : m_window(&window)
+Connector::Connector(MainWindow& window, DataInterface& data, QObject* parent)
+    : QObject(parent)
+    , m_window(&window)
     , m_data(&data)
 {
-
+    // climatic variables
+    connect(UI->climateAcceptButton, &QPushButton::clicked, this, &Connector::OnClimateAccept);
 }
+
+void Connector::OnClimateAccept()
+{
+    if (UI->climateLoadRadioButton->isChecked())
+    {
+        QString filename = UI->climateLineEdit->text();
+        if (!filename.isEmpty())
+        {
+            m_data->AddClimaticJournal(filename);
+        }
+    }
+    else
+    {
+        //TODO
+    }
+}
+
+#undef UI

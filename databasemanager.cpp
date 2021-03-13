@@ -6,6 +6,17 @@ DataBaseManager &DataBaseManager::GetInstance()
     return Instance;
 }
 
+DataBaseManager::~DataBaseManager()
+{
+    m_db.close();
+}
+
+bool DataBaseManager::AddClimateJournal(const QString &filename)
+{
+    //TODO
+    return true;
+}
+
 DataBaseManager::DataBaseManager()
     : m_db(QSqlDatabase::addDatabase("QSQLITE"))
 {

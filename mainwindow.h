@@ -19,6 +19,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    Ui::MainWindow * Ui() { return m_ui; }
 
 private slots:
     void ResetSpinBoxes();

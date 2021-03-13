@@ -4,13 +4,16 @@
 #include "mainwindow.h"
 #include "datainterface.h"
 
-class Connector
+class Connector : public QObject
 {
+    Q_OBJECT
 public:
-    Connector(const MainWindow& window, const DataInterface& data);
+    Connector(MainWindow& window, DataInterface& data, QObject *parent = nullptr);
+private slots:
+    void OnClimateAccept();
 private:
-    const MainWindow* m_window; ///< pointer to window with slots and signals
-    const DataInterface* m_data; ///< pointer to data interface with slots and signals
+    MainWindow* m_window; ///< pointer to window with slots and signals
+    DataInterface* m_data; ///< pointer to data interface with slots and signals
 };
 
 #endif // CONNECTOR_H
