@@ -17,12 +17,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     connector.cpp \
+    databasemanager.cpp \
     datainterface.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     connector.h \
+    databasemanager.h \
     datainterface.h \
     mainwindow.h
 
