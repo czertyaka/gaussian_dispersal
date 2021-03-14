@@ -5,9 +5,9 @@ ClimaticVariables::ClimaticVariables()
 
 }
 
-void ClimaticVariables::AddJournal(const QString &filename)
+void ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_format format)
 {
-    if (m_dbManager.AddClimateJournal(filename))
+    if (m_dbManager.AddClimateJournal(filename, format))
     {
         m_status = READY;
     }

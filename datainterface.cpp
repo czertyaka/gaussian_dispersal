@@ -11,7 +11,7 @@ DataInterface::DataInterface(QObject *parent)
 
 }
 
-void DataInterface::AddClimaticJournal(const QString &filename)
+void DataInterface::AddClimaticJournal(const QString &filename, ClimateCsvParser::t_format format)
 {
-    m_climaticVariables->AddJournal(filename);
+    m_climaticVariables->AddJournal(filename, format);
 }

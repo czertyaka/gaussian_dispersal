@@ -1,5 +1,6 @@
 #include "connector.h"
 #include "ui_mainwindow.h"
+#include "climatecsvparser.h"
 
 #include <QPushButton>
 
@@ -28,9 +29,10 @@ void Connector::OnClimateAccept()
     if (UI->climateLoadRadioButton->isChecked())
     {
         QString filename = UI->climateLineEdit->text();
+        ClimateCsvParser::t_format format = ClimateCsvParser::RP5;
         if (!filename.isEmpty())
         {
-            m_data->AddClimaticJournal(filename);
+            m_data->AddClimaticJournal(filename, format);
         }
     }
     else
