@@ -41,6 +41,7 @@ bool DataBaseManager::AddClimateJournal(const QString &filename, ClimateCsvParse
         }
     }
 
+    file.close();
     return true;
 }
 

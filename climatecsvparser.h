@@ -17,8 +17,8 @@ public:
     void SetFormat(t_format format) { m_format = format; }
     bool Parse(const QString& string, mm::t_observation& observation);
 private:
-    t_format m_format;
-    Rp5CsvParser* m_rp5Parser;
+    t_format m_format; ///< формат обрабатываемого файла
+    Rp5CsvParser* m_rp5Parser; ///< указатель на парсер CSV файла с сайта RP5
 };
 
 #endif // CLIMATECSVPARSER_H

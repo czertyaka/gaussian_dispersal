@@ -21,15 +21,11 @@ bool ClimateCsvParser::Parse(const QString& string, mm::t_observation &observati
     switch (m_format)
     {
     case NONE:
-    {
         qDebug() << __PRETTY_FUNCTION__ << ": format of scv file not set";
         break;
-    }
     case RP5:
-    {
         result = m_rp5Parser->Parse(string, observation);
         break;
-    }
     }
 
     return result;

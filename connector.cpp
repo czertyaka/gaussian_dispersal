@@ -37,7 +37,7 @@ void Connector::OnClimateAccept()
     }
     else
     {
-        //TODO
+        //TODO load stuff from database
     }
 }
 
