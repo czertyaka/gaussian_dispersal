@@ -34,6 +34,10 @@ bool DataBaseManager::AddClimateJournal(const QString &filename, ClimateCsvParse
         {
             QString line = in.readLine();
             mm::t_observation observation;
+            if (m_climateCsvParser->Parse(line, observation))
+            {
+                //TODO add to database
+            }
         }
     }
 
