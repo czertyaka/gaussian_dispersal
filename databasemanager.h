@@ -12,6 +12,7 @@ public:
     bool AddClimateJournal(const QString& filename);
 private:
     DataBaseManager();
+    void Init();
     QSqlDatabase m_db;
 };
 
