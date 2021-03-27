@@ -3,6 +3,8 @@
 #include <QStringList>
 #include <QDebug>
 #include <QRegExp>
+#include <QDate>
+#include <QTime>
 
 Rp5CsvParser::Rp5CsvParser()
     : m_prevE1("")
@@ -50,11 +52,10 @@ bool Rp5CsvParser::Parse(const QString &string, mm::t_observation &observation)
     m_prevE2 = m_E2;
 
     // check if we need to skip this observation
-    if (m_Time.isEmpty() || m_T.isEmpty() || m_DD.isEmpty() || m_Ff.isEmpty()
+    if (m_T.isEmpty() || m_DD.isEmpty() || m_Ff.isEmpty()
             || m_N.isEmpty() || m_Nh.isEmpty() || m_VV.isEmpty() || m_E1.isEmpty()
             || m_E2.isEmpty())
     {
-        qDebug() << __PRETTY_FUNCTION__ << ": observation at" << m_Time << "weren't added";
         return false;
     }
 
@@ -74,15 +75,15 @@ bool Rp5CsvParser::ParseTime()
 {
     QRegExp rx("(\\ |\\.|\\:)");
     QStringList list = m_Time.split(rx);
-    m_obs->day = list.at(0).toInt();
-    m_obs->month = static_cast<mm::t_month>(list.at(1).toInt());
-    m_obs->year = list.at(2).toInt();
-    m_obs->time = list.at(3).toInt();
+    int day = list.at(0).toInt();
+    int month = list.at(1).toInt();
+    int year = list.at(2).toInt();
+    int hour = list.at(3).toInt();
+    m_obs->dateTime = QDateTime(QDate(year, month, day), QTime(hour, 0, 0));
 
-    if (m_obs->day > 31 || m_obs->time > 24)
+    if (!m_obs->dateTime.isValid())
     {
-        qDebug() << __PRETTY_FUNCTION__ << "invalid data" << m_Time;
-        return false;
+        qDebug() << __PRETTY_FUNCTION__ << ": invalid datetime " << m_obs->dateTime.toString(DATETIME_FORMAT);
     }
 
     return true;

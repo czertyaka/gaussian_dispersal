@@ -2,6 +2,11 @@
 #define METEOROLOGY_H
 
 #include <QString>
+#include <QDateTime>
+
+#ifndef DATETIME_FORMAT
+#define DATETIME_FORMAT "MM-dd-yyyy hh:00:00"
+#endif
 
 namespace mm
 {
@@ -26,22 +31,6 @@ namespace mm
         NNW  = 16
     };
 
-    enum t_month : const int
-    {
-        january     = 1,
-        february    = 2,
-        march       = 3,
-        april       = 4,
-        may         = 5,
-        june        = 6,
-        july        = 7,
-        august      = 8,
-        september   = 9,
-        october     = 10,
-        november    = 11,
-        december    = 12
-    };
-
     enum t_smithParam : const int
     {
         cathA = 1,
@@ -55,16 +44,9 @@ namespace mm
 
     typedef struct observation
     {
-        int day; ///< день
-        t_month month; ///< месяц
-        int year; ///< год
-        int time; ///< гринвичевское время
-
-        double latitude; ///< широта, град.
-        double longitude; ///< долгота, град.
+        QDateTime dateTime; ///< дата и время наблюдения
 
         t_windDir windDir; ///< направление ветра, румб
-        t_smithParam smithParam; ///< параметр Смита (категория устойчивости атмосферы)
         double windSpeed; ///< скорость ветра, м/с
 
         int cloudAmount; ///< балл общей облачности, от 0 до 10
