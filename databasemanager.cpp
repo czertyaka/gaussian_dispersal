@@ -5,6 +5,7 @@
 
 #include "databasemanager.h"
 #include "meteorology.h"
+#include "datainterface.h"
 
 DataBaseManager &DataBaseManager::GetInstance()
 {
@@ -14,32 +15,73 @@ DataBaseManager &DataBaseManager::GetInstance()
 
 DataBaseManager::~DataBaseManager()
 {
-    QSqlQuery dropClimateJournalQuery("DROP TABLE IF EXISTS climate_journal;");
-    m_db.close();
+    if(m_db.open())
+    {
+        QSqlQuery dropClimateJournalQuery("DROP TABLE IF EXISTS climate_journal;");
+        m_db.close();
+    }
 }
 
 bool DataBaseManager::AddClimateJournal(const QString &filename, ClimateCsvParser::t_format format)
 {
+    if (!m_db.open())
+    {
+        MY_LOG(__PRETTY_FUNCTION__ << ": database not found");
+        return false;
+    }
+
+    QSqlQuery query;
+    query.exec("DROP TABLE IF EXISTS climate_journal;");
+
+    query.prepare("CREATE TABLE climate_journal ("
+               "dateTime DATETIME PRIMARY KEY NOT NULL,"
+               "windDir INT NOT NULL,"
+               "windSpeed REAL NOT NULL,"
+               "cloudAmount INT NOT NULL,"
+               "lowerCloudAmount INT NOT NULL,"
+               "fog BOOL NOT NULL,"
+               "snow BOOL  NOT NULL,"
+               "temper REAL NOT NULL"
+               ");"
+    );
+
+    if (query.exec())
+    {
+        MY_LOG( __PRETTY_FUNCTION__ << ": climate jornal table created successfully");
+    }
+    else
+    {
+        MY_LOG( __PRETTY_FUNCTION__ << ": climate journal table creation error:" << query.lastError().text());
+        return false;
+    }
+
     m_climateCsvParser->SetFormat(format);
 
     QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text))
     {
-        qDebug() << __PRETTY_FUNCTION__ << ": error opening file";
+        MY_LOG( __PRETTY_FUNCTION__ << ": error opening file");
     }
     else
     {
         size_t totalObservationsCounter = 0;
         size_t addedObservationsCounter = 0;
+        size_t invalidObseravtionsCounter = 0;
+        size_t incompleteObservationsCounter = 0;
 
         QTextStream in(&file);
         while (!in.atEnd())
         {
-            totalObservationsCounter++;
-
             QString line = in.readLine();
             mm::t_observation observation;
-            if (m_climateCsvParser->Parse(line, observation))
+            ClimateCsvParser::t_lineStatus lineStatus = m_climateCsvParser->Parse(line, observation);
+
+            if (lineStatus != ClimateCsvParser::NOT_A_DATA)
+            {
+                totalObservationsCounter++;
+            }
+
+            if (lineStatus == ClimateCsvParser::OK)
             {
                 QSqlQuery query;
                 QString str = QString("INSERT INTO climate_journal("
@@ -58,22 +100,28 @@ bool DataBaseManager::AddClimateJournal(const QString &filename, ClimateCsvParse
 
                 if (!query.exec())
                 {
-                    qDebug() << __PRETTY_FUNCTION__ << ": error inserting observation at"
-                             << observation.dateTime.toString(DATETIME_FORMAT)
-                             << ":" << query.lastError().text();
-                    qDebug() << __PRETTY_FUNCTION__ << addedObservationsCounter
-                             << "observations out of" << totalObservationsCounter
-                             << "were added to climate journal";
+                    MY_LOG( __PRETTY_FUNCTION__ << ": error inserting observation at "
+                        << observation.dateTime.toString(DATETIME_FORMAT)
+                        << ": " << query.lastError().text());
                     return false;
                 }
 
                 addedObservationsCounter++;
             }
+            else if (lineStatus == ClimateCsvParser::INVALID)
+            {
+                invalidObseravtionsCounter++;
+            }
+            else if (lineStatus == ClimateCsvParser::MISSING_DATA)
+            {
+                incompleteObservationsCounter++;
+            }
         }
 
-        qDebug() << __PRETTY_FUNCTION__ << addedObservationsCounter
-                 << "observations out of" << totalObservationsCounter
-                 << "were added to climate journal";
+        MY_LOG( __PRETTY_FUNCTION__ << ": total obseravtions: " << totalObservationsCounter
+            << "; added: " << addedObservationsCounter
+            << "; invalid: " << invalidObseravtionsCounter
+            << "; incomplete: " << incompleteObservationsCounter);
     }
 
     file.close();
@@ -85,40 +133,4 @@ DataBaseManager::DataBaseManager()
     , m_climateCsvParser(new ClimateCsvParser)
 {
     m_db.setDatabaseName("scattering_db.sqlite");
-    if (m_db.open())
-    {
-        qDebug() << __PRETTY_FUNCTION__ << ": database opened successfully";
-        Init();
-    }
-    else
-    {
-        qDebug() << __PRETTY_FUNCTION__ << ": database not open";
-    }
-}
-
-void DataBaseManager::Init()
-{
-    QSqlQuery query;
-    query.exec("DROP TABLE IF EXISTS climate_journal;");
-
-    query.prepare("CREATE TABLE climate_journal ("
-               "dateTime DATETIME PRIMARY KEY NOT NULL,"
-               "windDir INT NOT NULL,"
-               "windSpeed REAL NOT NULL,"
-               "cloudAmount INT NOT NULL,"
-               "lowerCloudAmount INT NOT NULL,"
-               "fog BOOL NOT NULL,"
-               "snow BOOL  NOT NULL,"
-               "temper REAL NOT NULL"
-               ");"
-    );
-
-    if (query.exec())
-    {
-        qDebug() << __PRETTY_FUNCTION__ << ": climate jornal table created successfully";
-    }
-    else
-    {
-        qDebug() << __PRETTY_FUNCTION__ << ": climate journal table creation error:" << query.lastError().text();
-    }
 }

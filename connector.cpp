@@ -20,6 +20,9 @@ Connector::Connector(MainWindow& window, DataInterface& data, QObject* parent)
     , m_window(&window)
     , m_data(&data)
 {
+    // log
+    connect(m_data, &DataInterface::AddLogSignal, UI->logPlainText, &QPlainTextEdit::appendPlainText);
+
     // climatic variables
     connect(UI->climateAcceptButton, &QPushButton::clicked, this, &Connector::OnClimateAccept);
 }

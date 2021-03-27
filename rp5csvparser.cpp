@@ -1,4 +1,5 @@
 #include "rp5csvparser.h"
+#include "datainterface.h"
 
 #include <QStringList>
 #include <QDebug>
@@ -13,14 +14,14 @@ Rp5CsvParser::Rp5CsvParser()
 
 }
 
-bool Rp5CsvParser::Parse(const QString &string, mm::t_observation &observation)
+ClimateCsvParser::t_lineStatus Rp5CsvParser::Parse(const QString &string, mm::t_observation &observation)
 {   
     m_obs = &observation;
 
     // skip comments
     if (string.at(0) == '#')
     {
-        return false;
+        return ClimateCsvParser::NOT_A_DATA;
     }
 
     QString myString = string;
@@ -31,7 +32,7 @@ bool Rp5CsvParser::Parse(const QString &string, mm::t_observation &observation)
     // skip header
     if (list.at(0).contains("Местное время"))
     {
-        return false;
+        return ClimateCsvParser::NOT_A_DATA;
     }
 
     // read
@@ -56,19 +57,19 @@ bool Rp5CsvParser::Parse(const QString &string, mm::t_observation &observation)
             || m_N.isEmpty() || m_Nh.isEmpty() || m_VV.isEmpty() || m_E1.isEmpty()
             || m_E2.isEmpty())
     {
-        return false;
+        return ClimateCsvParser::MISSING_DATA;
     }
 
+    if (!ParseTime() || !ParseWindDir() || !ParseCloudCoverage())
+    {
+        return ClimateCsvParser::INVALID;
+    }
     ParseTemper();
     ParseWindSpeed();
     ParseFog();
     ParseSnow();
-    if (!ParseTime() || !ParseWindDir() || ParseCloudCoverage())
-    {
-        return false;
-    }
 
-    return true;
+    return ClimateCsvParser::OK;
 }
 
 bool Rp5CsvParser::ParseTime()
@@ -83,7 +84,8 @@ bool Rp5CsvParser::ParseTime()
 
     if (!m_obs->dateTime.isValid())
     {
-        qDebug() << __PRETTY_FUNCTION__ << ": invalid datetime " << m_obs->dateTime.toString(DATETIME_FORMAT);
+        MY_LOG(__PRETTY_FUNCTION__ << ": invalid datetime " << m_obs->dateTime.toString(DATETIME_FORMAT));
+        return false;
     }
 
     return true;
@@ -115,7 +117,7 @@ bool Rp5CsvParser::ParseWindDir()
     else if (m_DD == "Ветер, дующий с северо-северо-запада")      { m_obs->windDir = mm::NNW;  }
     else
     {
-        qDebug() << __PRETTY_FUNCTION__ << "invalid wind direction:" << m_DD;
+        MY_LOG(__PRETTY_FUNCTION__ << ": invalid  wind direction: " << m_DD << " at " << m_obs->dateTime.toString(DATETIME_FORMAT));
         return false;
     }
 
@@ -142,7 +144,7 @@ bool Rp5CsvParser::ParseCloudCoverage()
     else if (m_N == "90  или более, но не 100%" || m_N == "100%.") { cloudAmount = 10; }
     else
     {
-        qDebug() << "invalid cloud coverage:" << m_N;
+        MY_LOG(__PRETTY_FUNCTION__ << ": invalid cloud coverage: " << m_N << " at " << m_obs->dateTime.toString(DATETIME_FORMAT));
         return false;
     }
 
@@ -156,7 +158,7 @@ bool Rp5CsvParser::ParseCloudCoverage()
     else if (m_Nh == "90  или более, но не 100%" || m_Nh == "100%.") { lowerCloudAmount = 10; }
     else
     {
-        qDebug() << "invalid lower cloud coverage:" << m_Nh;
+        MY_LOG(__PRETTY_FUNCTION__ << ": invalid lower cloud coverage: " << m_Nh << " at " << m_obs->dateTime.toString(DATETIME_FORMAT));
         return false;
     }
 

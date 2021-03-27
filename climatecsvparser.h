@@ -2,7 +2,8 @@
 #define CLIMATECSVPARSER_H
 
 #include "meteorology.h"
-#include "rp5csvparser.h"
+
+class Rp5CsvParser;
 
 class ClimateCsvParser
 {
@@ -12,10 +13,18 @@ public:
         NONE,
         RP5
     };
+    enum t_lineStatus
+    {
+        OK = 0,
+        MISSING_DATA,
+        INVALID,
+        NOT_A_DATA
+    };
+
     ClimateCsvParser();
     ~ClimateCsvParser();
     void SetFormat(t_format format) { m_format = format; }
-    bool Parse(const QString& string, mm::t_observation& observation);
+    t_lineStatus Parse(const QString& string, mm::t_observation& observation);
 private:
     t_format m_format; ///< формат обрабатываемого файла
     Rp5CsvParser* m_rp5Parser; ///< указатель на парсер CSV файла с сайта RP5

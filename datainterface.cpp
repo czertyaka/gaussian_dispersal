@@ -11,6 +11,18 @@ DataInterface::DataInterface(QObject *parent)
 
 }
 
+DataInterface &DataInterface::GetInstance()
+{
+    static DataInterface instance;
+    return  instance;
+}
+
+void DataInterface::AddLog(const QTextStream &stream)
+{
+    QString log = *(stream.string());
+    emit AddLogSignal(log);
+}
+
 void DataInterface::AddClimaticJournal(const QString &filename, ClimateCsvParser::t_format format)
 {
     m_climaticVariables->AddJournal(filename, format);

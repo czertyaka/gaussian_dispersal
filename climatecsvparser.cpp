@@ -1,6 +1,7 @@
 #include "QDebug"
 
 #include "climatecsvparser.h"
+#include "rp5csvparser.h"
 
 ClimateCsvParser::ClimateCsvParser()
     : m_format(NONE)
@@ -14,9 +15,9 @@ ClimateCsvParser::~ClimateCsvParser()
     delete m_rp5Parser;
 }
 
-bool ClimateCsvParser::Parse(const QString& string, mm::t_observation &observation)
+ClimateCsvParser::t_lineStatus ClimateCsvParser::Parse(const QString& string, mm::t_observation &observation)
 {
-    bool result = false;
+    t_lineStatus result = INVALID;
 
     switch (m_format)
     {

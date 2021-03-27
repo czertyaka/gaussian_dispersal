@@ -14,7 +14,6 @@ public:
     bool AddClimateJournal(const QString& filename, ClimateCsvParser::t_format format);
 private:
     DataBaseManager();
-    void Init();
     QSqlDatabase m_db;
     ClimateCsvParser* m_climateCsvParser;
 };
