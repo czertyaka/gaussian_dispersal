@@ -24,6 +24,12 @@ public:
 private slots:
     void ResetSpinBoxes();
     void BrowseFile(QLineEdit* lineEdit, const QString& file);
+    void AddedSource2(bool);
+    void AddedSource3(bool);
+    void AddedSource4(bool);
+    void AddedSource5(bool);
+    void AnnualEmissionToggled(bool);
+    void QuarterlyEmissionToggled(bool);
 
 private:
     void CustomUiSettings();
