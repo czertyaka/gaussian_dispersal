@@ -1,12 +1,23 @@
 #include "climaticvariables.h"
 #include "datainterface.h"
+#include "databasemanager.h"
 
 #include <QFile>
 
 ClimaticVariables::ClimaticVariables()
     : m_parser(new ClimateCsvParser())
 {
+    if (!m_parser)
+    {
+        MY_LOG(__PRETTY_FUNCTION__ << ": error creating climate journal parser");
+    }
 
+    m_status = ERROR;
+}
+
+ClimaticVariables::~ClimaticVariables()
+{
+    delete m_parser;
 }
 
 void ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_format format)
@@ -36,6 +47,10 @@ void ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
             if (lineStatus != ClimateCsvParser::NOT_A_DATA)
             {
                 totalObservationsCounter++;
+            }
+            else
+            {
+                continue;
             }
 
             if (lineStatus == ClimateCsvParser::OK)

@@ -1,4 +1,5 @@
 #include "datamanager.h"
+#include "databasemanager.h"
 
 DataManager::DataManager()
     : m_status(NOT_READY)

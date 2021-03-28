@@ -5,6 +5,8 @@
 
 #include "datamanager.h"
 
+class GeospatialCsvParser;
+
 class GeospatialData : public DataManager
 {
 public:
@@ -17,15 +19,18 @@ public:
         FOREST,
         BUILDINGS
     };
-    typedef struct geospatialData
+    typedef struct point
     {
         float longitude;
         float latitude;
         t_microrelief microrelief;
         short int elevation;
-    } t_geospatialData;
+    } t_point;
     GeospatialData();
+    ~GeospatialData();
     void AddFromFile(const QString& filename);
+private:
+    GeospatialCsvParser* m_parser;
 };
 
 #endif // GEOSPATIALDATA_H

@@ -1,7 +1,7 @@
 #ifndef DATAMANAGER_H
 #define DATAMANAGER_H
 
-#include "databasemanager.h"
+class DataBaseManager;
 
 class DataManager
 {
