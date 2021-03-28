@@ -17,7 +17,7 @@ DataBaseManager::~DataBaseManager()
 {
     if(m_db.open())
     {
-        QSqlQuery dropClimateJournalQuery("DROP TABLE IF EXISTS climate_journal;");
+        m_query.exec("DROP TABLE IF EXISTS climate_journal;");
         m_db.close();
     }
 }
@@ -30,28 +30,27 @@ bool DataBaseManager::AddClimateJournal(const QString &filename, ClimateCsvParse
         return false;
     }
 
-    QSqlQuery query;
-    query.exec("DROP TABLE IF EXISTS climate_journal;");
+    m_query.exec("DROP TABLE IF EXISTS climate_journal;");
 
-    query.prepare("CREATE TABLE climate_journal ("
-               "dateTime DATETIME PRIMARY KEY NOT NULL,"
-               "windDir INT NOT NULL,"
-               "windSpeed REAL NOT NULL,"
-               "cloudAmount INT NOT NULL,"
-               "lowerCloudAmount INT NOT NULL,"
-               "fog BOOL NOT NULL,"
-               "snow BOOL  NOT NULL,"
-               "temper REAL NOT NULL"
+    m_query.prepare("CREATE TABLE climate_journal ("
+               "dateTime DATETIME PRIMARY KEY,"
+               "windDir INT,"
+               "windSpeed REAL,"
+               "cloudAmount INT,"
+               "lowerCloudAmount INT,"
+               "fog BOOL,"
+               "snow BOOL,"
+               "temper REAL"
                ");"
     );
 
-    if (query.exec())
+    if (m_query.exec())
     {
         MY_LOG( __PRETTY_FUNCTION__ << ": climate jornal table created successfully");
     }
     else
     {
-        MY_LOG( __PRETTY_FUNCTION__ << ": climate journal table creation error:" << query.lastError().text());
+        MY_LOG( __PRETTY_FUNCTION__ << ": climate journal table creation error:" << m_query.lastError().text());
         return false;
     }
 
@@ -69,6 +68,26 @@ bool DataBaseManager::AddClimateJournal(const QString &filename, ClimateCsvParse
         size_t invalidObseravtionsCounter = 0;
         size_t incompleteObservationsCounter = 0;
 
+        m_query.prepare("INSERT INTO climate_journal("
+                        "dateTime,"
+                        "windDir,"
+                        "windSpeed,"
+                        "cloudAmount,"
+                        "lowerCloudAmount,"
+                        "fog,"
+                        "snow,"
+                        "temper"
+                        ") VALUES("
+                        ":dateTime,"
+                        ":windDir,"
+                        ":windSpeed,"
+                        ":cloudAmount,"
+                        ":lowerCloudAmount,"
+                        ":fog,"
+                        ":snow,"
+                        ":temper"
+                        ");");
+
         QTextStream in(&file);
         while (!in.atEnd())
         {
@@ -83,26 +102,20 @@ bool DataBaseManager::AddClimateJournal(const QString &filename, ClimateCsvParse
 
             if (lineStatus == ClimateCsvParser::OK)
             {
-                QSqlQuery query;
-                QString str = QString("INSERT INTO climate_journal("
-                    "dateTime, windDir, windSpeed, cloudAmount,"
-                    "lowerCloudAmount, fog, snow, temper"
-                    ") VALUES('%1', %2, %3, %4, %5, %6, %7, %8);")
-                    .arg(observation.dateTime.toString(DATETIME_FORMAT))
-                    .arg(observation.windDir)
-                    .arg(observation.windSpeed)
-                    .arg(observation.cloudAmount)
-                    .arg(observation.lowerCloudAmount)
-                    .arg(observation.fog)
-                    .arg(observation.snow)
-                    .arg(observation.temper);
-                query.prepare(str);
+                m_query.bindValue(":dateTime", observation.dateTime.toString(DATETIME_FORMAT));
+                m_query.bindValue(":windDir", observation.windDir);
+                m_query.bindValue(":windSpeed", observation.windSpeed);
+                m_query.bindValue(":cloudAmount", observation.cloudAmount);
+                m_query.bindValue(":lowerCloudAmount", observation.lowerCloudAmount);
+                m_query.bindValue(":fog", observation.fog);
+                m_query.bindValue(":snow", observation.snow);
+                m_query.bindValue(":temper", observation.temper);
 
-                if (!query.exec())
+                if (!m_query.exec())
                 {
                     MY_LOG( __PRETTY_FUNCTION__ << ": error inserting observation at "
                         << observation.dateTime.toString(DATETIME_FORMAT)
-                        << ": " << query.lastError().text());
+                        << ": " << m_query.lastError().text());
                     return false;
                 }
 
@@ -133,4 +146,6 @@ DataBaseManager::DataBaseManager()
     , m_climateCsvParser(new ClimateCsvParser)
 {
     m_db.setDatabaseName("scattering_db.sqlite");
+    m_db.exec("PRAGMA synchronous = OFF");
+    m_db.exec("PRAGMA journal_mode = MEMORY");
 }

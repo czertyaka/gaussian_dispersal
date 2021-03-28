@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QSqlDatabase>
+#include <QSqlQuery>
 
 #include "climatecsvparser.h"
 
@@ -15,6 +16,7 @@ public:
 private:
     DataBaseManager();
     QSqlDatabase m_db;
+    QSqlQuery m_query;
     ClimateCsvParser* m_climateCsvParser;
 };
 

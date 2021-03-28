@@ -28,6 +28,8 @@ MainWindow::~MainWindow()
  */
 void MainWindow::CustomUiSettings()
 {
+    QApplication::setStyle("fusion");
+
     m_ui->youChoseGeoProfileLabel->setVisible(false);
     m_ui->progressBar->reset();
 

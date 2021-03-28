@@ -1,6 +1,7 @@
 #include "connector.h"
 #include "ui_mainwindow.h"
 #include "climatecsvparser.h"
+#include "datainterface.h"
 
 #include <QPushButton>
 
@@ -36,6 +37,10 @@ void Connector::OnClimateAccept()
         if (!filename.isEmpty())
         {
             m_data->AddClimaticJournal(filename, format);
+        }
+        else
+        {
+            MY_LOG(__PRETTY_FUNCTION__ << ": filename field is empty");
         }
     }
     else

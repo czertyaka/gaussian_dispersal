@@ -84,7 +84,7 @@ bool Rp5CsvParser::ParseTime()
 
     if (!m_obs->dateTime.isValid())
     {
-        MY_LOG(__PRETTY_FUNCTION__ << ": invalid datetime " << m_obs->dateTime.toString(DATETIME_FORMAT));
+        MY_LOG(__PRETTY_FUNCTION__ << ": invalid datetime \"" << m_obs->dateTime.toString(DATETIME_FORMAT) << "\"");
         return false;
     }
 
@@ -117,7 +117,7 @@ bool Rp5CsvParser::ParseWindDir()
     else if (m_DD == "Ветер, дующий с северо-северо-запада")      { m_obs->windDir = mm::NNW;  }
     else
     {
-        MY_LOG(__PRETTY_FUNCTION__ << ": invalid  wind direction: " << m_DD << " at " << m_obs->dateTime.toString(DATETIME_FORMAT));
+        MY_LOG(__PRETTY_FUNCTION__ << ": invalid  wind direction: \"" << m_DD << "\" at " << m_obs->dateTime.toString(DATETIME_FORMAT));
         return false;
     }
 
@@ -144,7 +144,7 @@ bool Rp5CsvParser::ParseCloudCoverage()
     else if (m_N == "90  или более, но не 100%" || m_N == "100%.") { cloudAmount = 10; }
     else
     {
-        MY_LOG(__PRETTY_FUNCTION__ << ": invalid cloud coverage: " << m_N << " at " << m_obs->dateTime.toString(DATETIME_FORMAT));
+        MY_LOG(__PRETTY_FUNCTION__ << ": invalid cloud coverage: \"" << m_N << "\" at " << m_obs->dateTime.toString(DATETIME_FORMAT));
         return false;
     }
 
@@ -158,7 +158,7 @@ bool Rp5CsvParser::ParseCloudCoverage()
     else if (m_Nh == "90  или более, но не 100%" || m_Nh == "100%.") { lowerCloudAmount = 10; }
     else
     {
-        MY_LOG(__PRETTY_FUNCTION__ << ": invalid lower cloud coverage: " << m_Nh << " at " << m_obs->dateTime.toString(DATETIME_FORMAT));
+        MY_LOG(__PRETTY_FUNCTION__ << ": invalid lower cloud coverage: \"" << m_Nh << "\" at " << m_obs->dateTime.toString(DATETIME_FORMAT));
         return false;
     }
 
