@@ -7,6 +7,7 @@
 DataInterface::DataInterface(QObject *parent)
     : QObject(parent)
     , m_climaticVariables(new ClimaticVariables())
+    , m_GeospatialData(new GeospatialData())
 {
 
 }
@@ -26,4 +27,9 @@ void DataInterface::AddLog(const QTextStream &stream)
 void DataInterface::AddClimaticJournal(const QString &filename, ClimateCsvParser::t_format format)
 {
     m_climaticVariables->AddJournal(filename, format);
+}
+
+void DataInterface::AddGeospatialData(const QString &filename)
+{
+    m_GeospatialData->AddFromFile(filename);
 }

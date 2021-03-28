@@ -26,6 +26,9 @@ Connector::Connector(MainWindow& window, DataInterface& data, QObject* parent)
 
     // climatic variables
     connect(UI->climateAcceptButton, &QPushButton::clicked, this, &Connector::OnClimateAccept);
+
+    // geospatial data
+    connect(UI->geoAcceptButton, &QPushButton::clicked, this, &Connector::OnGeospatialAccept);
 }
 
 void Connector::OnClimateAccept()
@@ -45,7 +48,27 @@ void Connector::OnClimateAccept()
     }
     else
     {
-        //TODO load stuff from database
+        //TODO
+    }
+}
+
+void Connector::OnGeospatialAccept()
+{
+    if (UI->geoLoadRadioButton->isChecked())
+    {
+        QString filename = UI->geoLineEdit->text();
+        if (!filename.isEmpty())
+        {
+            m_data->AddGeospatialData(filename);
+        }
+        else
+        {
+            MY_LOG(__PRETTY_FUNCTION__ << ": filename field is empty");
+        }
+    }
+    else
+    {
+        //TODO
     }
 }
 

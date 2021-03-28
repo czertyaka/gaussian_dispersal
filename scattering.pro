@@ -22,6 +22,7 @@ SOURCES += \
     databasemanager.cpp \
     datainterface.cpp \
     datamanager.cpp \
+    geospatialdata.cpp \
     main.cpp \
     mainwindow.cpp \
     rp5csvparser.cpp
@@ -33,6 +34,7 @@ HEADERS += \
     databasemanager.h \
     datainterface.h \
     datamanager.h \
+    geospatialdata.h \
     mainwindow.h \
     meteorology.h \
     rp5csvparser.h

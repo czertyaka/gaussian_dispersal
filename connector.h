@@ -11,6 +11,7 @@ public:
     Connector(MainWindow& window, DataInterface& data, QObject *parent = nullptr);
 private slots:
     void OnClimateAccept();
+    void OnGeospatialAccept();
 private:
     MainWindow* m_window; ///< pointer to window with slots and signals
     DataInterface* m_data; ///< pointer to data interface with slots and signals
