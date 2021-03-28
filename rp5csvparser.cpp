@@ -28,6 +28,10 @@ ClimateCsvParser::t_lineStatus Rp5CsvParser::Parse(const QString &string, mm::t_
     myString.remove('"');
 
     QStringList list = myString.split(";");
+    if (list.count() < 28)
+    {
+        return ClimateCsvParser::COLUMNS_MISMATCH;
+    }
 
     // skip header
     if (list.at(0).contains("Местное время"))

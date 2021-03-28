@@ -18,7 +18,8 @@ public:
         OK = 0,
         MISSING_DATA,
         INVALID,
-        NOT_A_DATA
+        NOT_A_DATA,
+        COLUMNS_MISMATCH
     };
 
     ClimateCsvParser();

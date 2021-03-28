@@ -44,6 +44,14 @@ void ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
             mm::t_observation observation;
             ClimateCsvParser::t_lineStatus lineStatus = m_parser->Parse(line, observation);
 
+            if (lineStatus == ClimateCsvParser::COLUMNS_MISMATCH)
+            {
+                MY_LOG(__PRETTY_FUNCTION__ << ": column mismatch in line \""
+                       << line << "\", RP5 file consists of at least 28 columns");
+                m_status = ERROR;
+                return;
+            }
+
             if (lineStatus != ClimateCsvParser::NOT_A_DATA)
             {
                 totalObservationsCounter++;
