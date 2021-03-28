@@ -1,22 +1,20 @@
 #ifndef DATABASEMANAGER_H
 #define DATABASEMANAGER_H
 
-#include <QString>
 #include <vector>
 
-#include "climatecsvparser.h"
 #include "meteorology.h"
 
 class DataBaseManager
 {
 public:
+    typedef std::vector<mm::t_observation> t_climateJournal;
     static DataBaseManager& GetInstance();
     ~DataBaseManager();
-    bool AddClimateJournal(const QString& filename, ClimateCsvParser::t_format format);
+    t_climateJournal& GetClimateJournal();
 private:
     DataBaseManager();
-    std::vector<mm::t_observation> m_climateJournal;
-    ClimateCsvParser* m_climateCsvParser;
+    t_climateJournal m_climateJournal;
 };
 
 #endif // DATABASEMANAGER_H
