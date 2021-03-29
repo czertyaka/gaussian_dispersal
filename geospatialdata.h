@@ -10,19 +10,21 @@ class GeospatialCsvParser;
 class GeospatialData : public DataManager
 {
 public:
-    enum t_microrelief
+    enum t_microrelief : unsigned short
     {
+        UNKNOWN,
         SNOW,
         SHORTGRASS,
         TALLGRASS,
         SCRUB_GROWTH,
         FOREST,
-        BUILDINGS
+        BUILDINGS,
+        WATER
     };
     typedef struct point
     {
-        float longitude;
-        float latitude;
+        float x;
+        float y;
         t_microrelief microrelief;
         short int elevation;
     } t_point;

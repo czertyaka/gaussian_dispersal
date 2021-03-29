@@ -22,8 +22,9 @@ GeospatialData::~GeospatialData()
 }
 
 void GeospatialData::AddFromFile(const QString &filename)
-{
+{ 
     DataBaseManager::t_landscape landscape = m_dbManager.GetLandscape();
+    landscape.clear();
 
     QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -49,8 +50,7 @@ void GeospatialData::AddFromFile(const QString &filename)
             {
                 MY_LOG(__PRETTY_FUNCTION__ << ": error reading line \""
                        << line << "\"");
-                m_status = ERROR;
-                return;
+                continue;
             }
             else if (lineStatus == CsvParser::OK)
             {

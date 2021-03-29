@@ -24,6 +24,7 @@ void ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
 {
     m_parser->SetFormat(format);
     DataBaseManager::t_climateJournal climateJournal = m_dbManager.GetClimateJournal();
+    climateJournal.clear();
 
     QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text))

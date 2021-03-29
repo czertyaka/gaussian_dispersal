@@ -15,13 +15,14 @@ public:
         NOT_A_DATA,
         COLUMNS_MISMATCH
     };
-    CsvParser(const size_t columnsNumber, const QString& firstHeader);
+    CsvParser(const size_t columnsNumber, const QString& firstHeader, const char delimeter);
 protected:
     t_lineStatus ParseLine(const QString& string);
     QStringList m_list;
 private:
-    int m_columnsNumber;
-    QString m_firstHeader;
+    const int m_columnsNumber;
+    const QString m_firstHeader;
+    const char m_delimeter;
 };
 
 #endif // BASEPARSER_H

@@ -8,7 +8,7 @@
 #include <QTime>
 
 Rp5CsvParser::Rp5CsvParser() :
-    CsvParser(29, "Местное время"),
+    CsvParser(29, "Местное время", ';'),
     m_prevE1(""),
     m_prevE2("")
 {
