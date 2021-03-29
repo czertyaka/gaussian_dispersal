@@ -24,12 +24,16 @@ void DataInterface::AddLog(const QTextStream &stream)
     emit AddLogSignal(log);
 }
 
-void DataInterface::AddClimaticJournal(const QString &filename, ClimateCsvParser::t_format format)
+bool DataInterface::AddClimaticJournal(const QString &filename, ClimateCsvParser::t_format format)
 {
-    m_climaticVariables->AddJournal(filename, format);
+    bool result = m_climaticVariables->AddJournal(filename, format);
+    emit UpdateClimateStatusLabel(result);
+    return result;
 }
 
-void DataInterface::AddGeospatialData(const QString &filename)
+bool DataInterface::AddGeospatialData(const QString &filename)
 {
-    m_GeospatialData->AddFromFile(filename);
+    bool result = m_GeospatialData->AddFromFile(filename);
+    emit UpdateGeoStatusLabel(result);
+    return result;
 }

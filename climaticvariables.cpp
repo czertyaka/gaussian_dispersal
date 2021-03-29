@@ -20,7 +20,7 @@ ClimaticVariables::~ClimaticVariables()
     delete m_parser;
 }
 
-void ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_format format)
+bool ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_format format)
 {
     m_parser->SetFormat(format);
     DataBaseManager::t_climateJournal climateJournal = m_dbManager.GetClimateJournal();
@@ -50,7 +50,7 @@ void ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
                 MY_LOG(__PRETTY_FUNCTION__ << ": column mismatch in line \""
                        << line << "\", RP5 file consists of at least 29 columns");
                 m_status = ERROR;
-                return;
+                return false;
             }
 
             if (lineStatus != CsvParser::NOT_A_DATA)
@@ -87,11 +87,12 @@ void ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
             MY_LOG(__PRETTY_FUNCTION__ << ": no observations were added");
             MY_LOG(__PRETTY_FUNCTION__ << ": error reading climatic journal");
             m_status = ERROR;
-            return;
+            return false;
         }
     }
 
     file.close();
     MY_LOG(__PRETTY_FUNCTION__ << ": climatic journal read successfully");
     m_status = READY;
+    return true;
 }

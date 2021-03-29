@@ -26,9 +26,11 @@ Connector::Connector(MainWindow& window, DataInterface& data, QObject* parent)
 
     // climatic variables
     connect(UI->climateAcceptButton, &QPushButton::clicked, this, &Connector::OnClimateAccept);
+    connect(m_data, &DataInterface::UpdateClimateStatusLabel, m_window, &MainWindow::UpdateClimateStatusLabel);
 
     // geospatial data
     connect(UI->geoAcceptButton, &QPushButton::clicked, this, &Connector::OnGeospatialAccept);
+    connect(m_data, &DataInterface::UpdateGeoStatusLabel, m_window, &MainWindow::UpdateGeoStatusLabel);
 }
 
 void Connector::OnClimateAccept()

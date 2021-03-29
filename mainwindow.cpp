@@ -3,6 +3,12 @@
 
 #include <QAbstractSpinBox>
 #include <QFileDialog>
+#include <QString>
+
+#if !defined(MY_GREEN) && !defined(MY_RED)
+#define MY_GREEN "005500"
+#define MY_RED "aa0000"
+#endif
 
 /**
  * @brief MainWindow::MainWindow
@@ -22,6 +28,16 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete m_ui;
+}
+
+void MainWindow::UpdateClimateStatusLabel(const bool ok)
+{
+    UpdateStatusLabel(m_ui->climateStatusLabel, ok);
+}
+
+void MainWindow::UpdateGeoStatusLabel(const bool ok)
+{
+    UpdateStatusLabel(m_ui->geoStatusLabel, ok);
 }
 
 /**
@@ -48,16 +64,24 @@ void MainWindow::CustomUiSettings()
     connect(m_ui->annualButton, &QRadioButton::toggled, this, &MainWindow::AnnualEmissionToggled);
     connect(m_ui->quarterlyButton, &QRadioButton::toggled, this, &MainWindow::QuarterlyEmissionToggled);
 
-    connect(m_ui->climateResetButton, &QPushButton::clicked, this, [=](){ this->SetNotReadyStatus(m_ui->climateStatusLabel); });
-    connect(m_ui->geoResetButton, &QPushButton::clicked, this, [=](){ this->SetNotReadyStatus(m_ui->geoStatusLabel); });
-    connect(m_ui->imageResetButton, &QPushButton::clicked, this, [=](){ this->SetNotReadyStatus(m_ui->imageStatusLabel); });
+    connect(m_ui->climateResetButton, &QPushButton::clicked, this, [=](){ this->UpdateStatusLabel(m_ui->climateStatusLabel, false); });
+    connect(m_ui->geoResetButton, &QPushButton::clicked, this, [=](){ this->UpdateStatusLabel(m_ui->geoStatusLabel, false); });
+    connect(m_ui->imageResetButton, &QPushButton::clicked, this, [=](){ this->UpdateStatusLabel(m_ui->imageStatusLabel, false); });
     connect(m_ui->srcResetButton, &QPushButton::clicked, this, &MainWindow::ResetSources);
 }
 
-void MainWindow::SetNotReadyStatus(QLabel *label)
+void MainWindow::UpdateStatusLabel(QLabel *label, const bool result)
 {
-    label->setStyleSheet("QLabel { color : #aa0000; }");
-    label->setText("NOT READY");
+    if (result)
+    {
+        label->setStyleSheet(QString("QLabel { color : #%1; }").arg(MY_GREEN));
+        label->setText("READY");
+    }
+    else
+    {
+        label->setStyleSheet(QString("QLabel { color : #%1; }").arg(MY_RED));
+        label->setText("NOT READY");
+    }
 }
 
 /**
@@ -211,5 +235,5 @@ void MainWindow::ResetSources()
         boxes[i]->setValue(0);
     }
 
-    SetNotReadyStatus(m_ui->srcStatusLabel);
+    UpdateStatusLabel(m_ui->srcStatusLabel, false);
 }

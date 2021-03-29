@@ -22,6 +22,12 @@ public:
     ~MainWindow();
     Ui::MainWindow * Ui() { return m_ui; }
 
+public slots:
+    void UpdateClimateStatusLabel(const bool ok);
+    void UpdateGeoStatusLabel(const bool ok);
+//    void UpdateImageStatusLabel(const bool ok);
+//    void UpdateSourcesStatusLabel(const bool ok);
+
 private slots:
     void ResetSpinBoxes();
     void BrowseFile(QLineEdit* lineEdit, const QString& file);
@@ -35,7 +41,7 @@ private slots:
 
 private:
     void CustomUiSettings();
+    void UpdateStatusLabel(QLabel* label, const bool ok);
     Ui::MainWindow* m_ui;
-    void SetNotReadyStatus(QLabel* label);
 };
 #endif // MAINWINDOW_H

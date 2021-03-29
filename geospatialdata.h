@@ -30,7 +30,7 @@ public:
     } t_point;
     GeospatialData();
     ~GeospatialData();
-    void AddFromFile(const QString& filename);
+    bool AddFromFile(const QString& filename);
 private:
     GeospatialCsvParser* m_parser;
 };

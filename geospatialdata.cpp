@@ -21,7 +21,7 @@ GeospatialData::~GeospatialData()
     delete m_parser;
 }
 
-void GeospatialData::AddFromFile(const QString &filename)
+bool GeospatialData::AddFromFile(const QString &filename)
 { 
     DataBaseManager::t_landscape landscape = m_dbManager.GetLandscape();
     landscape.clear();
@@ -41,6 +41,14 @@ void GeospatialData::AddFromFile(const QString &filename)
             QString line = in.readLine();
             t_point point;
             CsvParser::t_lineStatus lineStatus = m_parser->ParseLine(line, point);
+
+            if (lineStatus == CsvParser::COLUMNS_MISMATCH)
+            {
+                MY_LOG(__PRETTY_FUNCTION__ << ": geospatial file must consist at least"
+                                              "of 5 columns");
+                m_status = ERROR;
+                return false;
+            }
 
             if (lineStatus == CsvParser::NOT_A_DATA)
             {
@@ -64,10 +72,11 @@ void GeospatialData::AddFromFile(const QString &filename)
         if (!pointsCounter)
         {
             m_status = ERROR;
-            return;
+            return false;
         }
     }
     file.close();
     MY_LOG(__PRETTY_FUNCTION__ << ": geospatial data read successfully");
     m_status = READY;
+    return true;
 }

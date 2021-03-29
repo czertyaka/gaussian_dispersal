@@ -21,10 +21,14 @@ public:
 
 signals:
     void AddLogSignal(const QString& log);
+    void UpdateClimateStatusLabel(const bool ok);
+    void UpdateGeoStatusLabel(const bool ok);
+    void UpdateImageStatusLabel(const bool ok);
+    void UpdateSourcesStatusLabel(const bool ok);
 
 public slots:
-    void AddClimaticJournal(const QString& filename, ClimateCsvParser::t_format format);
-    void AddGeospatialData(const QString& filename);
+    bool AddClimaticJournal(const QString& filename, ClimateCsvParser::t_format format);
+    bool AddGeospatialData(const QString& filename);
 
 private:
     explicit DataInterface(QObject *parent = nullptr);

@@ -66,7 +66,7 @@
           <item row="0" column="1">
            <widget class="QRadioButton" name="climatePresetsRadioButton">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Choose climatic variables preset</string>
@@ -224,7 +224,7 @@
           <item row="0" column="1" colspan="2">
            <widget class="QRadioButton" name="geoProfileradioButton">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -239,6 +239,9 @@
           </item>
           <item row="1" column="1">
            <widget class="QLabel" name="geoElevationLabel">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="text">
              <string>Elevation</string>
             </property>
@@ -246,6 +249,9 @@
           </item>
           <item row="1" column="2">
            <widget class="QLabel" name="geoSurfaceLabel">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="text">
              <string>Surface microrelief</string>
             </property>
@@ -673,6 +679,9 @@
           </item>
           <item row="1" column="0">
            <widget class="QRadioButton" name="imageDefaultRadioButton">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
               <horstretch>0</horstretch>
@@ -689,6 +698,9 @@
           </item>
           <item row="2" column="2">
            <widget class="QRadioButton" name="imageCustomizeRadioButton">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="text">
              <string>Customize</string>
             </property>
