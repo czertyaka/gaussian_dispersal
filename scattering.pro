@@ -19,6 +19,7 @@ SOURCES += \
     climatecsvparser.cpp \
     climaticvariables.cpp \
     connector.cpp \
+    csvparser.cpp \
     databasemanager.cpp \
     datainterface.cpp \
     datamanager.cpp \
@@ -32,6 +33,7 @@ HEADERS += \
     climatecsvparser.h \
     climaticvariables.h \
     connector.h \
+    csvparser.h \
     databasemanager.h \
     datainterface.h \
     datamanager.h \

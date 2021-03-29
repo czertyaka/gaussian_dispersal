@@ -7,48 +7,34 @@
 #include <QDate>
 #include <QTime>
 
-Rp5CsvParser::Rp5CsvParser()
-    : m_prevE1("")
-    , m_prevE2("")
+Rp5CsvParser::Rp5CsvParser() :
+    CsvParser(29, "Местное время"),
+    m_prevE1(""),
+    m_prevE2("")
 {
 
 }
 
-ClimateCsvParser::t_lineStatus Rp5CsvParser::Parse(const QString &string, mm::t_observation &observation)
+CsvParser::t_lineStatus Rp5CsvParser::Parse(const QString &string, mm::t_observation &observation)
 {   
     m_obs = &observation;
 
-    // skip comments
-    if (string.at(0) == '#')
+    t_lineStatus status = CsvParser::ParseLine(string);
+    if (status != OK)
     {
-        return ClimateCsvParser::NOT_A_DATA;
-    }
-
-    QString myString = string;
-    myString.remove('"');
-
-    QStringList list = myString.split(";");
-    if (list.count() < 28)
-    {
-        return ClimateCsvParser::COLUMNS_MISMATCH;
-    }
-
-    // skip header
-    if (list.at(0).contains("Местное время"))
-    {
-        return ClimateCsvParser::NOT_A_DATA;
+        return status;
     }
 
     // read
-    m_Time = list.at(0);
-    m_T = list.at(1);
-    m_DD = list.at(6);
-    m_Ff = list.at(7);
-    m_N = list.at(10);
-    m_Nh = list.at(17);
-    m_VV = list.at(21);
-    m_E1 = list.at(25);
-    m_E2 = list.at(27);
+    m_Time = m_list.at(0);
+    m_T = m_list.at(1);
+    m_DD = m_list.at(6);
+    m_Ff = m_list.at(7);
+    m_N = m_list.at(10);
+    m_Nh = m_list.at(17);
+    m_VV = m_list.at(21);
+    m_E1 = m_list.at(25);
+    m_E2 = m_list.at(27);
 
     // restore ground surface
     m_E1 = m_E1.isEmpty() ? m_prevE1 : m_E1;
@@ -61,19 +47,19 @@ ClimateCsvParser::t_lineStatus Rp5CsvParser::Parse(const QString &string, mm::t_
             || m_N.isEmpty() || m_Nh.isEmpty() || m_VV.isEmpty() || m_E1.isEmpty()
             || m_E2.isEmpty())
     {
-        return ClimateCsvParser::MISSING_DATA;
+        return MISSING_DATA;
     }
 
     if (!ParseTime() || !ParseWindDir() || !ParseCloudCoverage())
     {
-        return ClimateCsvParser::INVALID;
+        return INVALID;
     }
     ParseTemper();
     ParseWindSpeed();
     ParseFog();
     ParseSnow();
 
-    return ClimateCsvParser::OK;
+    return OK;
 }
 
 bool Rp5CsvParser::ParseTime()

@@ -4,18 +4,15 @@
 #include <QString>
 
 #include "geospatialdata.h"
+#include "csvparser.h"
 
-class GeospatialCsvParser
+class GeospatialCsvParser : public CsvParser
 {
 public:
-    enum t_lineStatus
-    {
-        OK,
-        ERROR,
-        NOT_A_DATA
-    };
     GeospatialCsvParser();
     t_lineStatus ParseLine(const QString& string, GeospatialData::t_point& point);
+private:
+    GeospatialData::t_point m_point;
 };
 
 #endif // GEOSPATIALCSVPARSER_H

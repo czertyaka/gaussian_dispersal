@@ -39,29 +39,35 @@ void GeospatialData::AddFromFile(const QString &filename)
         {
             QString line = in.readLine();
             t_point point;
-            GeospatialCsvParser::t_lineStatus lineStatus = m_parser->ParseLine(line, point);
+            CsvParser::t_lineStatus lineStatus = m_parser->ParseLine(line, point);
 
-            if (lineStatus == GeospatialCsvParser::NOT_A_DATA)
+            if (lineStatus == CsvParser::NOT_A_DATA)
             {
                 continue;
             }
-            else if (lineStatus == GeospatialCsvParser::ERROR)
+            else if (lineStatus == CsvParser::INVALID)
             {
                 MY_LOG(__PRETTY_FUNCTION__ << ": error reading line \""
                        << line << "\"");
                 m_status = ERROR;
                 return;
             }
-            else if (lineStatus == GeospatialCsvParser::OK)
+            else if (lineStatus == CsvParser::OK)
             {
                 landscape.push_back(point);
                 pointsCounter++;
             }
         }
-
-        file.close();
         MY_LOG(__PRETTY_FUNCTION__ << ": added " << pointsCounter
                << " geospatial points");
-        m_status = READY;
+
+        if (!pointsCounter)
+        {
+            m_status = ERROR;
+            return;
+        }
     }
+    file.close();
+    MY_LOG(__PRETTY_FUNCTION__ << ": geospatial data read successfully");
+    m_status = READY;
 }

@@ -42,17 +42,17 @@ void ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
         {
             QString line = in.readLine();
             mm::t_observation observation;
-            ClimateCsvParser::t_lineStatus lineStatus = m_parser->Parse(line, observation);
+            CsvParser::t_lineStatus lineStatus = m_parser->Parse(line, observation);
 
-            if (lineStatus == ClimateCsvParser::COLUMNS_MISMATCH)
+            if (lineStatus == CsvParser::COLUMNS_MISMATCH)
             {
                 MY_LOG(__PRETTY_FUNCTION__ << ": column mismatch in line \""
-                       << line << "\", RP5 file consists of at least 28 columns");
+                       << line << "\", RP5 file consists of at least 29 columns");
                 m_status = ERROR;
                 return;
             }
 
-            if (lineStatus != ClimateCsvParser::NOT_A_DATA)
+            if (lineStatus != CsvParser::NOT_A_DATA)
             {
                 totalObservationsCounter++;
             }
@@ -61,16 +61,16 @@ void ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
                 continue;
             }
 
-            if (lineStatus == ClimateCsvParser::OK)
+            if (lineStatus == CsvParser::OK)
             {
                 climateJournal.push_back(observation);
                 addedObservationsCounter++;
             }
-            else if (lineStatus == ClimateCsvParser::INVALID)
+            else if (lineStatus == CsvParser::INVALID)
             {
                 invalidObseravtionsCounter++;
             }
-            else if (lineStatus == ClimateCsvParser::MISSING_DATA)
+            else if (lineStatus == CsvParser::MISSING_DATA)
             {
                 incompleteObservationsCounter++;
             }

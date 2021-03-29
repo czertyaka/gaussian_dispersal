@@ -3,12 +3,13 @@
 
 #include "meteorology.h"
 #include "climatecsvparser.h"
+#include "csvparser.h"
 
-class Rp5CsvParser
+class Rp5CsvParser : public CsvParser
 {
 public:
     Rp5CsvParser();
-    ClimateCsvParser::t_lineStatus Parse(const QString& string, mm::t_observation& observation);
+    t_lineStatus Parse(const QString& string, mm::t_observation& observation);
 private:
     mm::t_observation* m_obs;
     bool ParseTime();
