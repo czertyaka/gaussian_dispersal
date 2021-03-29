@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QLineEdit>
 #include <QString>
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,9 +31,11 @@ private slots:
     void AddedSource5(bool);
     void AnnualEmissionToggled(bool);
     void QuarterlyEmissionToggled(bool);
+    void ResetSources();
 
 private:
     void CustomUiSettings();
     Ui::MainWindow* m_ui;
+    void SetNotReadyStatus(QLabel* label);
 };
 #endif // MAINWINDOW_H

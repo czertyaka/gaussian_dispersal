@@ -21,7 +21,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="climateTab">
        <attribute name="title">
@@ -120,7 +120,10 @@
           <item>
            <widget class="QLabel" name="climateStatusLabel">
             <property name="text">
-             <string>NOT READY</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;NOT READY&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::RichText</enum>
             </property>
            </widget>
           </item>
@@ -363,7 +366,7 @@
           <item>
            <widget class="QLabel" name="geoStatusLabel">
             <property name="text">
-             <string>NOT READY</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;NOT READY&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
@@ -732,7 +735,7 @@
           <item row="4" column="0">
            <widget class="QLabel" name="imageStatusLabel">
             <property name="text">
-             <string>NOT READY</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;NOT READY&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
@@ -1610,7 +1613,7 @@
             <item>
              <widget class="QLabel" name="srcStatusLabel">
               <property name="text">
-               <string>TextLabel</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;NOT READY&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
              </widget>
             </item>

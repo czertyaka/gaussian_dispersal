@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QAbstractSpinBox>
 #include <QFileDialog>
 
 /**
@@ -46,6 +47,17 @@ void MainWindow::CustomUiSettings()
 
     connect(m_ui->annualButton, &QRadioButton::toggled, this, &MainWindow::AnnualEmissionToggled);
     connect(m_ui->quarterlyButton, &QRadioButton::toggled, this, &MainWindow::QuarterlyEmissionToggled);
+
+    connect(m_ui->climateResetButton, &QPushButton::clicked, this, [=](){ this->SetNotReadyStatus(m_ui->climateStatusLabel); });
+    connect(m_ui->geoResetButton, &QPushButton::clicked, this, [=](){ this->SetNotReadyStatus(m_ui->geoStatusLabel); });
+    connect(m_ui->imageResetButton, &QPushButton::clicked, this, [=](){ this->SetNotReadyStatus(m_ui->imageStatusLabel); });
+    connect(m_ui->srcResetButton, &QPushButton::clicked, this, &MainWindow::ResetSources);
+}
+
+void MainWindow::SetNotReadyStatus(QLabel *label)
+{
+    label->setStyleSheet("QLabel { color : #aa0000; }");
+    label->setText("NOT READY");
 }
 
 /**
@@ -178,4 +190,26 @@ void MainWindow::QuarterlyEmissionToggled(bool toggled)
     m_ui->q25->setEnabled(toggled && m_ui->srcCheckBox_5->isChecked());
     m_ui->q35->setEnabled(toggled && m_ui->srcCheckBox_5->isChecked());
     m_ui->q45->setEnabled(toggled && m_ui->srcCheckBox_5->isChecked());
+}
+
+void MainWindow::ResetSources()
+{
+    QDoubleSpinBox* boxes[] = {
+        m_ui->x1, m_ui->x2, m_ui->x3, m_ui->x4, m_ui->x5,
+        m_ui->y1, m_ui->y2, m_ui->y3, m_ui->y4, m_ui->y5,
+        m_ui->h1, m_ui->h2, m_ui->h3, m_ui->h4, m_ui->h5,
+        m_ui->t1, m_ui->t2, m_ui->t3, m_ui->t4, m_ui->t5,
+        m_ui->e1, m_ui->e2, m_ui->e3, m_ui->e4, m_ui->e5,
+        m_ui->q11, m_ui->q12, m_ui->q13, m_ui->q14, m_ui->q15,
+        m_ui->q21, m_ui->q22, m_ui->q23, m_ui->q24, m_ui->q25,
+        m_ui->q31, m_ui->q32, m_ui->q33, m_ui->q34, m_ui->q35,
+        m_ui->q41, m_ui->q42, m_ui->q43, m_ui->q44, m_ui->q45
+    };
+
+    for (size_t i = 0; i < sizeof(boxes)/sizeof(boxes[0]); ++i)
+    {
+        boxes[i]->setValue(0);
+    }
+
+    SetNotReadyStatus(m_ui->srcStatusLabel);
 }
