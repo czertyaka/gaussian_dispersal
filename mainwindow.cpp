@@ -4,6 +4,9 @@
 #include <QAbstractSpinBox>
 #include <QFileDialog>
 #include <QString>
+#include <QObject>
+#include <QScrollBar>
+#include <QComboBox>
 
 #if !defined(MY_GREEN) && !defined(MY_RED)
 #define MY_GREEN "005500"
@@ -17,6 +20,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_ui(new Ui::MainWindow)
+    , m_row(2)
 {
     m_ui->setupUi(this);
     CustomUiSettings();
@@ -56,18 +60,15 @@ void MainWindow::CustomUiSettings()
     connect(m_ui->geoBrowseButton, &QPushButton::clicked, this, [=](){ this->BrowseFile(m_ui->geoLineEdit, "*.csv"); });
     connect(m_ui->imageBrowseButton, &QPushButton::clicked, this, [=](){ this->BrowseFile(m_ui->imageLineEdit, "*.jpg *.jpeg *.png"); });
 
-    connect(m_ui->srcCheckBox_2, &QCheckBox::toggled, this, &MainWindow::AddedSource2);
-    connect(m_ui->srcCheckBox_3, &QCheckBox::toggled, this, &MainWindow::AddedSource3);
-    connect(m_ui->srcCheckBox_4, &QCheckBox::toggled, this, &MainWindow::AddedSource4);
-    connect(m_ui->srcCheckBox_5, &QCheckBox::toggled, this, &MainWindow::AddedSource5);
-
     connect(m_ui->annualButton, &QRadioButton::toggled, this, &MainWindow::AnnualEmissionToggled);
-    connect(m_ui->quarterlyButton, &QRadioButton::toggled, this, &MainWindow::QuarterlyEmissionToggled);
 
     connect(m_ui->climateResetButton, &QPushButton::clicked, this, [=](){ this->UpdateStatusLabel(m_ui->climateStatusLabel, false); });
     connect(m_ui->geoResetButton, &QPushButton::clicked, this, [=](){ this->UpdateStatusLabel(m_ui->geoStatusLabel, false); });
     connect(m_ui->imageResetButton, &QPushButton::clicked, this, [=](){ this->UpdateStatusLabel(m_ui->imageStatusLabel, false); });
     connect(m_ui->srcResetButton, &QPushButton::clicked, this, &MainWindow::ResetSources);
+
+    connect(m_ui->addSourceButrton, &QPushButton::clicked, this, &MainWindow::AddSource);
+    connect(m_ui->removeSourceButton, &QPushButton::clicked, this, &MainWindow::RemoveSource);
 }
 
 void MainWindow::UpdateStatusLabel(QLabel *label, const bool result)
@@ -109,130 +110,95 @@ void MainWindow::BrowseFile(QLineEdit* lineEdit, const QString& filter)
     }
 }
 
-void MainWindow::AddedSource2(bool toggled)
-{
-    m_ui->x2->setEnabled(toggled);
-    m_ui->y2->setEnabled(toggled);
-    m_ui->h2->setEnabled(toggled);
-    m_ui->t2->setEnabled(toggled);
-    m_ui->e2->setEnabled(toggled && m_ui->annualButton->isChecked());
-    m_ui->q12->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-    m_ui->q22->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-    m_ui->q32->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-    m_ui->q42->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-
-    m_ui->srcCheckBox_3->setEnabled(toggled);
-    if (!toggled)
-    {
-        m_ui->srcCheckBox_3->setChecked(toggled);
-    }
-}
-
-void MainWindow::AddedSource3(bool toggled)
-{
-    m_ui->x3->setEnabled(toggled);
-    m_ui->y3->setEnabled(toggled);
-    m_ui->h3->setEnabled(toggled);
-    m_ui->t3->setEnabled(toggled);
-    m_ui->e3->setEnabled(toggled && m_ui->annualButton->isChecked());
-    m_ui->q13->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-    m_ui->q23->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-    m_ui->q33->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-    m_ui->q43->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-
-    m_ui->srcCheckBox_4->setEnabled(toggled);
-    if (!toggled)
-    {
-        m_ui->srcCheckBox_4->setChecked(toggled);
-    }
-}
-
-void MainWindow::AddedSource4(bool toggled)
-{
-    m_ui->x4->setEnabled(toggled);
-    m_ui->y4->setEnabled(toggled);
-    m_ui->h4->setEnabled(toggled);
-    m_ui->t4->setEnabled(toggled);
-    m_ui->e4->setEnabled(toggled && m_ui->annualButton->isChecked());
-    m_ui->q14->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-    m_ui->q24->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-    m_ui->q34->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-    m_ui->q44->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-
-    m_ui->srcCheckBox_5->setEnabled(toggled);
-    if (!toggled)
-    {
-        m_ui->srcCheckBox_5->setChecked(toggled);
-    }
-}
-
-void MainWindow::AddedSource5(bool toggled)
-{
-    m_ui->x5->setEnabled(toggled);
-    m_ui->y5->setEnabled(toggled);
-    m_ui->h5->setEnabled(toggled);
-    m_ui->t5->setEnabled(toggled);
-    m_ui->e5->setEnabled(toggled && m_ui->annualButton->isChecked());
-    m_ui->q15->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-    m_ui->q25->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-    m_ui->q35->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-    m_ui->q45->setEnabled(toggled && m_ui->quarterlyButton->isChecked());
-}
-
 void MainWindow::AnnualEmissionToggled(bool toggled)
 {
-    m_ui->e1->setEnabled(toggled);
-    m_ui->e2->setEnabled(toggled && m_ui->srcCheckBox_2->isChecked());
-    m_ui->e3->setEnabled(toggled && m_ui->srcCheckBox_3->isChecked());
-    m_ui->e4->setEnabled(toggled && m_ui->srcCheckBox_4->isChecked());
-    m_ui->e5->setEnabled(toggled && m_ui->srcCheckBox_5->isChecked());
+    for (int row = 1; row < m_row; ++row)
+    {
+        m_ui->sourceTableLayout->itemAtPosition(row, 6)->widget()->setEnabled(toggled);
+        m_ui->sourceTableLayout->itemAtPosition(row, 7)->widget()->setEnabled(!toggled);
+        m_ui->sourceTableLayout->itemAtPosition(row, 8)->widget()->setEnabled(!toggled);
+        m_ui->sourceTableLayout->itemAtPosition(row, 9)->widget()->setEnabled(!toggled);
+        m_ui->sourceTableLayout->itemAtPosition(row, 10)->widget()->setEnabled(!toggled);
+    }
 }
 
-void MainWindow::QuarterlyEmissionToggled(bool toggled)
+void MainWindow::AddSource()
 {
-    m_ui->q11->setEnabled(toggled);
-    m_ui->q21->setEnabled(toggled);
-    m_ui->q31->setEnabled(toggled);
-    m_ui->q41->setEnabled(toggled);
+    QGridLayout* table = m_ui->sourceTableLayout;
 
-    m_ui->q12->setEnabled(toggled && m_ui->srcCheckBox_2->isChecked());
-    m_ui->q22->setEnabled(toggled && m_ui->srcCheckBox_2->isChecked());
-    m_ui->q32->setEnabled(toggled && m_ui->srcCheckBox_2->isChecked());
-    m_ui->q42->setEnabled(toggled && m_ui->srcCheckBox_2->isChecked());
+    if (m_row > 500)
+    {
+        return;
+    }
 
-    m_ui->q13->setEnabled(toggled && m_ui->srcCheckBox_3->isChecked());
-    m_ui->q23->setEnabled(toggled && m_ui->srcCheckBox_3->isChecked());
-    m_ui->q33->setEnabled(toggled && m_ui->srcCheckBox_3->isChecked());
-    m_ui->q43->setEnabled(toggled && m_ui->srcCheckBox_3->isChecked());
+    // set label
+    QLabel* number = new QLabel;
+    number->setNum(m_row);
+    table->addWidget(number, m_row, 0);
 
-    m_ui->q14->setEnabled(toggled && m_ui->srcCheckBox_4->isChecked());
-    m_ui->q24->setEnabled(toggled && m_ui->srcCheckBox_4->isChecked());
-    m_ui->q34->setEnabled(toggled && m_ui->srcCheckBox_4->isChecked());
-    m_ui->q44->setEnabled(toggled && m_ui->srcCheckBox_4->isChecked());
+    // set nuclide
+    QComboBox* nuclide = new QComboBox;
+    QComboBox* prevNuclide = qobject_cast<QComboBox*>(table->itemAtPosition(m_row - 1, 1)->widget());
+    for (int item = 0; item < prevNuclide->count(); ++item)
+    {
+        nuclide->addItem(prevNuclide->itemText(item));
+    }
+    nuclide->setCurrentIndex(prevNuclide->currentIndex());
+    table->addWidget(nuclide, m_row, 1);
 
-    m_ui->q15->setEnabled(toggled && m_ui->srcCheckBox_5->isChecked());
-    m_ui->q25->setEnabled(toggled && m_ui->srcCheckBox_5->isChecked());
-    m_ui->q35->setEnabled(toggled && m_ui->srcCheckBox_5->isChecked());
-    m_ui->q45->setEnabled(toggled && m_ui->srcCheckBox_5->isChecked());
+    // set spinboxes
+    for (int column = 2; column < table->columnCount(); ++column)
+    {
+        QDoubleSpinBox* spinBox = new QDoubleSpinBox;
+        QDoubleSpinBox* prev = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(m_row - 1, column)->widget());
+        spinBox->setMaximum(prev->maximum());
+        spinBox->setMinimum(prev->minimum());
+        spinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);
+        spinBox->setDecimals(prev->decimals());
+        spinBox->setValue(prev->value());
+        table->addWidget(spinBox, m_row, column);
+    }
+    m_row++;
+    AnnualEmissionToggled(m_ui->annualButton->isChecked());
+
+    // scroll down
+    QScrollBar* scrollBar = m_ui->sourceScrollArea->verticalScrollBar();
+    scrollBar->setValue(scrollBar->maximum());
+}
+
+void MainWindow::RemoveSource()
+{
+    QGridLayout* table = m_ui->sourceTableLayout;
+
+    if (m_row < 3)
+    {
+        return;
+    }
+
+    for (int column = 0; column < table->columnCount(); ++column)
+    {
+        QLayoutItem* item = table->itemAtPosition(m_row - 1, column);
+        QWidget* widget = item->widget();
+        table->removeWidget(widget);
+        table->removeItem(item);
+        delete widget;
+    }
+
+    m_row--;
 }
 
 void MainWindow::ResetSources()
 {
-    QDoubleSpinBox* boxes[] = {
-        m_ui->x1, m_ui->x2, m_ui->x3, m_ui->x4, m_ui->x5,
-        m_ui->y1, m_ui->y2, m_ui->y3, m_ui->y4, m_ui->y5,
-        m_ui->h1, m_ui->h2, m_ui->h3, m_ui->h4, m_ui->h5,
-        m_ui->t1, m_ui->t2, m_ui->t3, m_ui->t4, m_ui->t5,
-        m_ui->e1, m_ui->e2, m_ui->e3, m_ui->e4, m_ui->e5,
-        m_ui->q11, m_ui->q12, m_ui->q13, m_ui->q14, m_ui->q15,
-        m_ui->q21, m_ui->q22, m_ui->q23, m_ui->q24, m_ui->q25,
-        m_ui->q31, m_ui->q32, m_ui->q33, m_ui->q34, m_ui->q35,
-        m_ui->q41, m_ui->q42, m_ui->q43, m_ui->q44, m_ui->q45
-    };
-
-    for (size_t i = 0; i < sizeof(boxes)/sizeof(boxes[0]); ++i)
+    for (int row = m_row - 1; row >= 2; --row)
     {
-        boxes[i]->setValue(0);
+        RemoveSource();
+    }
+
+    QGridLayout* table = m_ui->sourceTableLayout;
+    qobject_cast<QComboBox*>(table->itemAtPosition(1, 1)->widget())->setCurrentIndex(0);
+    for (int column = 2; column < table->columnCount(); ++column)
+    {
+        qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(1, column)->widget())->setValue(0);
     }
 
     UpdateStatusLabel(m_ui->srcStatusLabel, false);

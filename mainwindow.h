@@ -31,17 +31,15 @@ public slots:
 private slots:
     void ResetSpinBoxes();
     void BrowseFile(QLineEdit* lineEdit, const QString& file);
-    void AddedSource2(bool);
-    void AddedSource3(bool);
-    void AddedSource4(bool);
-    void AddedSource5(bool);
     void AnnualEmissionToggled(bool);
-    void QuarterlyEmissionToggled(bool);
+    void AddSource();
+    void RemoveSource();
     void ResetSources();
 
 private:
     void CustomUiSettings();
     void UpdateStatusLabel(QLabel* label, const bool ok);
     Ui::MainWindow* m_ui;
+    int m_row; ///< rows number of the sources table
 };
 #endif // MAINWINDOW_H
