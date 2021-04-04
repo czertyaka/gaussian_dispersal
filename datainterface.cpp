@@ -26,6 +26,14 @@ void DataInterface::AddLog(const QTextStream &stream)
     emit AddLogSignal(log);
 }
 
+bool DataInterface::CheckStatus()
+{
+    return m_climaticVariables->CheckStatus() == DataManager::READY &&
+           m_geospatialData->CheckStatus() == DataManager::READY &&
+           m_imageData->CheckStatus() == DataManager::READY &&
+           m_sourcesData->CheckStatus() == DataManager::READY;
+}
+
 bool DataInterface::AddClimaticJournal(const QString &filename, ClimateCsvParser::t_format format)
 {
     bool result = m_climaticVariables->AddJournal(filename, format);

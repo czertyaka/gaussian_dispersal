@@ -34,21 +34,29 @@ Connector::Connector(MainWindow& window, DataInterface& data, QObject* parent)
     // climatic variables
     connect(UI->climateAcceptButton, &QPushButton::clicked, this, &Connector::OnClimateAccept);
     connect(UI->climateResetButton, &QPushButton::clicked, this, &Connector::OnClimateReset);
+    connect(UI->climateAcceptButton, &QPushButton::clicked, this, &Connector::UpdateStartButton);
+    connect(UI->climateResetButton, &QPushButton::clicked, this, &Connector::UpdateStartButton);
     connect(m_data, &DataInterface::UpdateClimateStatusLabel, m_window, &MainWindow::UpdateClimateStatusLabel);
 
     // geospatial data
     connect(UI->geoAcceptButton, &QPushButton::clicked, this, &Connector::OnGeospatialAccept);
     connect(UI->geoResetButton, &QPushButton::clicked, this, &Connector::OnGeospatialReset);
+    connect(UI->geoAcceptButton, &QPushButton::clicked, this, &Connector::UpdateStartButton);
+    connect(UI->geoResetButton, &QPushButton::clicked, this, &Connector::UpdateStartButton);
     connect(m_data, &DataInterface::UpdateGeoStatusLabel, m_window, &MainWindow::UpdateGeoStatusLabel);
 
     // background image
     connect(UI->imageAcceptButton, &QPushButton::clicked, this, &Connector::OnImageAccept);
     connect(UI->imageResetButton, &QPushButton::clicked, this, &Connector::OnImageReset);
+    connect(UI->imageAcceptButton, &QPushButton::clicked, this, &Connector::UpdateStartButton);
+    connect(UI->imageResetButton, &QPushButton::clicked, this, &Connector::UpdateStartButton);
     connect(m_data, &DataInterface::UpdateImageStatusLabel, m_window, &MainWindow::UpdateImageStatusLabel);
 
     // sources
     connect(UI->srcAcceptButton, &QPushButton::clicked, this, &Connector::OnSourcesAccept);
     connect(UI->srcResetButton, &QPushButton::clicked, this, &Connector::OnSourcesReset);
+    connect(UI->srcAcceptButton, &QPushButton::clicked, this, &Connector::UpdateStartButton);
+    connect(UI->srcResetButton, &QPushButton::clicked, this, &Connector::UpdateStartButton);
     connect(m_data, &DataInterface::UpdateSourcesStatusLabel, m_window, &MainWindow::UpdateSourcesStatusLabel);
 }
 
@@ -199,6 +207,17 @@ void Connector::OnSourcesAccept()
 void Connector::OnSourcesReset()
 {
     m_data->OnSourcesReset();
+}
+
+void Connector::UpdateStartButton()
+{
+    bool ready = m_data->CheckStatus();
+    UI->startButton->setEnabled(ready);
+    UI->progressBar->setEnabled(ready);
+    if (ready)
+    {
+        MY_LOG(": ready to start calculation");
+    }
 }
 
 #undef UI

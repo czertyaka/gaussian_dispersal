@@ -20,6 +20,7 @@ class DataInterface : public QObject
 public:
     static DataInterface& GetInstance();
     void AddLog(const QTextStream& stream);
+    bool CheckStatus();
 
 signals:
     void AddLogSignal(const QString& log);

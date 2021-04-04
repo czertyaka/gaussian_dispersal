@@ -18,6 +18,8 @@ private slots:
     void OnImageReset();
     void OnSourcesAccept();
     void OnSourcesReset();
+
+    void UpdateStartButton();
 private:
     MainWindow* m_window; ///< pointer to window with slots and signals
     DataInterface* m_data; ///< pointer to data interface with slots and signals

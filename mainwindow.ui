@@ -21,7 +21,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="climateTab">
        <attribute name="title">
@@ -1211,6 +1211,14 @@
          </widget>
         </item>
        </layout>
+      </widget>
+      <widget class="QWidget" name="resultsTab">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <attribute name="title">
+        <string>Results</string>
+       </attribute>
       </widget>
      </widget>
     </item>
