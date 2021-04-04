@@ -96,3 +96,10 @@ bool ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
     m_status = READY;
     return true;
 }
+
+void ClimaticVariables::Reset()
+{
+    DataBaseManager::t_climateJournal& climateJournal = m_dbManager.GetClimateJournal();
+    climateJournal.clear();
+    m_status = NOT_READY;
+}

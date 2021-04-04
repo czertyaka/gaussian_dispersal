@@ -27,6 +27,7 @@ public:
     typedef std::vector<t_source> t_vSources;
     SourcesData();
     bool AddSources(const t_vSources& vSources);
+    void Reset() override;
 };
 
 #endif // SOURCESDATA_H

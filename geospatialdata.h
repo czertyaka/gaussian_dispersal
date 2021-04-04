@@ -31,6 +31,7 @@ public:
     GeospatialData();
     ~GeospatialData();
     bool AddFromFile(const QString& filename);
+    void Reset() override;
 private:
     GeospatialCsvParser* m_parser;
 };

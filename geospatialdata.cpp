@@ -80,3 +80,10 @@ bool GeospatialData::AddFromFile(const QString &filename)
     m_status = READY;
     return true;
 }
+
+void GeospatialData::Reset()
+{
+    DataBaseManager::t_landscape& landscape = m_dbManager.GetLandscape();
+    landscape.clear();
+    m_status = NOT_READY;
+}

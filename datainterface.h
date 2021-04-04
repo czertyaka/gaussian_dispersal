@@ -29,8 +29,11 @@ signals:
 
 public slots:
     bool AddClimaticJournal(const QString& filename, ClimateCsvParser::t_format format);
+    void OnClimateReset();
     bool AddGeospatialData(const QString& filename);
+    void OnGeospatialReset();
     bool AddSources(const SourcesData::t_vSources& vSources);
+    void OnSourcesReset();
 
 private:
     explicit DataInterface(QObject *parent = nullptr);

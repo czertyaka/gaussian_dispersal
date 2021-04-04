@@ -32,6 +32,11 @@ bool DataInterface::AddClimaticJournal(const QString &filename, ClimateCsvParser
     return result;
 }
 
+void DataInterface::OnClimateReset()
+{
+    m_climaticVariables->Reset();
+}
+
 bool DataInterface::AddGeospatialData(const QString &filename)
 {
     bool result = m_GeospatialData->AddFromFile(filename);
@@ -39,9 +44,19 @@ bool DataInterface::AddGeospatialData(const QString &filename)
     return result;
 }
 
+void DataInterface::OnGeospatialReset()
+{
+    m_GeospatialData->Reset();
+}
+
 bool DataInterface::AddSources(const SourcesData::t_vSources& vSources)
 {
     bool result = m_SourcesData->AddSources(vSources);
     emit UpdateSourcesStatusLabel(result);
     return result;
+}
+
+void DataInterface::OnSourcesReset()
+{
+    m_SourcesData->Reset();
 }

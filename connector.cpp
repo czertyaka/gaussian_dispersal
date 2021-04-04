@@ -32,14 +32,17 @@ Connector::Connector(MainWindow& window, DataInterface& data, QObject* parent)
 
     // climatic variables
     connect(UI->climateAcceptButton, &QPushButton::clicked, this, &Connector::OnClimateAccept);
+    connect(UI->climateResetButton, &QPushButton::click, this, &Connector::OnClimateReset);
     connect(m_data, &DataInterface::UpdateClimateStatusLabel, m_window, &MainWindow::UpdateClimateStatusLabel);
 
     // geospatial data
     connect(UI->geoAcceptButton, &QPushButton::clicked, this, &Connector::OnGeospatialAccept);
+    connect(UI->geoResetButton, &QPushButton::clicked, this, &Connector::OnGeospatialReset);
     connect(m_data, &DataInterface::UpdateGeoStatusLabel, m_window, &MainWindow::UpdateGeoStatusLabel);
 
     // sources
     connect(UI->srcAcceptButton, &QPushButton::clicked, this, &Connector::OnSourcesAccept);
+    connect(UI->srcResetButton, &QPushButton::clicked, this, &Connector::OnSourcesReset);
     connect(m_data, &DataInterface::UpdateSourcesStatusLabel, m_window, &MainWindow::UpdateSourcesStatusLabel);
 }
 
@@ -64,6 +67,11 @@ void Connector::OnClimateAccept()
     }
 }
 
+void Connector::OnClimateReset()
+{
+    m_data->OnClimateReset();
+}
+
 void Connector::OnGeospatialAccept()
 {
     if (UI->geoLoadRadioButton->isChecked())
@@ -82,6 +90,21 @@ void Connector::OnGeospatialAccept()
     {
         //TODO
     }
+}
+
+void Connector::OnGeospatialReset()
+{
+    m_data->OnGeospatialReset();
+}
+
+void Connector::OnImageAccept()
+{
+
+}
+
+void Connector::OnImageReset()
+{
+
 }
 
 void Connector::OnSourcesAccept()
@@ -143,6 +166,11 @@ void Connector::OnSourcesAccept()
     }
 
     m_data->AddSources(vSources);
+}
+
+void Connector::OnSourcesReset()
+{
+    m_data->OnSourcesReset();
 }
 
 #undef UI

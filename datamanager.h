@@ -14,6 +14,7 @@ public:
     };
     DataManager();
     t_status CheckStatus() const { return m_status; }
+    virtual void Reset() = 0;
 protected:
     t_status m_status;
     DataBaseManager& m_dbManager;

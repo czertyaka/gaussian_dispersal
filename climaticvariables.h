@@ -12,6 +12,7 @@ public:
     ClimaticVariables();
     ~ClimaticVariables();
     bool AddJournal(const QString& filename, ClimateCsvParser::t_format format);
+    void Reset() override;
 private:
     ClimateCsvParser* m_parser;
 };

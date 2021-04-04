@@ -993,7 +993,7 @@
                   </item>
                   <item>
                    <property name="text">
-                    <string>ИРГ4</string>
+                    <string>ИРГ3</string>
                    </property>
                   </item>
                   <item>
@@ -1627,7 +1627,7 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="imageButtonGroup"/>
   <buttongroup name="BoundariesButtonGroup"/>
+  <buttongroup name="imageButtonGroup"/>
  </buttongroups>
 </ui>
