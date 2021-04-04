@@ -2,7 +2,7 @@ QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -27,7 +27,8 @@ SOURCES += \
     geospatialdata.cpp \
     main.cpp \
     mainwindow.cpp \
-    rp5csvparser.cpp
+    rp5csvparser.cpp \
+    sourcesdata.cpp
 
 HEADERS += \
     climatecsvparser.h \
@@ -41,7 +42,8 @@ HEADERS += \
     geospatialdata.h \
     mainwindow.h \
     meteorology.h \
-    rp5csvparser.h
+    rp5csvparser.h \
+    sourcesdata.h
 
 FORMS += \
     mainwindow.ui

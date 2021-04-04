@@ -44,6 +44,11 @@ void MainWindow::UpdateGeoStatusLabel(const bool ok)
     UpdateStatusLabel(m_ui->geoStatusLabel, ok);
 }
 
+void MainWindow::UpdateSourcesStatusLabel(const bool ok)
+{
+    UpdateStatusLabel(m_ui->srcStatusLabel, ok);
+}
+
 /**
  * @brief MainWindow::CustomUiSettings All the setups and connections within GUI only
  */
@@ -158,12 +163,13 @@ void MainWindow::AddSource()
         spinBox->setValue(prev->value());
         table->addWidget(spinBox, m_row, column);
     }
+
     m_row++;
     AnnualEmissionToggled(m_ui->annualButton->isChecked());
 
     // scroll down
     QScrollBar* scrollBar = m_ui->sourceScrollArea->verticalScrollBar();
-    scrollBar->setValue(scrollBar->maximum());
+    scrollBar->setValue(scrollBar->maximum()); // TODO почему то не до конца
 }
 
 void MainWindow::RemoveSource()

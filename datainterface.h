@@ -7,6 +7,7 @@
 
 #include "climaticvariables.h"
 #include "geospatialdata.h"
+#include "sourcesdata.h"
 
 #ifndef MY_LOG
 #define MY_LOG( X ) { QString s; QTextStream str(&s); str << X; DataInterface::GetInstance().AddLog(str); }
@@ -29,11 +30,13 @@ signals:
 public slots:
     bool AddClimaticJournal(const QString& filename, ClimateCsvParser::t_format format);
     bool AddGeospatialData(const QString& filename);
+    bool AddSources(const SourcesData::t_vSources& vSources);
 
 private:
     explicit DataInterface(QObject *parent = nullptr);
     ClimaticVariables* m_climaticVariables;
     GeospatialData* m_GeospatialData;
+    SourcesData* m_SourcesData;
 
 };
 

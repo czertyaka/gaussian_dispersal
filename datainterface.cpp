@@ -6,8 +6,9 @@
  */
 DataInterface::DataInterface(QObject *parent)
     : QObject(parent)
-    , m_climaticVariables(new ClimaticVariables())
-    , m_GeospatialData(new GeospatialData())
+    , m_climaticVariables(new ClimaticVariables)
+    , m_GeospatialData(new GeospatialData)
+    , m_SourcesData(new SourcesData)
 {
 
 }
@@ -35,5 +36,12 @@ bool DataInterface::AddGeospatialData(const QString &filename)
 {
     bool result = m_GeospatialData->AddFromFile(filename);
     emit UpdateGeoStatusLabel(result);
+    return result;
+}
+
+bool DataInterface::AddSources(const SourcesData::t_vSources& vSources)
+{
+    bool result = m_SourcesData->AddSources(vSources);
+    emit UpdateSourcesStatusLabel(result);
     return result;
 }

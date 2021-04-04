@@ -12,6 +12,7 @@ public:
 private slots:
     void OnClimateAccept();
     void OnGeospatialAccept();
+    void OnSourcesAccept();
 private:
     MainWindow* m_window; ///< pointer to window with slots and signals
     DataInterface* m_data; ///< pointer to data interface with slots and signals

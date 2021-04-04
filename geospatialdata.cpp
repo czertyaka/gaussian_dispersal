@@ -23,7 +23,7 @@ GeospatialData::~GeospatialData()
 
 bool GeospatialData::AddFromFile(const QString &filename)
 { 
-    DataBaseManager::t_landscape landscape = m_dbManager.GetLandscape();
+    DataBaseManager::t_landscape& landscape = m_dbManager.GetLandscape();
     landscape.clear();
 
     QFile file(filename);

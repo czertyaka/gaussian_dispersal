@@ -21,12 +21,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     Ui::MainWindow * Ui() { return m_ui; }
+    int SourcesRows() { return m_row; }
 
 public slots:
     void UpdateClimateStatusLabel(const bool ok);
     void UpdateGeoStatusLabel(const bool ok);
 //    void UpdateImageStatusLabel(const bool ok);
-//    void UpdateSourcesStatusLabel(const bool ok);
+    void UpdateSourcesStatusLabel(const bool ok);
 
 private slots:
     void ResetSpinBoxes();

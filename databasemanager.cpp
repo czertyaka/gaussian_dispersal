@@ -20,6 +20,11 @@ DataBaseManager::t_landscape &DataBaseManager::GetLandscape()
     return m_landscape;
 }
 
+DataBaseManager::t_sources &DataBaseManager::GetSources()
+{
+    return m_sources;
+}
+
 DataBaseManager::DataBaseManager()
 {
 }
