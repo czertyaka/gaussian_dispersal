@@ -26,7 +26,7 @@ public:
 public slots:
     void UpdateClimateStatusLabel(const bool ok);
     void UpdateGeoStatusLabel(const bool ok);
-//    void UpdateImageStatusLabel(const bool ok);
+    void UpdateImageStatusLabel(const bool ok);
     void UpdateSourcesStatusLabel(const bool ok);
 
 private slots:

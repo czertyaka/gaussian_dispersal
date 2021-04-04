@@ -3,6 +3,7 @@
 #include "climatecsvparser.h"
 #include "datainterface.h"
 #include "sourcesdata.h"
+#include "imagedata.h"
 
 #include <QPushButton>
 #include <QGridLayout>
@@ -32,13 +33,18 @@ Connector::Connector(MainWindow& window, DataInterface& data, QObject* parent)
 
     // climatic variables
     connect(UI->climateAcceptButton, &QPushButton::clicked, this, &Connector::OnClimateAccept);
-    connect(UI->climateResetButton, &QPushButton::click, this, &Connector::OnClimateReset);
+    connect(UI->climateResetButton, &QPushButton::clicked, this, &Connector::OnClimateReset);
     connect(m_data, &DataInterface::UpdateClimateStatusLabel, m_window, &MainWindow::UpdateClimateStatusLabel);
 
     // geospatial data
     connect(UI->geoAcceptButton, &QPushButton::clicked, this, &Connector::OnGeospatialAccept);
     connect(UI->geoResetButton, &QPushButton::clicked, this, &Connector::OnGeospatialReset);
     connect(m_data, &DataInterface::UpdateGeoStatusLabel, m_window, &MainWindow::UpdateGeoStatusLabel);
+
+    // background image
+    connect(UI->imageAcceptButton, &QPushButton::clicked, this, &Connector::OnImageAccept);
+    connect(UI->imageResetButton, &QPushButton::clicked, this, &Connector::OnImageReset);
+    connect(m_data, &DataInterface::UpdateImageStatusLabel, m_window, &MainWindow::UpdateImageStatusLabel);
 
     // sources
     connect(UI->srcAcceptButton, &QPushButton::clicked, this, &Connector::OnSourcesAccept);
@@ -58,7 +64,7 @@ void Connector::OnClimateAccept()
         }
         else
         {
-            MY_LOG(__PRETTY_FUNCTION__ << ": filename field is empty");
+            MY_LOG(": climate filename field is empty");
         }
     }
     else
@@ -83,7 +89,7 @@ void Connector::OnGeospatialAccept()
         }
         else
         {
-            MY_LOG(__PRETTY_FUNCTION__ << ": filename field is empty");
+            MY_LOG(": geospatial data filename field is empty");
         }
     }
     else
@@ -99,12 +105,34 @@ void Connector::OnGeospatialReset()
 
 void Connector::OnImageAccept()
 {
+    QString filename;
+    ImageData::t_optBorders optBorders;
 
+    if (UI->imageLoadRadioButton->isChecked())
+    {
+        filename = UI->imageLineEdit->text();
+        if (filename.isEmpty())
+        {
+            MY_LOG(": image filename field is empty");
+            return;
+        }
+    }
+    else
+    {
+        // TODO
+    }
+
+    if (UI->imageCustomizeRadioButton)
+    {
+        // TODO
+    }
+
+    m_data->AddImage(filename, optBorders);
 }
 
 void Connector::OnImageReset()
 {
-
+    m_data->OnImageReset();
 }
 
 void Connector::OnSourcesAccept()
@@ -120,7 +148,7 @@ void Connector::OnSourcesAccept()
         QComboBox* comboBox = qobject_cast<QComboBox*>(table->itemAtPosition(row, 1)->widget());
         if (comboBox->currentIndex() == 0)
         {
-            MY_LOG(__PRETTY_FUNCTION__ << ": nuclide weren't chosen at source # " << row);
+            MY_LOG(": nuclide weren't chosen at source # " << row);
             return;
         }
         else
@@ -138,7 +166,7 @@ void Connector::OnSourcesAccept()
             double emission = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 6)->widget())->value();
             if (!emission)
             {
-                MY_LOG(__PRETTY_FUNCTION__ << ": annual emission field is empty at aource # " << row);
+                MY_LOG(": annual emission field is empty at aource # " << row);
                 return;
             }
 
@@ -153,7 +181,7 @@ void Connector::OnSourcesAccept()
 
             if (!fisrtQuarter && !secondQuarter && !thirdQuarter && !fourthQuarter)
             {
-                MY_LOG(__PRETTY_FUNCTION__ << ": quarterly emisiion fields are empty at source # " << row);
+                MY_LOG(": quarterly emisiion fields are empty at source # " << row);
             }
 
             source.firstQuarter = fisrtQuarter;

@@ -7,8 +7,9 @@
 DataInterface::DataInterface(QObject *parent)
     : QObject(parent)
     , m_climaticVariables(new ClimaticVariables)
-    , m_GeospatialData(new GeospatialData)
-    , m_SourcesData(new SourcesData)
+    , m_geospatialData(new GeospatialData)
+    , m_imageData(new ImageData)
+    , m_sourcesData(new SourcesData)
 {
 
 }
@@ -39,24 +40,36 @@ void DataInterface::OnClimateReset()
 
 bool DataInterface::AddGeospatialData(const QString &filename)
 {
-    bool result = m_GeospatialData->AddFromFile(filename);
+    bool result = m_geospatialData->AddFromFile(filename);
     emit UpdateGeoStatusLabel(result);
     return result;
 }
 
 void DataInterface::OnGeospatialReset()
 {
-    m_GeospatialData->Reset();
+    m_geospatialData->Reset();
+}
+
+bool DataInterface::AddImage(const QString &filename, const ImageData::t_optBorders& optBorders)
+{
+    bool result = m_imageData->AddImage(filename, optBorders);
+    emit UpdateImageStatusLabel(result);
+    return result;
+}
+
+void DataInterface::OnImageReset()
+{
+
 }
 
 bool DataInterface::AddSources(const SourcesData::t_vSources& vSources)
 {
-    bool result = m_SourcesData->AddSources(vSources);
+    bool result = m_sourcesData->AddSources(vSources);
     emit UpdateSourcesStatusLabel(result);
     return result;
 }
 
 void DataInterface::OnSourcesReset()
 {
-    m_SourcesData->Reset();
+    m_sourcesData->Reset();
 }

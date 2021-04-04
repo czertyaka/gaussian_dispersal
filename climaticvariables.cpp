@@ -9,7 +9,7 @@ ClimaticVariables::ClimaticVariables()
 {
     if (!m_parser)
     {
-        MY_LOG(__PRETTY_FUNCTION__ << ": error creating climate journal parser");
+        MY_LOG(": error creating climate journal parser");
     }
 
     m_status = ERROR;
@@ -29,7 +29,7 @@ bool ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
     QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text))
     {
-        MY_LOG( __PRETTY_FUNCTION__ << ": error opening file");
+        MY_LOG( ": error opening file");
     }
     else
     {
@@ -47,7 +47,7 @@ bool ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
 
             if (lineStatus == CsvParser::COLUMNS_MISMATCH)
             {
-                MY_LOG(__PRETTY_FUNCTION__ << ": column mismatch in line \""
+                MY_LOG(": column mismatch in line \""
                        << line << "\", RP5 file consists of at least 29 columns");
                 m_status = ERROR;
                 return false;
@@ -77,22 +77,22 @@ bool ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
             }
         }
 
-        MY_LOG( __PRETTY_FUNCTION__ << ": total obseravtions: " << totalObservationsCounter
+        MY_LOG( ": total obseravtions: " << totalObservationsCounter
             << "; added: " << addedObservationsCounter
             << "; invalid: " << invalidObseravtionsCounter
             << "; incomplete: " << incompleteObservationsCounter);
 
         if (!addedObservationsCounter)
         {
-            MY_LOG(__PRETTY_FUNCTION__ << ": no observations were added");
-            MY_LOG(__PRETTY_FUNCTION__ << ": error reading climatic journal");
+            MY_LOG(": no observations were added");
+            MY_LOG(": error reading climatic journal");
             m_status = ERROR;
             return false;
         }
     }
 
     file.close();
-    MY_LOG(__PRETTY_FUNCTION__ << ": climatic journal read successfully");
+    MY_LOG(": climatic journal read successfully");
     m_status = READY;
     return true;
 }

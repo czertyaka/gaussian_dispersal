@@ -8,9 +8,10 @@
 #include "climaticvariables.h"
 #include "geospatialdata.h"
 #include "sourcesdata.h"
+#include "imagedata.h"
 
 #ifndef MY_LOG
-#define MY_LOG( X ) { QString s; QTextStream str(&s); str << X; DataInterface::GetInstance().AddLog(str); }
+#define MY_LOG( X ) { QString s; QTextStream str(&s); str << (__PRETTY_FUNCTION__) << X; DataInterface::GetInstance().AddLog(str); }
 #endif // MY_LOG
 
 class DataInterface : public QObject
@@ -32,14 +33,17 @@ public slots:
     void OnClimateReset();
     bool AddGeospatialData(const QString& filename);
     void OnGeospatialReset();
+    bool AddImage(const QString& filename, const ImageData::t_optBorders& optBorders);
+    void OnImageReset();
     bool AddSources(const SourcesData::t_vSources& vSources);
     void OnSourcesReset();
 
 private:
     explicit DataInterface(QObject *parent = nullptr);
-    ClimaticVariables* m_climaticVariables;
-    GeospatialData* m_GeospatialData;
-    SourcesData* m_SourcesData;
+    ClimaticVariables*  m_climaticVariables;
+    GeospatialData*     m_geospatialData;
+    ImageData*          m_imageData;
+    SourcesData*        m_sourcesData;
 
 };
 

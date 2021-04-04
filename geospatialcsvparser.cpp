@@ -103,7 +103,7 @@ GeospatialData::t_microrelief GeospatialCsvParser::ParseMicrorelief(const QStrin
         return GeospatialData::UNKNOWN;
     default:
         *ok = false;
-        MY_LOG(__PRETTY_FUNCTION__ << ": invalid microrelief type: \"" << sValue
+        MY_LOG(": invalid microrelief type: \"" << sValue
                << "\"");
         return GeospatialData::UNKNOWN;
     }

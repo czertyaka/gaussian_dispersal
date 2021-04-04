@@ -44,6 +44,11 @@ void MainWindow::UpdateGeoStatusLabel(const bool ok)
     UpdateStatusLabel(m_ui->geoStatusLabel, ok);
 }
 
+void MainWindow::UpdateImageStatusLabel(const bool ok)
+{
+    UpdateStatusLabel(m_ui->imageStatusLabel, ok);
+}
+
 void MainWindow::UpdateSourcesStatusLabel(const bool ok)
 {
     UpdateStatusLabel(m_ui->srcStatusLabel, ok);

@@ -22,7 +22,7 @@ CsvParser::t_lineStatus ClimateCsvParser::Parse(const QString& string, mm::t_obs
     switch (m_format)
     {
     case NONE:
-        qDebug() << __PRETTY_FUNCTION__ << ": format of csv file not set";
+        qDebug() << ": format of csv file not set";
         break;
     case RP5:
         result = m_rp5Parser->Parse(string, observation);

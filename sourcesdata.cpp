@@ -15,7 +15,7 @@ bool SourcesData::AddSources(const SourcesData::t_vSources &vSources)
     sources = vSources;
     m_status = READY;
 
-    MY_LOG(__PRETTY_FUNCTION__ << ": " << sources.size() << " sources were successfully added");
+    MY_LOG(": " << sources.size() << " sources were successfully added");
 
     return true;
 }

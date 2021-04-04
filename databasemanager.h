@@ -5,6 +5,7 @@
 
 #include "meteorology.h"
 #include "geospatialdata.h"
+#include "imagedata.h"
 #include "sourcesdata.h"
 
 class DataBaseManager
@@ -12,17 +13,20 @@ class DataBaseManager
 public:
     typedef std::vector<mm::t_observation> t_climateJournal;
     typedef std::vector<GeospatialData::t_point> t_landscape;
+    typedef ImageData::t_image t_image;
     typedef SourcesData::t_vSources t_sources;
     static DataBaseManager& GetInstance();
     ~DataBaseManager();
     t_climateJournal& GetClimateJournal();
     t_landscape& GetLandscape();
+    t_image& GetImage();
     t_sources& GetSources();
 private:
     DataBaseManager();
-    t_climateJournal m_climateJournal;
-    t_landscape m_landscape;
-    t_sources m_sources;
+    t_climateJournal    m_climateJournal;
+    t_landscape         m_landscape;
+    t_image             m_image;
+    t_sources           m_sources;
 };
 
 #endif // DATABASEMANAGER_H
