@@ -85,12 +85,12 @@ void MainWindow::UpdateStatusLabel(QLabel *label, const bool result)
 {
     if (result)
     {
-        label->setStyleSheet(QString("QLabel { color : #%1; }").arg(MY_GREEN));
+        label->setStyleSheet(QString("QLabel { font-weight : bold; color : #%1; }").arg(MY_GREEN));
         label->setText("READY");
     }
     else
     {
-        label->setStyleSheet(QString("QLabel { color : #%1; }").arg(MY_RED));
+        label->setStyleSheet(QString("QLabel { font-weight : bold; color : #%1; }").arg(MY_RED));
         label->setText("NOT READY");
     }
 }
