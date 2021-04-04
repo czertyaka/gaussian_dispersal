@@ -1,6 +1,8 @@
 #ifndef DATAMANAGER_H
 #define DATAMANAGER_H
 
+#include <QString>
+
 class DataBaseManager;
 
 class DataManager
@@ -18,6 +20,7 @@ public:
 protected:
     t_status m_status;
     DataBaseManager& m_dbManager;
+    bool CheckPointer(void* ptr, const QString& msg);
 };
 
 #endif // DATAMANAGER_H

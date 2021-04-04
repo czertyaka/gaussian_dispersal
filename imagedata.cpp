@@ -11,16 +11,20 @@ ImageData::ImageData()
 
 bool ImageData::AddImage(const QString &filename, const ImageData::t_optBorders& optBorders)
 {
-    t_image& image = m_dbManager.GetImage();
+    t_image* image = m_dbManager.GetImage();
+    if (!CheckPointer(image, ": error opening database for image"))
+    {
+        return false;
+    }
 
-//    if (!image.picture.load(filename))
-//    {
-//        MY_LOG(": error loading picture " << filename);
-//        m_status = NOT_READY;
-//        return false;
-//    }
+    if (!image->picture.load(filename))
+    {
+        MY_LOG(": error loading picture " << filename);
+        m_status = NOT_READY;
+        return false;
+    }
 
-    image.borders = optBorders;
+    image->borders = optBorders;
 
     MY_LOG(": image " << filename << " were loaded successfully");
     m_status = READY;
@@ -29,5 +33,6 @@ bool ImageData::AddImage(const QString &filename, const ImageData::t_optBorders&
 
 void ImageData::Reset()
 {
+    MY_LOG(": image were reseted");
     m_status = NOT_READY;
 }

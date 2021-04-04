@@ -59,7 +59,7 @@ bool DataInterface::AddImage(const QString &filename, const ImageData::t_optBord
 
 void DataInterface::OnImageReset()
 {
-
+    m_imageData->Reset();
 }
 
 bool DataInterface::AddSources(const SourcesData::t_vSources& vSources)

@@ -1,6 +1,7 @@
 #include "climaticvariables.h"
 #include "datainterface.h"
 #include "databasemanager.h"
+#include "datamanager.h"
 
 #include <QFile>
 
@@ -23,8 +24,14 @@ ClimaticVariables::~ClimaticVariables()
 bool ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_format format)
 {
     m_parser->SetFormat(format);
-    DataBaseManager::t_climateJournal& climateJournal = m_dbManager.GetClimateJournal();
-    climateJournal.clear();
+    DataBaseManager::t_climateJournal* climateJournal = m_dbManager.GetClimateJournal();
+
+    if (!CheckPointer(climateJournal, ": error opening climate journal database"))
+    {
+        return false;
+    }
+
+    climateJournal->clear();
 
     QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -64,7 +71,7 @@ bool ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
 
             if (lineStatus == CsvParser::OK)
             {
-                climateJournal.push_back(observation);
+                climateJournal->push_back(observation);
                 addedObservationsCounter++;
             }
             else if (lineStatus == CsvParser::INVALID)
@@ -99,7 +106,10 @@ bool ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
 
 void ClimaticVariables::Reset()
 {
-    DataBaseManager::t_climateJournal& climateJournal = m_dbManager.GetClimateJournal();
-    climateJournal.clear();
-    m_status = NOT_READY;
+    DataBaseManager::t_climateJournal* climateJournal = m_dbManager.GetClimateJournal();
+    if (CheckPointer(climateJournal, ": error opening climate journal database"))
+    {
+        climateJournal->clear();
+        m_status = NOT_READY;
+    }
 }

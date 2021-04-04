@@ -23,8 +23,13 @@ GeospatialData::~GeospatialData()
 
 bool GeospatialData::AddFromFile(const QString &filename)
 { 
-    DataBaseManager::t_landscape& landscape = m_dbManager.GetLandscape();
-    landscape.clear();
+    DataBaseManager::t_landscape* landscape = m_dbManager.GetLandscape();
+    if (!CheckPointer(landscape, ": error opening geospatial database"))
+    {
+        return false;
+    }
+
+    landscape->clear();
 
     QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -62,7 +67,7 @@ bool GeospatialData::AddFromFile(const QString &filename)
             }
             else if (lineStatus == CsvParser::OK)
             {
-                landscape.push_back(point);
+                landscape->push_back(point);
                 pointsCounter++;
             }
         }
@@ -83,7 +88,10 @@ bool GeospatialData::AddFromFile(const QString &filename)
 
 void GeospatialData::Reset()
 {
-    DataBaseManager::t_landscape& landscape = m_dbManager.GetLandscape();
-    landscape.clear();
-    m_status = NOT_READY;
+    DataBaseManager::t_landscape* landscape = m_dbManager.GetLandscape();
+    if(CheckPointer(landscape, ": error opening geospatial database"))
+    {
+        landscape->clear();
+        m_status = NOT_READY;
+    }
 }

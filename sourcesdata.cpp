@@ -9,20 +9,28 @@ SourcesData::SourcesData()
 
 bool SourcesData::AddSources(const SourcesData::t_vSources &vSources)
 {
-    DataBaseManager::t_sources& sources = m_dbManager.GetSources();
-    sources.clear();
+    DataBaseManager::t_sources* sources = m_dbManager.GetSources();
+    if(!CheckPointer(sources, ": error opening sources databse"))
+    {
+        return false;
+    }
 
-    sources = vSources;
+    sources->clear();
+
+    *sources = vSources;
     m_status = READY;
 
-    MY_LOG(": " << sources.size() << " sources were successfully added");
+    MY_LOG(": " << sources->size() << " sources were successfully added");
 
     return true;
 }
 
 void SourcesData::Reset()
 {
-    DataBaseManager::t_sources& sources = m_dbManager.GetSources();
-    sources.clear();
-    m_status = NOT_READY;
+    DataBaseManager::t_sources* sources = m_dbManager.GetSources();
+    if (CheckPointer(sources, ": error opening sources databse"))
+    {
+        sources->clear();
+        m_status = NOT_READY;
+    }
 }
