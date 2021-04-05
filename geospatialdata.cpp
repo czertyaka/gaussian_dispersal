@@ -49,8 +49,7 @@ bool GeospatialData::AddFromFile(const QString &filename)
 
             if (lineStatus == CsvParser::COLUMNS_MISMATCH)
             {
-                MY_LOG(": geospatial file must consist at least"
-                                              "of 5 columns");
+                MY_LOG(": geospatial file must consist at least of 5 columns");
                 m_status = ERROR;
                 return false;
             }

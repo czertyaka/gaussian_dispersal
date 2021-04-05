@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1008</width>
+    <width>1070</width>
     <height>679</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="climateTab">
        <attribute name="title">
@@ -828,6 +828,50 @@
                </spacer>
               </item>
               <item>
+               <widget class="QLabel" name="coordinatesOptionsLabel">
+                <property name="text">
+                 <string>Coordinates:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="coordinatesEPSGRadioButton">
+                <property name="text">
+                 <string>EPSG:3857 WGS 84 / Pseudo-Mercator, m</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">buttonGroup</string>
+                </attribute>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="coordinatesRelativeRadioButton">
+                <property name="text">
+                 <string>Relative, %</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">buttonGroup</string>
+                </attribute>
+               </widget>
+              </item>
+              <item>
+               <widget class="Line" name="sourcesLine">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="emissionOptionsLabel">
+                <property name="text">
+                 <string>Emission:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QRadioButton" name="annualButton">
                 <property name="text">
                  <string>Annual emission</string>
@@ -835,6 +879,9 @@
                 <property name="checked">
                  <bool>true</bool>
                 </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">buttonGroup_2</string>
+                </attribute>
                </widget>
               </item>
               <item>
@@ -842,6 +889,9 @@
                 <property name="text">
                  <string>Quarterly emission</string>
                 </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">buttonGroup_2</string>
+                </attribute>
                </widget>
               </item>
              </layout>
@@ -882,7 +932,7 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>950</width>
+               <width>1012</width>
                <height>62</height>
               </rect>
              </property>
@@ -913,8 +963,14 @@
                 </item>
                 <item row="0" column="2">
                  <widget class="QLabel" name="xLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
-                   <string>x, %</string>
+                   <string>x, m</string>
                   </property>
                  </widget>
                 </item>
@@ -936,6 +992,12 @@
                 </item>
                 <item row="0" column="8">
                  <widget class="QLabel" name="secondQLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>Second quarter, GBq</string>
                   </property>
@@ -943,6 +1005,12 @@
                 </item>
                 <item row="1" column="4">
                  <widget class="QDoubleSpinBox" name="heightSpinBox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="focusPolicy">
                    <enum>Qt::WheelFocus</enum>
                   </property>
@@ -956,6 +1024,12 @@
                 </item>
                 <item row="0" column="1">
                  <widget class="QLabel" name="nuclideLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>Niclide</string>
                   </property>
@@ -963,6 +1037,12 @@
                 </item>
                 <item row="1" column="2">
                  <widget class="QDoubleSpinBox" name="xSpinBox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="focusPolicy">
                    <enum>Qt::WheelFocus</enum>
                   </property>
@@ -970,12 +1050,18 @@
                    <enum>QAbstractSpinBox::NoButtons</enum>
                   </property>
                   <property name="maximum">
-                   <double>100.000000000000000</double>
+                   <double>99999999.000000000000000</double>
                   </property>
                  </widget>
                 </item>
                 <item row="1" column="1">
                  <widget class="QComboBox" name="nuclideComboBox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <item>
                    <property name="text">
                     <string>None</string>
@@ -983,28 +1069,64 @@
                   </item>
                   <item>
                    <property name="text">
-                    <string>ИРГ1</string>
+                    <string>Ar-41</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>ИРГ2</string>
+                    <string>Kr-85m</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>ИРГ3</string>
+                    <string>Kr-87</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>ИРГ4</string>
+                    <string>Kr-88</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Kr-89</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Xe-133</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Xe-135</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Xe-135m</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Xe-138</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Xe-137</string>
                    </property>
                   </item>
                  </widget>
                 </item>
                 <item row="0" column="9">
                  <widget class="QLabel" name="thirdQLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>Third quarter, GBq</string>
                   </property>
@@ -1038,6 +1160,12 @@
                 </item>
                 <item row="0" column="7">
                  <widget class="QLabel" name="firstQLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>First quarter, GBq</string>
                   </property>
@@ -1058,6 +1186,12 @@
                 </item>
                 <item row="0" column="5">
                  <widget class="QLabel" name="tempLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>Emission temperature, K</string>
                   </property>
@@ -1081,6 +1215,12 @@
                 </item>
                 <item row="0" column="10">
                  <widget class="QLabel" name="fourthQLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>Fourth quarter, GBq</string>
                   </property>
@@ -1088,6 +1228,12 @@
                 </item>
                 <item row="0" column="4">
                  <widget class="QLabel" name="heightLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>Chimney height, m</string>
                   </property>
@@ -1095,37 +1241,67 @@
                 </item>
                 <item row="1" column="3">
                  <widget class="QDoubleSpinBox" name="ySpinBox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="buttonSymbols">
                    <enum>QAbstractSpinBox::NoButtons</enum>
                   </property>
                   <property name="maximum">
-                   <double>100.000000000000000</double>
+                   <double>99999999.000000000000000</double>
                   </property>
                  </widget>
                 </item>
                 <item row="0" column="3">
                  <widget class="QLabel" name="yLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
-                   <string>y, %</string>
+                   <string>y, m</string>
                   </property>
                  </widget>
                 </item>
                 <item row="0" column="6">
                  <widget class="QLabel" name="annualEmLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>Emission, GBq</string>
                   </property>
                  </widget>
                 </item>
                 <item row="0" column="0">
-                 <widget class="QLabel" name="label">
+                 <widget class="QLabel" name="numberLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>#</string>
                   </property>
                  </widget>
                 </item>
                 <item row="1" column="0">
-                 <widget class="QLabel" name="label_2">
+                 <widget class="QLabel" name="numberOneLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>1</string>
                   </property>
@@ -1272,7 +1448,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1008</width>
+     <width>1070</width>
      <height>20</height>
     </rect>
    </property>
@@ -1635,7 +1811,9 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="imageButtonGroup"/>
   <buttongroup name="BoundariesButtonGroup"/>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="imageButtonGroup"/>
  </buttongroups>
 </ui>

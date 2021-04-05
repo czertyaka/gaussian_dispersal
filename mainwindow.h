@@ -33,6 +33,7 @@ private slots:
     void ResetSpinBoxes();
     void BrowseFile(QLineEdit* lineEdit, const QString& file);
     void AnnualEmissionToggled(bool);
+    void EPSGCoordinatesToggled(bool);
     void AddSource();
     void RemoveSource();
     void ResetSources();

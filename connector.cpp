@@ -164,6 +164,15 @@ void Connector::OnSourcesAccept()
             source.nuclide = comboBox->currentText();
         }
 
+        if (UI->coordinatesEPSGRadioButton->isChecked())
+        {
+            source.coordinatesType = SourcesData::EPSG3857;
+        }
+        else
+        {
+            source.coordinatesType = SourcesData::RELATIVE;
+        }
+
         source.x = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 2)->widget())->value();
         source.y = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 3)->widget())->value();
         source.height = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 4)->widget())->value();
@@ -187,9 +196,10 @@ void Connector::OnSourcesAccept()
             double thirdQuarter = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 9)->widget())->value();
             double fourthQuarter = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 10)->widget())->value();
 
-            if (!fisrtQuarter && !secondQuarter && !thirdQuarter && !fourthQuarter)
+            if (!(fisrtQuarter && secondQuarter && thirdQuarter && fourthQuarter))
             {
                 MY_LOG(": quarterly emisiion fields are empty at source # " << row);
+                return;
             }
 
             source.firstQuarter = fisrtQuarter;

@@ -71,6 +71,7 @@ void MainWindow::CustomUiSettings()
     connect(m_ui->imageBrowseButton, &QPushButton::clicked, this, [=](){ this->BrowseFile(m_ui->imageLineEdit, "*.jpg *.jpeg *.png"); });
 
     connect(m_ui->annualButton, &QRadioButton::toggled, this, &MainWindow::AnnualEmissionToggled);
+    connect(m_ui->coordinatesEPSGRadioButton, &QRadioButton::toggled, this, &MainWindow::EPSGCoordinatesToggled);
 
     connect(m_ui->climateResetButton, &QPushButton::clicked, this, [=](){ this->UpdateStatusLabel(m_ui->climateStatusLabel, false); });
     connect(m_ui->geoResetButton, &QPushButton::clicked, this, [=](){ this->UpdateStatusLabel(m_ui->geoStatusLabel, false); });
@@ -129,6 +130,32 @@ void MainWindow::AnnualEmissionToggled(bool toggled)
         m_ui->sourceTableLayout->itemAtPosition(row, 8)->widget()->setEnabled(!toggled);
         m_ui->sourceTableLayout->itemAtPosition(row, 9)->widget()->setEnabled(!toggled);
         m_ui->sourceTableLayout->itemAtPosition(row, 10)->widget()->setEnabled(!toggled);
+    }
+}
+
+void MainWindow::EPSGCoordinatesToggled(bool toggled)
+{
+    double maximum;
+
+    if (toggled)
+    {
+        m_ui->xLabel->setText("x, m");
+        m_ui->yLabel->setText("y, m");
+
+        maximum = 99999999;
+    }
+    else
+    {
+        m_ui->xLabel->setText("x, %");
+        m_ui->yLabel->setText("y, %");
+
+        maximum = 100;
+    }
+
+    for (int row = 1; row < m_row; ++row)
+    {
+        qobject_cast<QDoubleSpinBox*>(m_ui->sourceTableLayout->itemAtPosition(row, 2)->widget())->setMaximum(maximum);
+        qobject_cast<QDoubleSpinBox*>(m_ui->sourceTableLayout->itemAtPosition(row, 3)->widget())->setMaximum(maximum);
     }
 }
 

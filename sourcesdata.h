@@ -10,10 +10,16 @@
 class SourcesData : public DataManager
 {
 public:
+    enum t_coordinatesType
+    {
+        EPSG3857,
+        RELATIVE
+    };
     typedef struct sources
     {
         int                     id;
         QString                 nuclide;
+        t_coordinatesType       coordinatesType;
         double                  x;
         double                  y;
         double                  height;
