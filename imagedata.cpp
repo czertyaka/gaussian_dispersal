@@ -11,9 +11,17 @@ ImageData::ImageData()
 
 bool ImageData::AddImage(const QString &filename, const ImageData::t_optBorders& optBorders)
 {
+    if (filename.isEmpty())
+    {
+        MY_LOG(": image filename field is empty");
+        m_status = NOT_READY;
+        return false;
+    }
+
     t_image* image = m_dbManager.GetImage();
     if (!CheckPointer(image, ": error opening database for image"))
     {
+        m_status = ERROR;
         return false;
     }
 

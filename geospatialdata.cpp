@@ -23,6 +23,12 @@ GeospatialData::~GeospatialData()
 
 bool GeospatialData::AddFromFile(const QString &filename)
 { 
+    if (filename.isEmpty())
+    {
+        MY_LOG(": geospatial data filename field is empty");
+        return false;
+    }
+
     DataBaseManager::t_landscape* landscape = m_dbManager.GetLandscape();
     if (!CheckPointer(landscape, ": error opening geospatial database"))
     {
@@ -35,6 +41,7 @@ bool GeospatialData::AddFromFile(const QString &filename)
     if (!file.open(QFile::ReadOnly | QFile::Text))
     {
         MY_LOG( ": error opening file");
+        return false;
     }
     else
     {

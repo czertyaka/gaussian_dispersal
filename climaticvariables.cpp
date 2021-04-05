@@ -26,6 +26,12 @@ bool ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
     m_parser->SetFormat(format);
     DataBaseManager::t_climateJournal* climateJournal = m_dbManager.GetClimateJournal();
 
+    if (filename.isEmpty())
+    {
+        MY_LOG(": climate filename field is empty");
+        return false;
+    }
+
     if (!CheckPointer(climateJournal, ": error opening climate journal database"))
     {
         return false;
@@ -37,6 +43,7 @@ bool ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
     if (!file.open(QFile::ReadOnly | QFile::Text))
     {
         MY_LOG( ": error opening file");
+        return false;
     }
     else
     {

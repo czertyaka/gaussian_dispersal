@@ -66,14 +66,7 @@ void Connector::OnClimateAccept()
     {
         QString filename = UI->climateLineEdit->text();
         ClimateCsvParser::t_format format = ClimateCsvParser::RP5;
-        if (!filename.isEmpty())
-        {
-            m_data->AddClimaticJournal(filename, format);
-        }
-        else
-        {
-            MY_LOG(": climate filename field is empty");
-        }
+        m_data->AddClimaticJournal(filename, format);
     }
     else
     {
@@ -91,14 +84,7 @@ void Connector::OnGeospatialAccept()
     if (UI->geoLoadRadioButton->isChecked())
     {
         QString filename = UI->geoLineEdit->text();
-        if (!filename.isEmpty())
-        {
-            m_data->AddGeospatialData(filename);
-        }
-        else
-        {
-            MY_LOG(": geospatial data filename field is empty");
-        }
+        m_data->AddGeospatialData(filename);
     }
     else
     {
@@ -119,11 +105,6 @@ void Connector::OnImageAccept()
     if (UI->imageLoadRadioButton->isChecked())
     {
         filename = UI->imageLineEdit->text();
-        if (filename.isEmpty())
-        {
-            MY_LOG(": image filename field is empty");
-            return;
-        }
     }
     else
     {
@@ -183,7 +164,7 @@ void Connector::OnSourcesAccept()
             double emission = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 6)->widget())->value();
             if (!emission)
             {
-                MY_LOG(": annual emission field is empty at aource # " << row);
+                MY_LOG(": annual emission field is empty at source # " << row);
                 return;
             }
 
