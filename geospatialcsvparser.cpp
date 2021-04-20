@@ -4,16 +4,16 @@
 #include <QStringList>
 
 GeospatialCsvParser::GeospatialCsvParser() :
-    CsvParser(5, "system:index", ',')
+    CsvParser()
 {
-
+    Init(5, "system:index", ',');
 }
 
 GeospatialCsvParser::t_lineStatus GeospatialCsvParser::ParseLine(const QString &string, GeospatialData::t_point &point)
-{
+{   
     m_point = &point;
 
-    t_lineStatus status = CsvParser::ParseLine(string);
+    t_lineStatus status = CsvParser::SplitLine(string);
     if (status != OK)
     {
         return status;

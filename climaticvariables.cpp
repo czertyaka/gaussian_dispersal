@@ -57,7 +57,7 @@ bool ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
         {
             QString line = in.readLine();
             mm::t_observation observation;
-            CsvParser::t_lineStatus lineStatus = m_parser->Parse(line, observation);
+            CsvParser::t_lineStatus lineStatus = m_parser->ParseLine(line, observation);
 
             if (lineStatus == CsvParser::COLUMNS_MISMATCH)
             {

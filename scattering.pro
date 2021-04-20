@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     climatecsvparser.cpp \
+    climaticparsingstrategy.cpp \
     climaticvariables.cpp \
     connector.cpp \
     csvparser.cpp \
@@ -28,11 +29,12 @@ SOURCES += \
     imagedata.cpp \
     main.cpp \
     mainwindow.cpp \
-    rp5csvparser.cpp \
+    rp5strategy.cpp \
     sourcesdata.cpp
 
 HEADERS += \
     climatecsvparser.h \
+    climaticparsingstrategy.h \
     climaticvariables.h \
     connector.h \
     csvparser.h \
@@ -44,7 +46,7 @@ HEADERS += \
     imagedata.h \
     mainwindow.h \
     meteorology.h \
-    rp5csvparser.h \
+    rp5strategy.h \
     sourcesdata.h
 
 FORMS += \

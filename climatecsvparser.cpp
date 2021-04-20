@@ -1,33 +1,52 @@
 #include "QDebug"
 
 #include "climatecsvparser.h"
-#include "rp5csvparser.h"
+#include "climaticparsingstrategy.h"
+#include "rp5strategy.h"
 
 ClimateCsvParser::ClimateCsvParser()
-    : m_format(NONE)
-    , m_rp5Parser(new Rp5CsvParser)
+    : CsvParser()
+    , m_format(NONE)
+    , m_strategy(nullptr)
 {
 
 }
 
 ClimateCsvParser::~ClimateCsvParser()
 {
-    delete m_rp5Parser;
+    if (m_strategy)
+    {
+        delete m_strategy;
+    }
 }
 
-CsvParser::t_lineStatus ClimateCsvParser::Parse(const QString& string, mm::t_observation &observation)
+void ClimateCsvParser::SetFormat(ClimateCsvParser::t_format format)
 {
-    CsvParser::t_lineStatus result = CsvParser::INVALID;
+    if (m_strategy)
+    {
+        delete m_strategy;
+    }
 
-    switch (m_format)
+    switch (format)
     {
     case NONE:
         qDebug() << ": format of csv file not set";
         break;
     case RP5:
-        result = m_rp5Parser->Parse(string, observation);
+        m_strategy = new Rp5Strategy;
+        Init(29, "Местное время", ';');
+    default:
         break;
     }
+}
 
-    return result;
+CsvParser::t_lineStatus ClimateCsvParser::ParseLine(const QString& string, mm::t_observation &observation)
+{
+    t_lineStatus status = SplitLine(string);
+    if (status != OK)
+    {
+        return status;
+    }
+
+    return m_strategy->ParseLine(m_list, observation);
 }

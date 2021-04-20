@@ -1,14 +1,18 @@
 #include "csvparser.h"
 
-CsvParser::CsvParser(const size_t columnsNumber, const QString& firstHeader, const char delimeter) :
-    m_columnsNumber(columnsNumber),
-    m_firstHeader(firstHeader),
-    m_delimeter(delimeter)
+CsvParser::CsvParser()
 {
 
 }
 
-CsvParser::t_lineStatus CsvParser::ParseLine(const QString &string)
+void CsvParser::Init(const size_t columnsNumber, const QString &firstHeader, const char delimeter)
+{
+    m_columnsNumber = columnsNumber;
+    m_firstHeader = firstHeader;
+    m_delimeter = delimeter;
+}
+
+CsvParser::t_lineStatus CsvParser::SplitLine(const QString &string)
 {
     // skip comments
     if (string.at(0) == '#')
@@ -16,7 +20,7 @@ CsvParser::t_lineStatus CsvParser::ParseLine(const QString &string)
         return NOT_A_DATA;
     }
 
-    // remove qutes and split
+    // remove delimeters and split
     QString myString(string);
     myString.remove('"');
 

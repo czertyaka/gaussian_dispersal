@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QTextStream>
-#include <Qstring>
+#include <QString>
 
 #include "climaticvariables.h"
 #include "geospatialdata.h"

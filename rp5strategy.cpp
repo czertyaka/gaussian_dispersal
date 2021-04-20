@@ -1,4 +1,4 @@
-#include "rp5csvparser.h"
+#include "rp5strategy.h"
 #include "datainterface.h"
 
 #include <QStringList>
@@ -7,34 +7,27 @@
 #include <QDate>
 #include <QTime>
 
-Rp5CsvParser::Rp5CsvParser() :
-    CsvParser(29, "Местное время", ';'),
+Rp5Strategy::Rp5Strategy() :
     m_prevE1(""),
     m_prevE2("")
 {
 
 }
 
-CsvParser::t_lineStatus Rp5CsvParser::Parse(const QString &string, mm::t_observation &observation)
+CsvParser::t_lineStatus Rp5Strategy::ParseLine(const QStringList &list, mm::t_observation &observation)
 {   
     m_obs = &observation;
 
-    t_lineStatus status = CsvParser::ParseLine(string);
-    if (status != OK)
-    {
-        return status;
-    }
-
     // read
-    m_Time = m_list.at(0);
-    m_T = m_list.at(1);
-    m_DD = m_list.at(6);
-    m_Ff = m_list.at(7);
-    m_N = m_list.at(10);
-    m_Nh = m_list.at(17);
-    m_VV = m_list.at(21);
-    m_E1 = m_list.at(25);
-    m_E2 = m_list.at(27);
+    m_Time = list.at(0);
+    m_T = list.at(1);
+    m_DD = list.at(6);
+    m_Ff = list.at(7);
+    m_N = list.at(10);
+    m_Nh = list.at(17);
+    m_VV = list.at(21);
+    m_E1 = list.at(25);
+    m_E2 = list.at(27);
 
     // restore ground surface
     m_E1 = m_E1.isEmpty() ? m_prevE1 : m_E1;
@@ -47,22 +40,22 @@ CsvParser::t_lineStatus Rp5CsvParser::Parse(const QString &string, mm::t_observa
             || m_N.isEmpty() || m_Nh.isEmpty() || m_VV.isEmpty() || m_E1.isEmpty()
             || m_E2.isEmpty())
     {
-        return MISSING_DATA;
+        return CsvParser::MISSING_DATA;
     }
 
     if (!ParseTime() || !ParseWindDir() || !ParseCloudCoverage())
     {
-        return INVALID;
+        return CsvParser::INVALID;
     }
     ParseTemper();
     ParseWindSpeed();
     ParseFog();
     ParseSnow();
 
-    return OK;
+    return CsvParser::OK;
 }
 
-bool Rp5CsvParser::ParseTime()
+bool Rp5Strategy::ParseTime()
 {
     QRegExp rx("(\\ |\\.|\\:)");
     QStringList list = m_Time.split(rx);
@@ -81,12 +74,12 @@ bool Rp5CsvParser::ParseTime()
     return true;
 }
 
-void Rp5CsvParser::ParseTemper()
+void Rp5Strategy::ParseTemper()
 {
     m_obs->temper = m_T.toFloat();
 }
 
-bool Rp5CsvParser::ParseWindDir()
+bool Rp5Strategy::ParseWindDir()
 {
     if      (m_DD == "Штиль, безветрие")                          { m_obs->windDir = mm::calm; }
     else if (m_DD == "Ветер, дующий с севера")                    { m_obs->windDir = mm::N;    }
@@ -114,12 +107,12 @@ bool Rp5CsvParser::ParseWindDir()
     return true;
 }
 
-void Rp5CsvParser::ParseWindSpeed()
+void Rp5Strategy::ParseWindSpeed()
 {
     m_obs->windSpeed = m_Ff.toFloat();
 }
 
-bool Rp5CsvParser::ParseCloudCoverage()
+bool Rp5Strategy::ParseCloudCoverage()
 {
     int cloudAmount;
     int lowerCloudAmount;
@@ -158,13 +151,13 @@ bool Rp5CsvParser::ParseCloudCoverage()
     return true;
 }
 
-void Rp5CsvParser::ParseFog()
+void Rp5Strategy::ParseFog()
 {
     if (m_VV == "менее 0.05") { m_obs->fog = true; }
     else                      { m_obs->fog = m_VV.toFloat() < 1 ? true : false; }
 }
 
-void Rp5CsvParser::ParseSnow()
+void Rp5Strategy::ParseSnow()
 {
     m_obs->snow = (
         m_E2 != "Неровный слой слежавшегося или мокрого снега покрывает почву полностью." &&

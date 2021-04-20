@@ -1017,6 +1017,9 @@
                   <property name="buttonSymbols">
                    <enum>QAbstractSpinBox::NoButtons</enum>
                   </property>
+                  <property name="minimum">
+                   <double>10.000000000000000</double>
+                  </property>
                   <property name="maximum">
                    <double>1000.000000000000000</double>
                   </property>
@@ -1070,6 +1073,11 @@
                   <item>
                    <property name="text">
                     <string>Ar-41</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Kr-85</string>
                    </property>
                   </item>
                   <item>
@@ -1811,9 +1819,9 @@
   </connection>
  </connections>
  <buttongroups>
+  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="BoundariesButtonGroup"/>
   <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="imageButtonGroup"/>
  </buttongroups>
 </ui>
