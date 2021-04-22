@@ -16,38 +16,38 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    basedataloader.cpp \
     climatecsvparser.cpp \
     climaticparsingstrategy.cpp \
-    climaticvariables.cpp \
+    climaticvariablesloader.cpp \
     connector.cpp \
     csvparser.cpp \
-    databasemanager.cpp \
+    database.cpp \
     datainterface.cpp \
-    datamanager.cpp \
     geospatialcsvparser.cpp \
-    geospatialdata.cpp \
-    imagedata.cpp \
+    geospatialdataloader.cpp \
+    imageloader.cpp \
     main.cpp \
     mainwindow.cpp \
     rp5strategy.cpp \
-    sourcesdata.cpp
+    sourcesloader.cpp
 
 HEADERS += \
+    basedataloader.h \
     climatecsvparser.h \
     climaticparsingstrategy.h \
-    climaticvariables.h \
+    climaticvariablesloader.h \
     connector.h \
     csvparser.h \
-    databasemanager.h \
+    database.h \
     datainterface.h \
-    datamanager.h \
     geospatialcsvparser.h \
-    geospatialdata.h \
-    imagedata.h \
+    geospatialdataloader.h \
+    imageloader.h \
     mainwindow.h \
     meteorology.h \
     rp5strategy.h \
-    sourcesdata.h
+    sourcesloader.h
 
 FORMS += \
     mainwindow.ui

@@ -1,15 +1,15 @@
-#include "imagedata.h"
-#include "databasemanager.h"
+#include "imageloader.h"
+#include "database.h"
 #include "datainterface.h"
 
 #include <QPicture>
 
-ImageData::ImageData()
+ImageLoader::ImageLoader()
 {
 
 }
 
-bool ImageData::AddImage(const QString &filename, const ImageData::t_optBorders& optBorders)
+bool ImageLoader::AddImage(const QString &filename, const ImageLoader::t_optBorders& optBorders)
 {
     if (filename.isEmpty())
     {
@@ -18,7 +18,7 @@ bool ImageData::AddImage(const QString &filename, const ImageData::t_optBorders&
         return false;
     }
 
-    t_image* image = m_dbManager.GetImage();
+    t_image* image = m_db.GetImage();
     if (!CheckPointer(image, ": error opening database for image"))
     {
         m_status = ERROR;
@@ -39,7 +39,7 @@ bool ImageData::AddImage(const QString &filename, const ImageData::t_optBorders&
     return true;
 }
 
-void ImageData::Reset()
+void ImageLoader::Reset()
 {
     MY_LOG(": image were reseted");
     m_status = NOT_READY;

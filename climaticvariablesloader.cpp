@@ -1,11 +1,11 @@
-#include "climaticvariables.h"
+#include "climaticvariablesloader.h"
 #include "datainterface.h"
-#include "databasemanager.h"
-#include "datamanager.h"
+#include "database.h"
+#include "basedataloader.h"
 
 #include <QFile>
 
-ClimaticVariables::ClimaticVariables()
+ClimaticVariablesLoader::ClimaticVariablesLoader()
     : m_parser(new ClimateCsvParser())
 {
     if (!m_parser)
@@ -16,15 +16,15 @@ ClimaticVariables::ClimaticVariables()
     m_status = ERROR;
 }
 
-ClimaticVariables::~ClimaticVariables()
+ClimaticVariablesLoader::~ClimaticVariablesLoader()
 {
     delete m_parser;
 }
 
-bool ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_format format)
+bool ClimaticVariablesLoader::AddJournal(const QString &filename, ClimateCsvParser::t_format format)
 {
     m_parser->SetFormat(format);
-    DataBaseManager::t_climateJournal* climateJournal = m_dbManager.GetClimateJournal();
+    DataBase::t_climateJournal* climateJournal = m_db.GetClimateJournal();
 
     if (filename.isEmpty())
     {
@@ -111,9 +111,9 @@ bool ClimaticVariables::AddJournal(const QString &filename, ClimateCsvParser::t_
     return true;
 }
 
-void ClimaticVariables::Reset()
+void ClimaticVariablesLoader::Reset()
 {
-    DataBaseManager::t_climateJournal* climateJournal = m_dbManager.GetClimateJournal();
+    DataBase::t_climateJournal* climateJournal = m_db.GetClimateJournal();
     if (CheckPointer(climateJournal, ": error opening climate journal database"))
     {
         climateJournal->clear();

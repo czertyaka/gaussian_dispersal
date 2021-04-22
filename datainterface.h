@@ -1,14 +1,14 @@
-#ifndef DATAINTERFACE_H
-#define DATAINTERFACE_H
+#ifndef DataInterface_H
+#define DataInterface_H
 
 #include <QObject>
 #include <QTextStream>
 #include <QString>
 
-#include "climaticvariables.h"
-#include "geospatialdata.h"
-#include "sourcesdata.h"
-#include "imagedata.h"
+#include "climaticvariablesloader.h"
+#include "geospatialdataloader.h"
+#include "sourcesloader.h"
+#include "imageloader.h"
 
 #ifndef MY_LOG
 #define MY_LOG( X ) { QString s; QTextStream str(&s); str << (__PRETTY_FUNCTION__) << X; DataInterface::GetInstance().AddLog(str); }
@@ -34,18 +34,18 @@ public slots:
     void OnClimateReset();
     bool AddGeospatialData(const QString& filename);
     void OnGeospatialReset();
-    bool AddImage(const QString& filename, const ImageData::t_optBorders& optBorders);
+    bool AddImage(const QString& filename, const ImageLoader::t_optBorders& optBorders);
     void OnImageReset();
-    bool AddSources(const SourcesData::t_vSources& vSources);
+    bool AddSources(const SourcesLoader::t_vSources& vSources);
     void OnSourcesReset();
 
 private:
     explicit DataInterface(QObject *parent = nullptr);
-    ClimaticVariables*  m_climaticVariables;
-    GeospatialData*     m_geospatialData;
-    ImageData*          m_imageData;
-    SourcesData*        m_sourcesData;
+    ClimaticVariablesLoader*  m_climaticVariablesLoader;
+    GeospatialDataLoader*     m_geospatialDataLoader;
+    ImageLoader*              m_imageLoader;
+    SourcesLoader*            m_sourcesLoader;
 
 };
 
-#endif // DATAINTERFACE_H
+#endif // DataInterface_H

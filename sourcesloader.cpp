@@ -1,15 +1,15 @@
-#include "sourcesdata.h"
-#include "databasemanager.h"
+#include "sourcesloader.h"
+#include "database.h"
 #include "datainterface.h"
 
-SourcesData::SourcesData()
+SourcesLoader::SourcesLoader()
 {
 
 }
 
-bool SourcesData::AddSources(const SourcesData::t_vSources &vSources)
+bool SourcesLoader::AddSources(const SourcesLoader::t_vSources &vSources)
 {
-    DataBaseManager::t_sources* sources = m_dbManager.GetSources();
+    DataBase::t_sources* sources = m_db.GetSources();
     if(!CheckPointer(sources, ": error opening sources databse"))
     {
         return false;
@@ -25,9 +25,9 @@ bool SourcesData::AddSources(const SourcesData::t_vSources &vSources)
     return true;
 }
 
-void SourcesData::Reset()
+void SourcesLoader::Reset()
 {
-    DataBaseManager::t_sources* sources = m_dbManager.GetSources();
+    DataBase::t_sources* sources = m_db.GetSources();
     if (CheckPointer(sources, ": error opening sources databse"))
     {
         sources->clear();

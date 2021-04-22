@@ -1,12 +1,12 @@
 #ifndef IMAGEDATA_H
 #define IMAGEDATA_H
 
-#include "datamanager.h"
+#include "basedataloader.h"
 
 #include <QImage>
 #include <optional>
 
-class ImageData : public DataManager
+class ImageLoader : public BaseDataLoader
 {
 public:
     typedef struct borders
@@ -22,7 +22,7 @@ public:
         QImage picture;
         t_optBorders borders;
     } t_image;
-    ImageData();
+    ImageLoader();
     bool AddImage(const QString& filename, const t_optBorders& optBorders);
     void Reset() override;
 };

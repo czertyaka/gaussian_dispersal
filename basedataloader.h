@@ -3,9 +3,9 @@
 
 #include <QString>
 
-class DataBaseManager;
+class DataBase;
 
-class DataManager
+class BaseDataLoader
 {
 public:
     enum t_status
@@ -14,12 +14,12 @@ public:
         READY,
         ERROR
     };
-    DataManager();
+    BaseDataLoader();
     t_status CheckStatus() const { return m_status; }
     virtual void Reset() = 0;
 protected:
     t_status m_status;
-    DataBaseManager& m_dbManager;
+    DataBase& m_db;
     bool CheckPointer(void* ptr, const QString& msg);
 };
 

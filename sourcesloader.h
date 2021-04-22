@@ -5,9 +5,9 @@
 #include <optional>
 #include <vector>
 
-#include "datamanager.h"
+#include "basedataloader.h"
 
-class SourcesData : public DataManager
+class SourcesLoader : public BaseDataLoader
 {
 public:
     enum t_coordinatesType
@@ -31,7 +31,7 @@ public:
         std::optional<double>   fourthQuarter;
     } t_source;
     typedef std::vector<t_source> t_vSources;
-    SourcesData();
+    SourcesLoader();
     bool AddSources(const t_vSources& vSources);
     void Reset() override;
 };

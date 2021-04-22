@@ -2,8 +2,8 @@
 #include "ui_mainwindow.h"
 #include "climatecsvparser.h"
 #include "datainterface.h"
-#include "sourcesdata.h"
-#include "imagedata.h"
+#include "sourcesloader.h"
+#include "imageloader.h"
 
 #include <QPushButton>
 #include <QGridLayout>
@@ -100,7 +100,7 @@ void Connector::OnGeospatialReset()
 void Connector::OnImageAccept()
 {
     QString filename;
-    ImageData::t_optBorders optBorders;
+    ImageLoader::t_optBorders optBorders;
 
     if (UI->imageLoadRadioButton->isChecked())
     {
@@ -126,12 +126,12 @@ void Connector::OnImageReset()
 
 void Connector::OnSourcesAccept()
 {
-    SourcesData::t_vSources vSources;
+    SourcesLoader::t_vSources vSources;
     QGridLayout* table = UI->sourceTableLayout;
 
     for (int row = 1; row < m_window->SourcesRows(); ++row)
     {
-        SourcesData::t_source source;
+        SourcesLoader::t_source source;
         source.id = qobject_cast<QLabel*>(table->itemAtPosition(row, 0)->widget())->text().toInt();
 
         QComboBox* comboBox = qobject_cast<QComboBox*>(table->itemAtPosition(row, 1)->widget());
@@ -147,11 +147,11 @@ void Connector::OnSourcesAccept()
 
         if (UI->coordinatesEPSGRadioButton->isChecked())
         {
-            source.coordinatesType = SourcesData::EPSG3857;
+            source.coordinatesType = SourcesLoader::EPSG3857;
         }
         else
         {
-            source.coordinatesType = SourcesData::RELATIVE;
+            source.coordinatesType = SourcesLoader::RELATIVE;
         }
 
         source.x = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 2)->widget())->value();

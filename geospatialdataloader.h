@@ -1,13 +1,13 @@
-#ifndef GEOSPATIALDATA_H
-#define GEOSPATIALDATA_H
+#ifndef GeospatialDataLoader_H
+#define GeospatialDataLoader_H
 
 #include <QString>
 
-#include "datamanager.h"
+#include "basedataloader.h"
 
 class GeospatialCsvParser;
 
-class GeospatialData : public DataManager
+class GeospatialDataLoader : public BaseDataLoader
 {
 public:
     enum t_microrelief : unsigned short
@@ -28,12 +28,12 @@ public:
         t_microrelief microrelief;
         short int elevation;
     } t_point;
-    GeospatialData();
-    ~GeospatialData();
+    GeospatialDataLoader();
+    ~GeospatialDataLoader();
     bool AddFromFile(const QString& filename);
     void Reset() override;
 private:
     GeospatialCsvParser* m_parser;
 };
 
-#endif // GEOSPATIALDATA_H
+#endif // GeospatialDataLoader_H

@@ -1,11 +1,11 @@
-#include "geospatialdata.h"
+#include "geospatialdataloader.h"
 #include "datainterface.h"
 #include "geospatialcsvparser.h"
-#include "databasemanager.h"
+#include "database.h"
 
 #include <QFile>
 
-GeospatialData::GeospatialData()
+GeospatialDataLoader::GeospatialDataLoader()
     : m_parser(new GeospatialCsvParser())
 {
     if (!m_parser)
@@ -16,12 +16,12 @@ GeospatialData::GeospatialData()
     m_status = ERROR;
 }
 
-GeospatialData::~GeospatialData()
+GeospatialDataLoader::~GeospatialDataLoader()
 {
     delete m_parser;
 }
 
-bool GeospatialData::AddFromFile(const QString &filename)
+bool GeospatialDataLoader::AddFromFile(const QString &filename)
 { 
     if (filename.isEmpty())
     {
@@ -29,7 +29,7 @@ bool GeospatialData::AddFromFile(const QString &filename)
         return false;
     }
 
-    DataBaseManager::t_landscape* landscape = m_dbManager.GetLandscape();
+    DataBase::t_landscape* landscape = m_db.GetLandscape();
     if (!CheckPointer(landscape, ": error opening geospatial database"))
     {
         return false;
@@ -92,9 +92,9 @@ bool GeospatialData::AddFromFile(const QString &filename)
     return true;
 }
 
-void GeospatialData::Reset()
+void GeospatialDataLoader::Reset()
 {
-    DataBaseManager::t_landscape* landscape = m_dbManager.GetLandscape();
+    DataBase::t_landscape* landscape = m_db.GetLandscape();
     if(CheckPointer(landscape, ": error opening geospatial database"))
     {
         landscape->clear();
