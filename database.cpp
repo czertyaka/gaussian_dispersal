@@ -12,32 +12,39 @@ DataBase::~DataBase()
     delete m_landscape;
     delete m_image;
     delete m_sources;
+    delete m_matrix;
 }
 
-DataBase::t_climateJournal* DataBase::GetClimateJournal()
+mm::t_matrix &DataBase::Matrix()
 {
-    return m_climateJournal;
+    return *m_matrix;
 }
 
-DataBase::t_landscape* DataBase::GetLandscape()
+DataBase::t_climateJournal& DataBase::GetClimateJournal()
 {
-    return m_landscape;
+    return *m_climateJournal;
 }
 
-DataBase::t_image* DataBase::GetImage()
+DataBase::t_landscape& DataBase::GetLandscape()
 {
-    return m_image;
+    return *m_landscape;
 }
 
-DataBase::t_sources* DataBase::GetSources()
+DataBase::t_image& DataBase::GetImage()
 {
-    return m_sources;
+    return *m_image;
+}
+
+DataBase::t_sources& DataBase::GetSources()
+{
+    return *m_sources;
 }
 
 DataBase::DataBase() :
     m_climateJournal(new t_climateJournal),
     m_landscape(new t_landscape),
     m_image(new t_image),
-    m_sources(new t_sources)
+    m_sources(new t_sources),
+    m_matrix(new mm::t_matrix)
 {
 }

@@ -17,16 +17,18 @@ public:
     typedef SourcesLoader::t_vSources t_sources;
     static DataBase& GetInstance();
     ~DataBase();
-    t_climateJournal* GetClimateJournal();
-    t_landscape* GetLandscape();
-    t_image* GetImage();
-    t_sources* GetSources();
+    t_climateJournal& GetClimateJournal();
+    t_landscape& GetLandscape();
+    t_image& GetImage();
+    t_sources& GetSources();
+    mm::t_matrix& Matrix();
 private:
     DataBase();
     t_climateJournal*   m_climateJournal;
     t_landscape*        m_landscape;
     t_image*            m_image;
     t_sources*          m_sources;
+    mm::t_matrix*       m_matrix;
 };
 
 #endif // DATABASEMANAGER_H
