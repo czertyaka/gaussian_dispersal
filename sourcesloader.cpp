@@ -9,7 +9,7 @@ SourcesLoader::SourcesLoader()
 
 bool SourcesLoader::AddSources(const SourcesLoader::t_vSources &vSources)
 {
-    DataBase::t_sources* sources = m_db.GetSources();
+    DataBase::t_sources* sources = &(m_db.GetSources());
     if(!CheckPointer(sources, "error opening sources databse"))
     {
         return false;
@@ -27,7 +27,7 @@ bool SourcesLoader::AddSources(const SourcesLoader::t_vSources &vSources)
 
 void SourcesLoader::Reset()
 {
-    DataBase::t_sources* sources = m_db.GetSources();
+    DataBase::t_sources* sources = &(m_db.GetSources());
     if (CheckPointer(sources, "error opening sources databse"))
     {
         sources->clear();
