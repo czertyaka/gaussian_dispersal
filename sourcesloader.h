@@ -32,6 +32,7 @@ public:
     } t_source;
     typedef std::vector<t_source> t_vSources;
     SourcesLoader();
+    virtual ~SourcesLoader() = default;
     bool AddSources(const t_vSources& vSources);
     void Reset() override;
 };

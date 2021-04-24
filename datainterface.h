@@ -9,6 +9,7 @@
 #include "geospatialdataloader.h"
 #include "sourcesloader.h"
 #include "imageloader.h"
+#include "matrixcalculator.h"
 
 #ifndef MY_LOG
 #define MY_LOG( X ) { QString s; QTextStream str(&s); str << (__PRETTY_FUNCTION__) << X; DataInterface::GetInstance().AddLog(str); }
@@ -19,6 +20,7 @@ class DataInterface : public QObject
     Q_OBJECT
 public:
     static DataInterface& GetInstance();
+    ~DataInterface();
     void AddLog(const QTextStream& stream);
     bool CheckStatus();
 
@@ -41,10 +43,11 @@ public slots:
 
 private:
     explicit DataInterface(QObject *parent = nullptr);
-    ClimaticVariablesLoader*  m_climaticVariablesLoader;
-    GeospatialDataLoader*     m_geospatialDataLoader;
-    ImageLoader*              m_imageLoader;
-    SourcesLoader*            m_sourcesLoader;
+    ClimaticVariablesLoader*    m_climaticVariablesLoader;
+    GeospatialDataLoader*       m_geospatialDataLoader;
+    ImageLoader*                m_imageLoader;
+    SourcesLoader*              m_sourcesLoader;
+    MatrixCalculator*           m_matrixCalculator;
 
 };
 

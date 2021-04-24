@@ -29,7 +29,7 @@ public:
         short int elevation;
     } t_point;
     GeospatialDataLoader();
-    ~GeospatialDataLoader();
+    virtual ~GeospatialDataLoader();
     bool AddFromFile(const QString& filename);
     void Reset() override;
 private:

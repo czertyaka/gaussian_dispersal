@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    basecalculator.cpp \
     basedataloader.cpp \
     climatecsvparser.cpp \
     climaticparsingstrategy.cpp \
@@ -29,10 +30,12 @@ SOURCES += \
     imageloader.cpp \
     main.cpp \
     mainwindow.cpp \
+    matrixcalculator.cpp \
     rp5strategy.cpp \
     sourcesloader.cpp
 
 HEADERS += \
+    basecalculator.h \
     basedataloader.h \
     climatecsvparser.h \
     climaticparsingstrategy.h \
@@ -45,6 +48,7 @@ HEADERS += \
     geospatialdataloader.h \
     imageloader.h \
     mainwindow.h \
+    matrixcalculator.h \
     meteorology.h \
     rp5strategy.h \
     sourcesloader.h

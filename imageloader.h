@@ -23,6 +23,7 @@ public:
         t_optBorders borders;
     } t_image;
     ImageLoader();
+    virtual ~ImageLoader() = default;
     bool AddImage(const QString& filename, const t_optBorders& optBorders);
     void Reset() override;
 };

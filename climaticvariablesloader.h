@@ -10,7 +10,7 @@ class ClimaticVariablesLoader : public BaseDataLoader
 {
 public:
     ClimaticVariablesLoader();
-    ~ClimaticVariablesLoader();
+    virtual ~ClimaticVariablesLoader();
     bool AddJournal(const QString& filename, ClimateCsvParser::t_format format);
     void Reset() override;
 private:

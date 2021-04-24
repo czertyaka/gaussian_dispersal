@@ -10,6 +10,7 @@ DataInterface::DataInterface(QObject *parent)
     , m_geospatialDataLoader(new GeospatialDataLoader)
     , m_imageLoader(new ImageLoader)
     , m_sourcesLoader(new SourcesLoader)
+    , m_matrixCalculator(new MatrixCalculator)
 {
 
 }
@@ -18,6 +19,15 @@ DataInterface &DataInterface::GetInstance()
 {
     static DataInterface instance;
     return  instance;
+}
+
+DataInterface::~DataInterface()
+{
+    delete m_climaticVariablesLoader;
+    delete m_geospatialDataLoader;
+    delete m_imageLoader;
+    delete m_sourcesLoader;
+    delete m_matrixCalculator;
 }
 
 void DataInterface::AddLog(const QTextStream &stream)
