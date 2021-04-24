@@ -20,7 +20,7 @@ static const double FN = 0; ///< False northing, meters
 epsg3857coord::epsg3857coord(const mm::epsg4326coord &o)
 {
     easting = FE + a * (o.lon - lon_o);
-    northing = FN + a * log(tan(M_PI/4 + RAD(o.lat)/2));
+    northing = FN + a * log(tan(M_PI/4 + o.lat/2));
 }
 
 epsg4326coord::epsg4326coord(const mm::epsg3857coord &o)
