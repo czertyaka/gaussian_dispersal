@@ -3,9 +3,15 @@
 
 #include <QString>
 #include <QDateTime>
+#include <cmath>
 
 #ifndef DATETIME_FORMAT
 #define DATETIME_FORMAT "MM-dd-yyyy hh:00:00"
+#endif
+
+#if !defined(RAD) && !defined(DEG)
+#define RAD(degree) static_cast<double>(degree)/180*M_PI
+#define DEG(radian) static_cast<double>(radian)/M_PI*180
 #endif
 
 namespace mm
@@ -41,6 +47,22 @@ namespace mm
         cathF = 6,
         cathG = 7
     };
+
+    struct epsg4326coord;
+
+    typedef struct epsg3857coord
+    {
+        double easting;
+        double northing;
+        epsg3857coord(const epsg4326coord& o);
+    } t_epsg3857coord;
+
+    typedef struct epsg4326coord
+    {
+        double lon;
+        double lat;
+        epsg4326coord(const epsg3857coord& o);
+    } t_epsg4326coord;
 
     typedef struct observation
     {

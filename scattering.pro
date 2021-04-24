@@ -31,7 +31,9 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     matrixcalculator.cpp \
+    meteorology.cpp \
     rp5strategy.cpp \
+    smithparamcalculator.cpp \
     sourcesloader.cpp
 
 HEADERS += \
@@ -51,6 +53,7 @@ HEADERS += \
     matrixcalculator.h \
     meteorology.h \
     rp5strategy.h \
+    smithparamcalculator.h \
     sourcesloader.h
 
 FORMS += \

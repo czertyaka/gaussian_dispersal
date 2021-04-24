@@ -9,7 +9,8 @@ public:
     BaseCalculator();
     enum t_errorCode
     {
-        OK
+        OK,
+        NOT_SUPPORTED
     };
     virtual t_errorCode Execute() = 0;
 protected:
