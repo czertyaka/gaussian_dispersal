@@ -54,6 +54,7 @@ namespace mm
     {
         double easting;
         double northing;
+        epsg3857coord() {};
         epsg3857coord(const epsg4326coord& o);
     } t_epsg3857coord;
 
@@ -61,6 +62,7 @@ namespace mm
     {
         double lon;
         double lat;
+        epsg4326coord() {};
         epsg4326coord(const epsg3857coord& o);
     } t_epsg4326coord;
 
