@@ -24,7 +24,7 @@ ClimaticVariablesLoader::~ClimaticVariablesLoader()
 bool ClimaticVariablesLoader::AddJournal(const QString &filename, ClimateCsvParser::t_format format)
 {
     m_parser->SetFormat(format);
-    DataBase::t_climateJournal* climateJournal = &(m_db.GetClimateJournal());
+    DataBase::t_climateJournal* climateJournal = &(m_db.ClimateJournal());
 
     if (filename.isEmpty())
     {
@@ -113,7 +113,7 @@ bool ClimaticVariablesLoader::AddJournal(const QString &filename, ClimateCsvPars
 
 void ClimaticVariablesLoader::Reset()
 {
-    DataBase::t_climateJournal* climateJournal = &(m_db.GetClimateJournal());
+    DataBase::t_climateJournal* climateJournal = &(m_db.ClimateJournal());
     if (CheckPointer(climateJournal, "error opening climate journal database"))
     {
         climateJournal->clear();

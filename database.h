@@ -17,11 +17,11 @@ public:
     typedef SourcesLoader::t_vSources t_sources;
     static DataBase& GetInstance();
     ~DataBase();
-    t_climateJournal& GetClimateJournal();
-    t_landscape& GetLandscape();
-    t_image& GetImage();
-    t_sources& GetSources();
-    mm::t_matrix& Matrix();
+    t_climateJournal&   ClimateJournal();
+    t_landscape&        Landscape();
+    t_image&            Image();
+    t_sources&          Sources();
+    mm::t_matrix&       Matrix();
 private:
     DataBase();
     t_climateJournal*   m_climateJournal;

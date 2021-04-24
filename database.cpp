@@ -20,22 +20,22 @@ mm::t_matrix &DataBase::Matrix()
     return *m_matrix;
 }
 
-DataBase::t_climateJournal& DataBase::GetClimateJournal()
+DataBase::t_climateJournal& DataBase::ClimateJournal()
 {
     return *m_climateJournal;
 }
 
-DataBase::t_landscape& DataBase::GetLandscape()
+DataBase::t_landscape& DataBase::Landscape()
 {
     return *m_landscape;
 }
 
-DataBase::t_image& DataBase::GetImage()
+DataBase::t_image& DataBase::Image()
 {
     return *m_image;
 }
 
-DataBase::t_sources& DataBase::GetSources()
+DataBase::t_sources& DataBase::Sources()
 {
     return *m_sources;
 }

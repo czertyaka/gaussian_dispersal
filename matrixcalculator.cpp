@@ -1,4 +1,5 @@
 #include "matrixcalculator.h"
+#include "database.h"
 
 MatrixCalculator::MatrixCalculator()
 {

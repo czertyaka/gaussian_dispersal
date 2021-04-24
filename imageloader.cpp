@@ -18,7 +18,7 @@ bool ImageLoader::AddImage(const QString &filename, const ImageLoader::t_optBord
         return false;
     }
 
-    t_image* image = &(m_db.GetImage());
+    t_image* image = &(m_db.Image());
     if (!CheckPointer(image, "error opening database for image"))
     {
         m_status = ERROR;

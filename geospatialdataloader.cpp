@@ -29,7 +29,7 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
         return false;
     }
 
-    DataBase::t_landscape* landscape = &(m_db.GetLandscape());
+    DataBase::t_landscape* landscape = &(m_db.Landscape());
     if (!CheckPointer(landscape, "error opening geospatial database"))
     {
         return false;
@@ -94,7 +94,7 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
 
 void GeospatialDataLoader::Reset()
 {
-    DataBase::t_landscape* landscape = &(m_db.GetLandscape());
+    DataBase::t_landscape* landscape = &(m_db.Landscape());
     if(CheckPointer(landscape, "error opening geospatial database"))
     {
         landscape->clear();
