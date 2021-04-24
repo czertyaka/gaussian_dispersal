@@ -103,7 +103,7 @@ GeospatialDataLoader::t_microrelief GeospatialCsvParser::ParseMicrorelief(const 
         return GeospatialDataLoader::UNKNOWN;
     default:
         *ok = false;
-        MY_LOG(": invalid microrelief type: \"" << sValue
+        MY_LOG("invalid microrelief type: \"" << sValue
                << "\"");
         return GeospatialDataLoader::UNKNOWN;
     }

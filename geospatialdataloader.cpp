@@ -10,7 +10,7 @@ GeospatialDataLoader::GeospatialDataLoader()
 {
     if (!m_parser)
     {
-        MY_LOG(": error creating geospatial data parser");
+        MY_LOG("error creating geospatial data parser");
     }
 
     m_status = ERROR;
@@ -25,12 +25,12 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
 { 
     if (filename.isEmpty())
     {
-        MY_LOG(": geospatial data filename field is empty");
+        MY_LOG("geospatial data filename field is empty");
         return false;
     }
 
     DataBase::t_landscape* landscape = m_db.GetLandscape();
-    if (!CheckPointer(landscape, ": error opening geospatial database"))
+    if (!CheckPointer(landscape, "error opening geospatial database"))
     {
         return false;
     }
@@ -40,7 +40,7 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
     QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text))
     {
-        MY_LOG( ": error opening file");
+        MY_LOG( "error opening file");
         return false;
     }
     else
@@ -56,7 +56,7 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
 
             if (lineStatus == CsvParser::COLUMNS_MISMATCH)
             {
-                MY_LOG(": geospatial file must consist at least of 5 columns");
+                MY_LOG("geospatial file must consist at least of 5 columns");
                 m_status = ERROR;
                 return false;
             }
@@ -67,7 +67,7 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
             }
             else if (lineStatus == CsvParser::INVALID)
             {
-                MY_LOG(": error reading line \""
+                MY_LOG("error reading line \""
                        << line << "\"");
                 continue;
             }
@@ -77,7 +77,7 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
                 pointsCounter++;
             }
         }
-        MY_LOG(": added " << pointsCounter
+        MY_LOG("added " << pointsCounter
                << " geospatial points");
 
         if (!pointsCounter)
@@ -87,7 +87,7 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
         }
     }
     file.close();
-    MY_LOG(": geospatial data read successfully");
+    MY_LOG("geospatial data read successfully");
     m_status = READY;
     return true;
 }
@@ -95,7 +95,7 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
 void GeospatialDataLoader::Reset()
 {
     DataBase::t_landscape* landscape = m_db.GetLandscape();
-    if(CheckPointer(landscape, ": error opening geospatial database"))
+    if(CheckPointer(landscape, "error opening geospatial database"))
     {
         landscape->clear();
         m_status = NOT_READY;

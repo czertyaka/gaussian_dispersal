@@ -91,3 +91,17 @@ void DataInterface::OnSourcesReset()
 {
     m_sourcesLoader->Reset();
 }
+
+void DataInterface::OnStart()
+{
+    if (m_matrixCalculator->Execute() == BaseCalculator::OK)
+    {
+        MY_LOG("repeatability matrix calculation: done");
+    }
+    else
+    {
+        MY_LOG("repeatability matrix calculation: error");
+        MY_LOG("aborting calculation");
+        return;
+    }
+}

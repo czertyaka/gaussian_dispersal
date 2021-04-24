@@ -30,7 +30,7 @@ void ClimateCsvParser::SetFormat(ClimateCsvParser::t_format format)
     switch (format)
     {
     case NONE:
-        qDebug() << ": format of csv file not set";
+        qDebug() << "format of csv file not set";
         break;
     case RP5:
         m_strategy = new Rp5Strategy;

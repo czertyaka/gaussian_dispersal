@@ -10,7 +10,7 @@ ClimaticVariablesLoader::ClimaticVariablesLoader()
 {
     if (!m_parser)
     {
-        MY_LOG(": error creating climate journal parser");
+        MY_LOG("error creating climate journal parser");
     }
 
     m_status = ERROR;
@@ -28,11 +28,11 @@ bool ClimaticVariablesLoader::AddJournal(const QString &filename, ClimateCsvPars
 
     if (filename.isEmpty())
     {
-        MY_LOG(": climate filename field is empty");
+        MY_LOG("climate filename field is empty");
         return false;
     }
 
-    if (!CheckPointer(climateJournal, ": error opening climate journal database"))
+    if (!CheckPointer(climateJournal, "error opening climate journal database"))
     {
         return false;
     }
@@ -42,7 +42,7 @@ bool ClimaticVariablesLoader::AddJournal(const QString &filename, ClimateCsvPars
     QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text))
     {
-        MY_LOG( ": error opening file");
+        MY_LOG( "error opening file");
         return false;
     }
     else
@@ -61,7 +61,7 @@ bool ClimaticVariablesLoader::AddJournal(const QString &filename, ClimateCsvPars
 
             if (lineStatus == CsvParser::COLUMNS_MISMATCH)
             {
-                MY_LOG(": column mismatch in line \""
+                MY_LOG("column mismatch in line \""
                        << line << "\", RP5 file consists of at least 29 columns");
                 m_status = ERROR;
                 return false;
@@ -91,22 +91,22 @@ bool ClimaticVariablesLoader::AddJournal(const QString &filename, ClimateCsvPars
             }
         }
 
-        MY_LOG( ": total obseravtions: " << totalObservationsCounter
+        MY_LOG( "total obseravtions: " << totalObservationsCounter
             << "; added: " << addedObservationsCounter
             << "; invalid: " << invalidObseravtionsCounter
             << "; incomplete: " << incompleteObservationsCounter);
 
         if (!addedObservationsCounter)
         {
-            MY_LOG(": no observations were added");
-            MY_LOG(": error reading climatic journal");
+            MY_LOG("no observations were added");
+            MY_LOG("error reading climatic journal");
             m_status = ERROR;
             return false;
         }
     }
 
     file.close();
-    MY_LOG(": climatic journal read successfully");
+    MY_LOG("climatic journal read successfully");
     m_status = READY;
     return true;
 }
@@ -114,7 +114,7 @@ bool ClimaticVariablesLoader::AddJournal(const QString &filename, ClimateCsvPars
 void ClimaticVariablesLoader::Reset()
 {
     DataBase::t_climateJournal* climateJournal = m_db.GetClimateJournal();
-    if (CheckPointer(climateJournal, ": error opening climate journal database"))
+    if (CheckPointer(climateJournal, "error opening climate journal database"))
     {
         climateJournal->clear();
         m_status = NOT_READY;

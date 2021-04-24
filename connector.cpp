@@ -58,6 +58,9 @@ Connector::Connector(MainWindow& window, DataInterface& data, QObject* parent)
     connect(UI->srcAcceptButton, &QPushButton::clicked, this, &Connector::UpdateStartButton);
     connect(UI->srcResetButton, &QPushButton::clicked, this, &Connector::UpdateStartButton);
     connect(m_data, &DataInterface::UpdateSourcesStatusLabel, m_window, &MainWindow::UpdateSourcesStatusLabel);
+
+    // calculations
+    connect(UI->startButton, &QPushButton::clicked, m_data, &DataInterface::OnStart);
 }
 
 void Connector::OnClimateAccept()
@@ -137,7 +140,7 @@ void Connector::OnSourcesAccept()
         QComboBox* comboBox = qobject_cast<QComboBox*>(table->itemAtPosition(row, 1)->widget());
         if (comboBox->currentIndex() == 0)
         {
-            MY_LOG(": nuclide weren't chosen at source # " << row);
+            MY_LOG("nuclide weren't chosen at source # " << row);
             return;
         }
         else
@@ -164,7 +167,7 @@ void Connector::OnSourcesAccept()
             double emission = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 6)->widget())->value();
             if (!emission)
             {
-                MY_LOG(": annual emission field is empty at source # " << row);
+                MY_LOG("annual emission field is empty at source # " << row);
                 return;
             }
 
@@ -179,7 +182,7 @@ void Connector::OnSourcesAccept()
 
             if (!(fisrtQuarter && secondQuarter && thirdQuarter && fourthQuarter))
             {
-                MY_LOG(": quarterly emisiion fields are empty at source # " << row);
+                MY_LOG("quarterly emisiion fields are empty at source # " << row);
                 return;
             }
 
@@ -207,7 +210,7 @@ void Connector::UpdateStartButton()
     UI->progressBar->setEnabled(ready);
     if (ready)
     {
-        MY_LOG(": ready to start calculation");
+        MY_LOG("ready to start calculation");
     }
 }
 

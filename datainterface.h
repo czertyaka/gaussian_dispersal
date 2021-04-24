@@ -12,7 +12,7 @@
 #include "matrixcalculator.h"
 
 #ifndef MY_LOG
-#define MY_LOG( X ) { QString s; QTextStream str(&s); str << (__PRETTY_FUNCTION__) << X; DataInterface::GetInstance().AddLog(str); }
+#define MY_LOG( X ) { QString s; QTextStream str(&s); str << (__PRETTY_FUNCTION__) << ": " << X; DataInterface::GetInstance().AddLog(str); }
 #endif // MY_LOG
 
 class DataInterface : public QObject
@@ -40,6 +40,7 @@ public slots:
     void OnImageReset();
     bool AddSources(const SourcesLoader::t_vSources& vSources);
     void OnSourcesReset();
+    void OnStart();
 
 private:
     explicit DataInterface(QObject *parent = nullptr);
