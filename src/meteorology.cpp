@@ -17,10 +17,24 @@ static const double lon_o = 0; ///< Longitude of natural origin, rad
 static const double FE = 0; ///< False easting, meters
 static const double FN = 0; ///< False northing, meters
 
+epsg3857coord::epsg3857coord(double easting, double northing) :
+    easting(easting),
+    northing(northing)
+{
+
+}
+
 epsg3857coord::epsg3857coord(const mm::epsg4326coord &o)
 {
     easting = FE + a * (o.lon - lon_o);
     northing = FN + a * log(tan(M_PI/4 + o.lat/2));
+}
+
+epsg4326coord::epsg4326coord(double lon, double lat) :
+    lon(lon),
+    lat(lat)
+{
+
 }
 
 epsg4326coord::epsg4326coord(const mm::epsg3857coord &o)

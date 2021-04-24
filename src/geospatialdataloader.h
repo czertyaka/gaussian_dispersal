@@ -4,6 +4,7 @@
 #include <QString>
 
 #include "basedataloader.h"
+#include "meteorology.h"
 
 class GeospatialCsvParser;
 
@@ -23,8 +24,7 @@ public:
     };
     typedef struct point
     {
-        float x;
-        float y;
+        mm::t_pseudoMercatorCoord coord;
         t_microrelief microrelief;
         short int elevation;
     } t_point;

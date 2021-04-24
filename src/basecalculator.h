@@ -10,7 +10,7 @@ public:
     enum t_errorCode
     {
         OK,
-        NOT_SUPPORTED
+        ERROR
     };
     virtual t_errorCode Execute() = 0;
 protected:

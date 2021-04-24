@@ -8,23 +8,17 @@
 SmithParamCalculator::SmithParamCalculator(const mm::t_observation& obs) :
     BaseCalculator(),
     m_obs(obs),
-    m_latitude(0),
-    m_longitude(0)
+    m_coord(mm::t_epsg4326coord())
 {
 
 }
 
 BaseCalculator::t_errorCode SmithParamCalculator::Execute()
 {
-    switch (m_db.Sources().at(0).coordinatesType)
+    if (!GetCoordinate())
     {
-    case SourcesLoader::EPSG3857:
-        m_latitude = 1;
-        m_longitude = 1;
-        break;
-    case SourcesLoader::RELATIVE:
-        MY_LOG("program not ready yet to handle relative coordinates");
-        return NOT_SUPPORTED;
+        MY_LOG("coordinate can not be estimated");
+        return ERROR;
     }
 
     CalcSunDeclination();
@@ -40,11 +34,49 @@ mm::t_smithParam SmithParamCalculator::Get() const
     return m_param;
 }
 
+/**
+ * @brief SmithParamCalculator::GetCoordinate Search for any coordinates in database
+ * @return true if found
+ */
+bool SmithParamCalculator::GetCoordinate()
+{
+    if (!m_db.Landscape().empty())
+    {
+        m_coord = mm::t_epsg4326coord(m_db.Landscape().at(0).coord);
+    }
+    else if (m_db.Image().borders.has_value())
+    {
+        m_coord = m_db.Image().borders.value().nw;
+    }
+    else if (m_db.Sources().at(0).coordinatesType != SourcesLoader::RELATIVE)
+    {
+        SourcesLoader::t_source& source = m_db.Sources().at(0);
+
+        switch (source.coordinatesType)
+        {
+        case SourcesLoader::EPSG4326:
+            m_coord = mm::t_epsg4326coord(source.x, source.y);
+            break;
+        case SourcesLoader::EPSG3857:
+            m_coord = mm::t_epsg4326coord(mm::t_epsg3857coord(source.x, source.y));
+            break;
+        default:
+            break;
+        }
+    }
+    else
+    {
+        return false;
+    }
+
+    return true;
+}
+
 void SmithParamCalculator::CalcSunAngle()
 {
     double hourAngle = M_PI * ( static_cast<double>(m_obs.dateTime.time().hour()) / 12.0 - 1 );
-    double sunAngleSin = sin(m_sunDecl) * sin(RAD(m_latitude)) +
-                         cos(m_sunDecl) * cos(RAD(m_latitude)) *
+    double sunAngleSin = sin(m_sunDecl) * sin(m_coord.lat) +
+                         cos(m_sunDecl) * cos(m_coord.lon) *
                          cos(hourAngle);
     m_sunAngle = 180 / M_PI * asin(sunAngleSin);
 }

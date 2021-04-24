@@ -55,14 +55,18 @@ namespace mm
         double easting;
         double northing;
         epsg3857coord() {};
+        epsg3857coord(double easting, double northing);
         epsg3857coord(const epsg4326coord& o);
     } t_epsg3857coord;
+
+    typedef t_epsg3857coord t_pseudoMercatorCoord;
 
     typedef struct epsg4326coord
     {
         double lon;
         double lat;
         epsg4326coord() {};
+        epsg4326coord(double lon, double lat);
         epsg4326coord(const epsg3857coord& o);
     } t_epsg4326coord;
 

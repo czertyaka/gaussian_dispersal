@@ -14,6 +14,7 @@ public:
 
 private:
 
+    bool GetCoordinate();
     void CalcSunAngle();
     void CalcSetOfDay();
     void CalcSunDeclination();
@@ -40,8 +41,7 @@ private:
     double  m_sunAngle; ///< высота солнца, град.
     int     m_insolClass; ///< класс инсоляции
 
-    double m_latitude;
-    double m_longitude;
+    mm::t_epsg4326coord m_coord;
 };
 
 #endif // SMITHPARAMCALCULATOR_H

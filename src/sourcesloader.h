@@ -13,6 +13,7 @@ public:
     enum t_coordinatesType
     {
         EPSG3857,
+        EPSG4326,
         RELATIVE
     };
     typedef struct sources
