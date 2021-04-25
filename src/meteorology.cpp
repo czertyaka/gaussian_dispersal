@@ -30,9 +30,10 @@ epsg3857coord::epsg3857coord(const mm::epsg4326coord &o)
     northing = FN + a * log(tan(M_PI/4 + RAD(o.lat)/2));
 }
 
-epsg4326coord::epsg4326coord(double lon, double lat) :
+epsg4326coord::epsg4326coord(double lon, double lat, t_Unit unit) :
     lon(lon),
-    lat(lat)
+    lat(lat),
+    m_unit(unit)
 {
 
 }
@@ -42,4 +43,21 @@ epsg4326coord::epsg4326coord(const mm::epsg3857coord &o)
     double D = (FN - o.northing)/a;
     lat = DEG(M_PI/2 - 2*atan(exp(D)));
     lon = DEG((o.easting - FE)/a + lon_o);
+}
+
+void epsg4326coord::SetUnits(epsg4326coord::t_Unit unit)
+{
+    if (unit != m_unit)
+    {
+        switch (unit)
+        {
+        case DEGREES:
+            lon = DEG(lon);
+            lat = DEG(lat);
+            break;
+        case RADIANS:
+            lon = RAD(lon);
+            lat = RAD(lat);
+        }
+    }
 }

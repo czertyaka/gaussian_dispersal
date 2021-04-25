@@ -14,9 +14,18 @@ private:
 
     bool AddObservation(const mm::t_observation& obs);
 
-    size_t GetJ(const mm::t_smithParam smithParam) const;
-    size_t GetK(const double windSpeed) const;
-    size_t GetN(const mm::t_windDir) const;
+    size_t GetJ(const mm::t_smithParam smithParam, bool& result) const;
+    size_t GetK(const double windSpeed, bool& result) const;
+    size_t GetN(const mm::t_windDir, bool& result) const;
+
+    void NormalizeMatrix();
+    void CalcWindRose();
+    void CalcWindSpeedRepeatabilityByCompPoint();
+    void CalcWindSpeedRepeatability();
+    void CalcCalmRepeatability();
+    void CalcSmithParamRepeatability();
+    void CalcAverageWindSpeedByCompPoint();
+    void CalcAverageWindSpeedBySmithParam();
 
     DataBase::t_climateJournal& m_journal;
     mm::t_matrix&               m_matrix;

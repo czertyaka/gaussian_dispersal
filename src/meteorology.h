@@ -48,6 +48,22 @@ namespace mm
         cathG = 7
     };
 
+    enum month_t : const int
+    {
+        JAN = 1,
+        FEB = 2,
+        MAR = 3,
+        APR = 4,
+        MAY = 5,
+        JUN = 6,
+        JUL = 7,
+        AUG = 8,
+        SEP = 9,
+        OCT = 10,
+        NOV = 11,
+        DEC = 12
+    };
+
     struct epsg4326coord;
 
     typedef struct epsg3857coord
@@ -62,10 +78,18 @@ namespace mm
 
     typedef struct epsg4326coord
     {
+        enum t_Unit
+        {
+            DEGREES,
+            RADIANS
+        };
         double lon;
         double lat;
-        epsg4326coord(double lon = 0, double lat = 0);
+        epsg4326coord(double lon = 0, double lat = 0, t_Unit unit = DEGREES);
         epsg4326coord(const epsg3857coord& o);
+        void SetUnits(t_Unit unit);
+    private:
+        t_Unit m_unit;;
     } t_epsg4326coord;
 
     typedef struct observation

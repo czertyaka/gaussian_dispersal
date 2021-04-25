@@ -100,8 +100,8 @@ void DataInterface::OnStart()
     }
     else
     {
-        MY_LOG("repeatability matrix calculation: error");
-        MY_LOG("aborting calculation");
+        MY_LOG("repeatability matrix calculation: error, "
+               "aborting calculation");
         return;
     }
 }
