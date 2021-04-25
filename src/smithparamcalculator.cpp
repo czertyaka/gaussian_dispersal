@@ -40,29 +40,20 @@ mm::t_smithParam SmithParamCalculator::Get() const
  */
 bool SmithParamCalculator::GetCoordinate()
 {
+    // get coordiantes from geosaptial data
     if (!m_db.Landscape().empty())
     {
         m_coord = m_db.Landscape().at(0).coord;
     }
+    // if there is none, look for image borders
     else if (m_db.Image().borders.has_value())
     {
         m_coord = m_db.Image().borders.value().nw;
     }
-    else if (m_db.Sources().at(0).coordinatesType != SourcesLoader::RELATIVE)
+    // at last, check fisrt source coordinate
+    else if (!m_db.Sources().empty())
     {
-        SourcesLoader::t_source& source = m_db.Sources().at(0);
-
-        switch (source.coordinatesType)
-        {
-        case SourcesLoader::EPSG4326:
-            m_coord = mm::t_epsg4326coord(source.x, source.y);
-            break;
-        case SourcesLoader::EPSG3857:
-            m_coord = mm::t_epsg4326coord(mm::t_epsg3857coord(source.x, source.y));
-            break;
-        default:
-            break;
-        }
+        m_coord = m_db.Sources().at(0).coord;
     }
     else
     {

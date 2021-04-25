@@ -71,9 +71,9 @@ void MainWindow::CustomUiSettings()
     connect(m_ui->imageBrowseButton, &QPushButton::clicked, this, [=](){ this->BrowseFile(m_ui->imageLineEdit, "*.jpg *.jpeg *.png"); });
 
     connect(m_ui->annualButton, &QRadioButton::toggled, this, &MainWindow::AnnualEmissionToggled);
-    connect(m_ui->coordinatesEPSG4326RadioButton, &QRadioButton::toggled, this, [=](){ this->CoordinatesToggled(SourcesLoader::EPSG4326); });
-    connect(m_ui->coordinatesEPSG3857RadioButton, &QRadioButton::toggled, this, [=](){ this->CoordinatesToggled(SourcesLoader::EPSG3857); });
-    connect(m_ui->coordinatesRelativeRadioButton, &QRadioButton::toggled, this, [=](){ this->CoordinatesToggled(SourcesLoader::RELATIVE); });
+    connect(m_ui->coordinatesEPSG4326RadioButton, &QRadioButton::toggled, this, [=](){ this->CoordinatesToggled(EPSG4326); });
+    connect(m_ui->coordinatesEPSG3857RadioButton, &QRadioButton::toggled, this, [=](){ this->CoordinatesToggled(EPSG3857); });
+    connect(m_ui->coordinatesRelativeRadioButton, &QRadioButton::toggled, this, [=](){ this->CoordinatesToggled(RELATIVE); });
 
     connect(m_ui->climateResetButton, &QPushButton::clicked, this, [=](){ this->UpdateStatusLabel(m_ui->climateStatusLabel, false); });
     connect(m_ui->geoResetButton, &QPushButton::clicked, this, [=](){ this->UpdateStatusLabel(m_ui->geoStatusLabel, false); });
@@ -135,7 +135,7 @@ void MainWindow::AnnualEmissionToggled(bool toggled)
     }
 }
 
-void MainWindow::CoordinatesToggled(SourcesLoader::t_coordinatesType type)
+void MainWindow::CoordinatesToggled(t_coordinatesType type)
 {
     double firstMax;
     double secondMax;
@@ -144,7 +144,7 @@ void MainWindow::CoordinatesToggled(SourcesLoader::t_coordinatesType type)
 
     switch (type)
     {
-    case SourcesLoader::EPSG4326:
+    case EPSG4326:
         m_ui->xLabel->setText("lon, °");
         m_ui->yLabel->setText("lat, °");
         firstMax = 180;
@@ -152,7 +152,7 @@ void MainWindow::CoordinatesToggled(SourcesLoader::t_coordinatesType type)
         firstMin = -180;
         secondMin = -85;
         break;
-    case SourcesLoader::EPSG3857:
+    case EPSG3857:
         m_ui->xLabel->setText("E, m");
         m_ui->yLabel->setText("N, m");
         firstMax = 20037508.34;
@@ -160,7 +160,7 @@ void MainWindow::CoordinatesToggled(SourcesLoader::t_coordinatesType type)
         firstMin = -20037508.34;
         secondMin = -19971868.88;
         break;
-    case SourcesLoader::RELATIVE:
+    case RELATIVE:
         m_ui->xLabel->setText("x, %");
         m_ui->yLabel->setText("y, %");
         firstMax = 100;
@@ -171,7 +171,7 @@ void MainWindow::CoordinatesToggled(SourcesLoader::t_coordinatesType type)
     }
 
     for (int row = 1; row < m_row; ++row)
-    {
+    {     
         qobject_cast<QDoubleSpinBox*>(m_ui->sourceTableLayout->itemAtPosition(row, 2)->widget())->setMaximum(firstMax);
         qobject_cast<QDoubleSpinBox*>(m_ui->sourceTableLayout->itemAtPosition(row, 3)->widget())->setMaximum(secondMax);
         qobject_cast<QDoubleSpinBox*>(m_ui->sourceTableLayout->itemAtPosition(row, 2)->widget())->setMinimum(firstMin);

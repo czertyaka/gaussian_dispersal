@@ -6,8 +6,6 @@
 #include <QString>
 #include <QLabel>
 
-#include "sourcesloader.h"
-
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -25,6 +23,14 @@ public:
     Ui::MainWindow * Ui() { return m_ui; }
     int SourcesRows() { return m_row; }
 
+private:
+    enum t_coordinatesType
+    {
+        EPSG3857,
+        EPSG4326,
+        RELATIVE
+    };
+
 public slots:
     void UpdateClimateStatusLabel(const bool ok);
     void UpdateGeoStatusLabel(const bool ok);
@@ -35,7 +41,7 @@ private slots:
     void ResetSpinBoxes();
     void BrowseFile(QLineEdit* lineEdit, const QString& file);
     void AnnualEmissionToggled(bool);
-    void CoordinatesToggled(SourcesLoader::t_coordinatesType);
+    void CoordinatesToggled(t_coordinatesType);
     void AddSource();
     void RemoveSource();
     void ResetSources();

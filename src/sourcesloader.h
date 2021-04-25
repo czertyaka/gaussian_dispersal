@@ -6,23 +6,16 @@
 #include <vector>
 
 #include "basedataloader.h"
+#include "meteorology.h"
 
 class SourcesLoader : public BaseDataLoader
 {
 public:
-    enum t_coordinatesType
-    {
-        EPSG3857,
-        EPSG4326,
-        RELATIVE
-    };
     typedef struct sources
     {
         int                     id;
         QString                 nuclide;
-        t_coordinatesType       coordinatesType;
-        double                  x;
-        double                  y;
+        mm::t_epsg4326coord     coord;
         double                  height;
         double                  temp;
         std::optional<double>   emission;

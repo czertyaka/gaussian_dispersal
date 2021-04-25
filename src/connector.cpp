@@ -148,21 +148,22 @@ void Connector::OnSourcesAccept()
             source.nuclide = comboBox->currentText();
         }
 
+        double x = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 2)->widget())->value();
+        double y = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 3)->widget())->value();
+
         if (UI->coordinatesEPSG4326RadioButton->isChecked())
         {
-            source.coordinatesType = SourcesLoader::EPSG4326;
+            source.coord = mm::t_epsg4326coord(x, y);
         }
         else if (UI->coordinatesEPSG3857RadioButton->isChecked())
         {
-            source.coordinatesType = SourcesLoader::EPSG3857;
+            source.coord = mm::t_epsg4326coord(mm::t_epsg3857coord(x, y));
         }
         else
         {
-            source.coordinatesType = SourcesLoader::RELATIVE;
+            // TODO
         }
 
-        source.x = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 2)->widget())->value();
-        source.y = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 3)->widget())->value();
         source.height = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 4)->widget())->value();
         source.temp = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 5)->widget())->value();
 

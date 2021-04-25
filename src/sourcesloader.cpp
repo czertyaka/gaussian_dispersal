@@ -10,7 +10,7 @@ SourcesLoader::SourcesLoader()
 bool SourcesLoader::AddSources(const SourcesLoader::t_vSources &vSources)
 {
     DataBase::t_sources* sources = &(m_db.Sources());
-    if(!CheckPointer(sources, "error opening sources databse"))
+    if(!CheckPointer(sources, "error opening sources database"))
     {
         return false;
     }
