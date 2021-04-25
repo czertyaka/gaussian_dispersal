@@ -148,7 +148,11 @@ void Connector::OnSourcesAccept()
             source.nuclide = comboBox->currentText();
         }
 
-        if (UI->coordinatesEPSGRadioButton->isChecked())
+        if (UI->coordinatesEPSG4326RadioButton->isChecked())
+        {
+            source.coordinatesType = SourcesLoader::EPSG4326;
+        }
+        else if (UI->coordinatesEPSG3857RadioButton->isChecked())
         {
             source.coordinatesType = SourcesLoader::EPSG3857;
         }

@@ -6,6 +6,8 @@
 #include <QString>
 #include <QLabel>
 
+#include "sourcesloader.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -33,7 +35,7 @@ private slots:
     void ResetSpinBoxes();
     void BrowseFile(QLineEdit* lineEdit, const QString& file);
     void AnnualEmissionToggled(bool);
-    void EPSGCoordinatesToggled(bool);
+    void CoordinatesToggled(SourcesLoader::t_coordinatesType);
     void AddSource();
     void RemoveSource();
     void ResetSources();

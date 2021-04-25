@@ -42,7 +42,7 @@ bool SmithParamCalculator::GetCoordinate()
 {
     if (!m_db.Landscape().empty())
     {
-        m_coord = mm::t_epsg4326coord(m_db.Landscape().at(0).coord);
+        m_coord = m_db.Landscape().at(0).coord;
     }
     else if (m_db.Image().borders.has_value())
     {

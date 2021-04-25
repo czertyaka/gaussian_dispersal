@@ -24,7 +24,7 @@ public:
     };
     typedef struct point
     {
-        mm::t_pseudoMercatorCoord coord;
+        mm::t_epsg4326coord coord;
         t_microrelief microrelief;
         short int elevation;
     } t_point;

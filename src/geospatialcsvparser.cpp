@@ -20,8 +20,8 @@ GeospatialCsvParser::t_lineStatus GeospatialCsvParser::ParseLine(const QString &
     }
 
     bool casting = true;
-    m_point->coord.easting = m_list.at(3).toFloat(&casting);
-    m_point->coord.northing = m_list.at(4).toFloat(&casting);
+    m_point->coord.lat = m_list.at(3).toFloat(&casting);
+    m_point->coord.lon = m_list.at(4).toFloat(&casting);
     m_point->elevation = m_list.at(2).toShort(&casting);
     m_point->microrelief = ParseMicrorelief(m_list.at(1), &casting);
 

@@ -1,7 +1,7 @@
 var default_projection = ee.Projection({
-    crs: 'EPSG:3857',
-  })
-  .atScale(50);
+  crs: 'EPSG:4326',
+})
+.atScale(50);
 
 var pixels = ee.Image.pixelLonLat()
 .clip(geometry)
