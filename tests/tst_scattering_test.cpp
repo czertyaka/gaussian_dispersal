@@ -65,23 +65,23 @@ void scattering_test::test_3857to4326()
 
     epsg3857.easting = 0;
     epsg3857.northing = -19971868.88;
-    test_3857to4326Case(epsg3857, RAD(-85), RAD(0));
+    test_3857to4326Case(epsg3857, -85, 0);
 
     epsg3857.easting = 0;
     epsg3857.northing = 19971868.88;
-    test_3857to4326Case(epsg3857, RAD(85), RAD(0));
+    test_3857to4326Case(epsg3857, 85, 0);
 
     epsg3857.easting = 20037508.34;
     epsg3857.northing = 0;
-    test_3857to4326Case(epsg3857, RAD(0), RAD(180));
+    test_3857to4326Case(epsg3857, 0, 180);
 
     epsg3857.easting = -20037508.34;
     epsg3857.northing = 0;
-    test_3857to4326Case(epsg3857, RAD(0), RAD(-180));
+    test_3857to4326Case(epsg3857, 0, -180);
 
     epsg3857.easting = 2671667.78;
     epsg3857.northing = -5311971.85;
-    test_3857to4326Case(epsg3857, RAD(-43), RAD(24));
+    test_3857to4326Case(epsg3857, -43, 24);
 }
 
 static void test_4326to3857Case(const t_epsg4326coord& epsg4326, double exp_easting, double exp_northing)
@@ -99,28 +99,28 @@ void scattering_test::test_4326to3857()
 {
     t_epsg4326coord epsg4326;
 
-    epsg4326.lat = RAD(0);
-    epsg4326.lon = RAD(0);
+    epsg4326.lat = 0;
+    epsg4326.lon = 0;
     test_4326to3857Case(epsg4326, 0, 0);
 
-    epsg4326.lat = RAD(-85);
-    epsg4326.lon = RAD(0);
+    epsg4326.lat = -85;
+    epsg4326.lon = 0;
     test_4326to3857Case(epsg4326, 0, -19971868.88);
 
-    epsg4326.lat = RAD(85);
-    epsg4326.lon = RAD(0);
+    epsg4326.lat = 85;
+    epsg4326.lon = 0;
     test_4326to3857Case(epsg4326, 0, 19971868.88);
 
-    epsg4326.lat = RAD(0);
-    epsg4326.lon = RAD(180);
+    epsg4326.lat = 0;
+    epsg4326.lon = 180;
     test_4326to3857Case(epsg4326, 20037508.34, 0);
 
-    epsg4326.lat = RAD(0);
-    epsg4326.lon = RAD(-180);
+    epsg4326.lat = 0;
+    epsg4326.lon = -180;
     test_4326to3857Case(epsg4326, -20037508.34, 0);
 
-    epsg4326.lat = RAD(-43);
-    epsg4326.lon = RAD(24);
+    epsg4326.lat = -43;
+    epsg4326.lon = 24;
     test_4326to3857Case(epsg4326, 2671667.78, -5311971.85);
 }
 

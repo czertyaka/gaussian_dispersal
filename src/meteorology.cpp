@@ -26,8 +26,8 @@ epsg3857coord::epsg3857coord(double easting, double northing) :
 
 epsg3857coord::epsg3857coord(const mm::epsg4326coord &o)
 {
-    easting = FE + a * (o.lon - lon_o);
-    northing = FN + a * log(tan(M_PI/4 + o.lat/2));
+    easting = FE + a * (RAD(o.lon) - lon_o);
+    northing = FN + a * log(tan(M_PI/4 + RAD(o.lat)/2));
 }
 
 epsg4326coord::epsg4326coord(double lon, double lat) :
@@ -40,6 +40,6 @@ epsg4326coord::epsg4326coord(double lon, double lat) :
 epsg4326coord::epsg4326coord(const mm::epsg3857coord &o)
 {
     double D = (FN - o.northing)/a;
-    lat = M_PI/2 - 2*atan(exp(D));
-    lon = (o.easting - FE)/a + lon_o;
+    lat = DEG(M_PI/2 - 2*atan(exp(D)));
+    lon = DEG((o.easting - FE)/a + lon_o);
 }

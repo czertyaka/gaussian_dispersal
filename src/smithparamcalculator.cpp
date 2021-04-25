@@ -63,6 +63,13 @@ bool SmithParamCalculator::GetCoordinate()
     return true;
 }
 
+void SmithParamCalculator::CalcSunDeclination()
+{
+    int dayNumber = 30 * (m_obs.dateTime.date().month() - 1) + m_obs.dateTime.date().day();
+    double sunLongitude = 4.909 + 1.705e-2 * dayNumber;
+    m_sunDecl = asin(0.39795 * sin(sunLongitude));
+}
+
 void SmithParamCalculator::CalcSunAngle()
 {
     double hourAngle = M_PI * ( static_cast<double>(m_obs.dateTime.time().hour()) / 12.0 - 1 );
@@ -74,14 +81,18 @@ void SmithParamCalculator::CalcSunAngle()
 
 void SmithParamCalculator::CalcSetOfDay()
 {
-
-}
-
-void SmithParamCalculator::CalcSunDeclination()
-{
-    int dayNumber = 30 * (m_obs.dateTime.date().month() - 1) + m_obs.dateTime.date().day();
-    double sunLongitude = 4.909 + 1.705e-2 * dayNumber;
-    m_sunDecl = asin(0.39795 * sin(sunLongitude));
+    double beta = - ( 0.0145 + sin(m_sunDecl) * sin(RAD(m_coord.lat)) ) /
+                    ( cos(m_sunDecl) * cos(RAD(m_coord.lat)) );
+    if (beta > 1)
+    {
+        beta = 1;
+    }
+    else if (beta < -1)
+    {
+        beta = -1;
+    }
+    m_setTime = 12 * (1 + 1/M_PI * acos(beta));
+    m_riseTime = 24 - m_setTime;
 }
 
 void SmithParamCalculator::CalcInsolClass()
