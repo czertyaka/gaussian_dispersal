@@ -23,6 +23,7 @@ SOURCES += \
     climaticvariablesloader.cpp \
     connector.cpp \
     csvparser.cpp \
+    csvwriter.cpp \
     database.cpp \
     datainterface.cpp \
     geospatialcsvparser.cpp \
@@ -44,6 +45,7 @@ HEADERS += \
     climaticvariablesloader.h \
     connector.h \
     csvparser.h \
+    csvwriter.h \
     database.h \
     datainterface.h \
     geospatialcsvparser.h \

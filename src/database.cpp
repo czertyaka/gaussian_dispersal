@@ -20,6 +20,11 @@ mm::t_matrix &DataBase::Matrix()
     return *m_matrix;
 }
 
+bool DataBase::SaveMatrix()
+{
+
+}
+
 DataBase::t_climateJournal& DataBase::ClimateJournal()
 {
     return *m_climateJournal;
