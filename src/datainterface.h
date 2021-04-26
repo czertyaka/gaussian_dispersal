@@ -30,6 +30,7 @@ signals:
     void UpdateGeoStatusLabel(const bool ok);
     void UpdateImageStatusLabel(const bool ok);
     void UpdateSourcesStatusLabel(const bool ok);
+    void MatrixDone(const bool ok);
 
 public slots:
     bool AddClimaticJournal(const QString& filename, ClimateCsvParser::t_format format);

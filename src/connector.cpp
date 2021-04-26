@@ -37,6 +37,7 @@ Connector::Connector(MainWindow& window, DataInterface& data, QObject* parent)
     connect(UI->climateAcceptButton, &QPushButton::clicked, this, &Connector::UpdateStartButton);
     connect(UI->climateResetButton, &QPushButton::clicked, this, &Connector::UpdateStartButton);
     connect(m_data, &DataInterface::UpdateClimateStatusLabel, m_window, &MainWindow::UpdateClimateStatusLabel);
+    connect(m_data, &DataInterface::MatrixDone, m_window, &MainWindow::OnClimateDone);
 
     // geospatial data
     connect(UI->geoAcceptButton, &QPushButton::clicked, this, &Connector::OnGeospatialAccept);

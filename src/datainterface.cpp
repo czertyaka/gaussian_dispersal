@@ -97,11 +97,13 @@ void DataInterface::OnStart()
     if (m_matrixCalculator->Execute() == BaseCalculator::OK)
     {
         MY_LOG("repeatability matrix calculation: done");
+        MatrixDone(true);
     }
     else
     {
         MY_LOG("repeatability matrix calculation: error, "
                "aborting calculation");
+        MatrixDone(false);
         return;
     }
 }

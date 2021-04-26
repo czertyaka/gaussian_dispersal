@@ -56,6 +56,11 @@ void MainWindow::UpdateSourcesStatusLabel(const bool ok)
     UpdateStatusLabel(m_ui->srcStatusLabel, ok);
 }
 
+void MainWindow::OnClimateDone(const bool ok)
+{
+    m_ui->climateSaveButton->setEnabled(ok);
+}
+
 /**
  * @brief MainWindow::CustomUiSettings All the setups and connections within GUI only
  */
