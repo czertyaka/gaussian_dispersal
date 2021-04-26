@@ -33,10 +33,10 @@ bool DataBase::SaveMatrix(const QString& directory)
             return false;
         }
 
-        writer.AddComment("Повторяемость направлений ветра n-го румба (роза ветров)");
-        writer.AddItem("Румб, град.");
-        writer.AddItem("Холодное время года");
-        writer.AddItem("Теплое время года");
+        writer.AddComment("Wind rose");
+        writer.AddItem("Compass point, deg.");
+        writer.AddItem("Cold season");
+        writer.AddItem("Warm season");
 
         for (size_t n = 0; n < m_matrix->N; ++n)
         {
@@ -44,6 +44,8 @@ bool DataBase::SaveMatrix(const QString& directory)
             writer.AddItem(m_matrix->windRoseCold[n]);
             writer.AddItem(m_matrix->windRoseWarm[n]);
         }
+
+        MY_LOG("finished writing to " << filename);
     }
 
     return true;
