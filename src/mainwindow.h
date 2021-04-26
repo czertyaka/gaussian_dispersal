@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <QString>
 #include <QLabel>
+#include <QDir>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -49,7 +50,9 @@ private slots:
 private:
     void CustomUiSettings();
     void UpdateStatusLabel(QLabel* label, const bool ok);
+
     Ui::MainWindow* m_ui;
     int m_row; ///< rows number of the sources table
+    QDir m_dir; ///< directory which will open in file dialog
 };
 #endif // MAINWINDOW_H

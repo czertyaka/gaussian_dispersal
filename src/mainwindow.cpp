@@ -24,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     m_ui->setupUi(this);
     CustomUiSettings();
+
+    m_dir = QDir::current();
 }
 
 /**
@@ -116,9 +118,11 @@ void MainWindow::ResetSpinBoxes()
  */
 void MainWindow::BrowseFile(QLineEdit* lineEdit, const QString& filter)
 {
-    QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), QDir::currentPath(), filter);
-    if (!filename.isNull())
+    QFileDialog dialog(this, tr("Open File"), m_dir.path(), filter);
+    if (dialog.exec() == QFileDialog::Accepted)
     {
+        m_dir = dialog.directory();
+        QString filename = dialog.selectedFiles().first();
         lineEdit->setText(filename);
     }
 }
