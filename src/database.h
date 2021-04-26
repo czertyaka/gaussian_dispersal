@@ -26,7 +26,7 @@ public:
     mm::t_matrix&       Matrix();
 
     // savers
-    bool SaveMatrix();
+    bool SaveMatrix(const QString& directory);
 
 private:
     DataBase();

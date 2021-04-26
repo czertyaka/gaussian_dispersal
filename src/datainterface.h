@@ -10,6 +10,7 @@
 #include "sourcesloader.h"
 #include "imageloader.h"
 #include "matrixcalculator.h"
+#include "database.h"
 
 #ifndef MY_LOG
 #define MY_LOG( X ) { QString s; QTextStream str(&s); str << (__PRETTY_FUNCTION__) << ": " << X; DataInterface::GetInstance().AddLog(str); }
@@ -42,6 +43,7 @@ public slots:
     bool AddSources(const SourcesLoader::t_vSources& vSources);
     void OnSourcesReset();
     void OnStart();
+    void SaveClimate(const QString directiry);
 
 private:
     explicit DataInterface(QObject *parent = nullptr);
@@ -50,7 +52,7 @@ private:
     ImageLoader*                m_imageLoader;
     SourcesLoader*              m_sourcesLoader;
     MatrixCalculator*           m_matrixCalculator;
-
+    DataBase&                   m_database;
 };
 
 #endif // DataInterface_H

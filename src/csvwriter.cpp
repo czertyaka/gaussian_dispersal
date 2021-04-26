@@ -1,5 +1,11 @@
 #include "csvwriter.h"
 
+#ifndef TESTING
+#include "datainterface.h"
+#else
+#define MY_LOG( X )
+#endif // TESTING
+
 CsvWriter::CsvWriter(const QString &filename, const size_t cols, const char delimeter, bool quotes) :
     m_stream(nullptr),
     m_filename(filename),
@@ -34,28 +40,29 @@ bool CsvWriter::Init()
     return true;
 }
 
-bool CsvWriter::AddComment(const QString &comment)
+void CsvWriter::AddComment(const QString &comment)
 {
     if (m_colsCounter)
     {
-        MY_LOG(" can not add a comment: table row not finished");
-        return false;
+        EOL();
     }
-
-    (*m_stream) << "# " << comment << "\n";
-    return true;
+    (*m_stream) << "# " << comment;
+    EOL();
 }
 
-bool CsvWriter::EOL()
+void CsvWriter::EOL()
 {
-    if (m_colsCounter < m_cols)
+    while (m_colsCounter && m_colsCounter < m_cols)
     {
-        MY_LOG(" can not add new line: table row not finished");
-        return false;
+        (*m_stream) << m_delimeter;
+        if (m_quotes)
+        {
+            (*m_stream) << "\"\"";
+        }
+        ++m_colsCounter;
     }
 
-    m_colsCounter = 0;
     (*m_stream) << "\n";
-    return true;
+    m_colsCounter = 0;
 }
 

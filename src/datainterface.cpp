@@ -11,6 +11,7 @@ DataInterface::DataInterface(QObject *parent)
     , m_imageLoader(new ImageLoader)
     , m_sourcesLoader(new SourcesLoader)
     , m_matrixCalculator(new MatrixCalculator)
+    , m_database(DataBase::GetInstance())
 {
 
 }
@@ -104,6 +105,15 @@ void DataInterface::OnStart()
         MY_LOG("repeatability matrix calculation: error, "
                "aborting calculation");
         MatrixDone(false);
+        return;
+    }
+}
+
+void DataInterface::SaveClimate(const QString directory)
+{
+    if (!m_database.SaveMatrix(directory))
+    {
+        MY_LOG("error saving repeatability matrix");
         return;
     }
 }

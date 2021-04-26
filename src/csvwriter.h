@@ -5,8 +5,6 @@
 #include <QFile>
 #include <QTextStream>
 
-#include "datainterface.h"
-
 class CsvWriter
 {
 public:
@@ -15,38 +13,34 @@ public:
     ~CsvWriter();
     bool Init();
 
-    bool AddComment(const QString& comment);
+    void AddComment(const QString& comment);
 
     template <class T>
-    bool AddItem(T item)
+    void AddItem(T item)
     {
-        ++m_colsCounter;
-
-        if (m_colsCounter > m_cols)
+        if (m_colsCounter >= m_cols)
         {
-            MY_LOG("can not add an item: table row finished");
-            return false;
+            EOL();
         }
 
-        if (m_colsCounter && m_colsCounter != m_cols)
+        if (m_colsCounter)
         {
             (*m_stream) << m_delimeter;
         }
 
         if (m_quotes)
         {
-            (*m_stream) << '"';
+            (*m_stream) << '"' << item << '"';
         }
-
-        (*m_stream) << item;
-
-        if (m_quotes)
+        else
         {
-            (*m_stream) << '"';
+            (*m_stream) << item;
         }
+
+        ++m_colsCounter;
     };
 
-    bool EOL();
+    void EOL();
 private:
     QFile m_file;
     QTextStream* m_stream;

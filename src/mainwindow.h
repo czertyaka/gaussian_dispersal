@@ -23,6 +23,7 @@ public:
     ~MainWindow();
     Ui::MainWindow * Ui() { return m_ui; }
     int SourcesRows() { return m_row; }
+    QString CurrentDirectory() { return m_dir.path(); }
 
 private:
     enum t_coordinatesType
@@ -37,7 +38,6 @@ public slots:
     void UpdateGeoStatusLabel(const bool ok);
     void UpdateImageStatusLabel(const bool ok);
     void UpdateSourcesStatusLabel(const bool ok);
-
     void OnClimateDone(const bool ok);
 
 private slots:
@@ -48,6 +48,7 @@ private slots:
     void AddSource();
     void RemoveSource();
     void ResetSources();
+    void GetOutputDir();
 
 private:
     void CustomUiSettings();

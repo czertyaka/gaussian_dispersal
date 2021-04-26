@@ -1,8 +1,14 @@
 #include <QtTest>
 #include <sstream>
+#include <QDir>
+
+#ifndef TESTING
+#error
+#endif
 
 // add necessary includes here
 #include "meteorology.h"
+#include "csvwriter.h"
 
 using namespace mm;
 
@@ -31,6 +37,7 @@ public:
 private slots:
     void test_3857to4326();
     void test_4326to3857();
+    void test_csvWriter();
 
 };
 
@@ -122,6 +129,22 @@ void scattering_test::test_4326to3857()
     epsg4326.lat = -43;
     epsg4326.lon = 24;
     test_4326to3857Case(epsg4326, 2671667.78, -5311971.85);
+}
+
+void scattering_test::test_csvWriter()
+{
+    QString dir = QDir::currentPath();
+
+    {
+        CsvWriter writer(dir + "\test1.csv", 2);
+        QVERIFY(writer.Init());
+
+        writer.AddComment("comment");
+        writer.AddItem(1);
+        writer.AddItem(0.2);
+        writer.AddItem('v');
+        writer.AddItem("haha");
+    }
 }
 
 QTEST_APPLESS_MAIN(scattering_test)

@@ -1,4 +1,6 @@
 #include "database.h"
+#include "csvwriter.h"
+#include "datainterface.h"
 
 DataBase &DataBase::GetInstance()
 {
@@ -20,9 +22,31 @@ mm::t_matrix &DataBase::Matrix()
     return *m_matrix;
 }
 
-bool DataBase::SaveMatrix()
+bool DataBase::SaveMatrix(const QString& directory)
 {
+    {
+        QString filename = directory + "/wind-rose.csv";
+        CsvWriter writer(filename, 3);
+        if (!writer.Init())
+        {
+            MY_LOG("error writing to " << filename);
+            return false;
+        }
 
+        writer.AddComment("Повторяемость направлений ветра n-го румба (роза ветров)");
+        writer.AddItem("Румб, град.");
+        writer.AddItem("Холодное время года");
+        writer.AddItem("Теплое время года");
+
+        for (size_t n = 0; n < m_matrix->N; ++n)
+        {
+            writer.AddItem(m_matrix->windDirVals[n]);
+            writer.AddItem(m_matrix->windRoseCold[n]);
+            writer.AddItem(m_matrix->windRoseWarm[n]);
+        }
+    }
+
+    return true;
 }
 
 DataBase::t_climateJournal& DataBase::ClimateJournal()

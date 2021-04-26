@@ -89,6 +89,8 @@ void MainWindow::CustomUiSettings()
 
     connect(m_ui->addSourceButrton, &QPushButton::clicked, this, &MainWindow::AddSource);
     connect(m_ui->removeSourceButton, &QPushButton::clicked, this, &MainWindow::RemoveSource);
+
+    connect(m_ui->climateSaveButton, &QPushButton::clicked, this, &MainWindow::GetOutputDir);
 }
 
 void MainWindow::UpdateStatusLabel(QLabel *label, const bool result)
@@ -269,4 +271,14 @@ void MainWindow::ResetSources()
     }
 
     UpdateStatusLabel(m_ui->srcStatusLabel, false);
+}
+
+void MainWindow::GetOutputDir()
+{
+    QFileDialog dialog(this, tr("Choose output directory"), m_dir.path());
+    dialog.setFileMode(QFileDialog::Directory);
+    if (dialog.exec() == QFileDialog::Accepted)
+    {
+        m_dir = dialog.directory();
+    }
 }

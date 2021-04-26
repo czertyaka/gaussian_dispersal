@@ -21,7 +21,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="climateTab">
        <attribute name="title">
@@ -1838,9 +1838,9 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_2"/>
-  <buttongroup name="BoundariesButtonGroup"/>
   <buttongroup name="imageButtonGroup"/>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="BoundariesButtonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
