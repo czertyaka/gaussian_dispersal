@@ -170,7 +170,7 @@ bool SmithParamCalculator::GetCoordinate()
     // at last, check fisrt source coordinate
     else if (!m_db.Sources().empty())
     {
-        m_coord = m_db.Sources().at(0).coord;
+        m_coord = m_db.Sources().at(0).coordinates;
     }
     else
     {

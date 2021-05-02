@@ -7,20 +7,20 @@ SourcesLoader::SourcesLoader()
 
 }
 
-bool SourcesLoader::AddSources(const SourcesLoader::t_vSources &vSources)
+bool SourcesLoader::AddSources(const DataBase::t_sources &sources)
 {
-    DataBase::t_sources* sources = &(m_db.Sources());
-    if(!CheckPointer(sources, "error opening sources database"))
+    DataBase::t_sources* pSources = &(m_db.Sources());
+    if(!CheckPointer(pSources, "error opening sources database"))
     {
         return false;
     }
 
-    sources->clear();
+    pSources->clear();
 
-    *sources = vSources;
+    *pSources = sources;
     m_status = READY;
 
-    MY_LOG(sources->size() << " sources were successfully added");
+    MY_LOG(pSources->size() << " sources were successfully added");
 
     return true;
 }

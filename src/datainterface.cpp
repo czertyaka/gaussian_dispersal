@@ -69,7 +69,7 @@ void DataInterface::OnGeospatialReset()
     m_geospatialDataLoader->Reset();
 }
 
-bool DataInterface::AddImage(const QString &filename, const ImageLoader::t_optBorders& optBorders)
+bool DataInterface::AddImage(const QString &filename, const db::t_optBorders& optBorders)
 {
     bool result = m_imageLoader->AddImage(filename, optBorders);
     emit UpdateImageStatusLabel(result);
@@ -81,9 +81,9 @@ void DataInterface::OnImageReset()
     m_imageLoader->Reset();
 }
 
-bool DataInterface::AddSources(const SourcesLoader::t_vSources& vSources)
+bool DataInterface::AddSources(const DataBase::t_sources& sources)
 {
-    bool result = m_sourcesLoader->AddSources(vSources);
+    bool result = m_sourcesLoader->AddSources(sources);
     emit UpdateSourcesStatusLabel(result);
     return result;
 }

@@ -9,7 +9,7 @@ GeospatialCsvParser::GeospatialCsvParser() :
     Init(5, "system:index", ',');
 }
 
-GeospatialCsvParser::t_lineStatus GeospatialCsvParser::ParseLine(const QString &string, GeospatialDataLoader::t_point &point)
+GeospatialCsvParser::t_lineStatus GeospatialCsvParser::ParseLine(const QString &string, DataBase::t_point &point)
 {   
     m_point = &point;
 
@@ -25,7 +25,7 @@ GeospatialCsvParser::t_lineStatus GeospatialCsvParser::ParseLine(const QString &
     m_point->elevation = m_list.at(2).toShort(&casting);
     m_point->microrelief = ParseMicrorelief(m_list.at(1), &casting);
 
-    if (!casting || m_point->microrelief == GeospatialDataLoader::UNKNOWN)
+    if (!casting || m_point->microrelief == DataBase::UNKNOWN)
     {
         return INVALID;
     }
@@ -33,7 +33,7 @@ GeospatialCsvParser::t_lineStatus GeospatialCsvParser::ParseLine(const QString &
     return OK;
 }
 
-GeospatialDataLoader::t_microrelief GeospatialCsvParser::ParseMicrorelief(const QString &sValue, bool *ok)
+DataBase::t_microrelief GeospatialCsvParser::ParseMicrorelief(const QString &sValue, bool *ok)
 {
     enum localTypes : unsigned short
     {
@@ -65,27 +65,27 @@ GeospatialDataLoader::t_microrelief GeospatialCsvParser::ParseMicrorelief(const 
     short value = sValue.toUShort(ok);
     if (!(*ok))
     {
-        return GeospatialDataLoader::UNKNOWN;
+        return DataBase::UNKNOWN;
     }
 
     switch (value)
     {
     case SNOW:
-        return GeospatialDataLoader::SNOW;
+        return DataBase::SNOW;
     case GRASS:
     case THIN_VEGETATION:
     case MOSS:
-        return GeospatialDataLoader::SHORTGRASS;
+        return DataBase::SHORTGRASS;
     case AGRICULTURE:
     case SWAMPS:
-        return GeospatialDataLoader::TALLGRASS;
+        return DataBase::TALLGRASS;
     case SHRUB:
-        return GeospatialDataLoader::SCRUB_GROWTH;
+        return DataBase::SCRUB_GROWTH;
     case BUILDINGS:
-        return GeospatialDataLoader::BUILDINGS;
+        return DataBase::BUILDINGS;
     case WATER:
     case SEAS:
-        return GeospatialDataLoader::WATER;
+        return DataBase::WATER;
     case FOREST_CLOSED_EVERGREEN_ACICULAR:
     case FOREST_CLOSED_EVERGREEN_BROADLEAVED:
     case FOREST_CLOSED_DECIDIOUS_ACICULAR:
@@ -98,13 +98,13 @@ GeospatialDataLoader::t_microrelief GeospatialCsvParser::ParseMicrorelief(const 
     case FOREST_OPENED_DECIDIOUS_BROADLEAVED:
     case FOREST_OPENED_MIXED:
     case FOREST_OPENED_UNKNOWN:
-        return GeospatialDataLoader::FOREST;
+        return DataBase::FOREST;
     case UNKNOWN:
-        return GeospatialDataLoader::UNKNOWN;
+        return DataBase::UNKNOWN;
     default:
         *ok = false;
         MY_LOG("invalid microrelief type: \"" << sValue
                << "\"");
-        return GeospatialDataLoader::UNKNOWN;
+        return DataBase::UNKNOWN;
     }
 }

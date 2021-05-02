@@ -11,6 +11,7 @@
 #include <QLabel>
 #include <QComboBox>
 #include <QDoubleSpinBox>
+#include <algorithm>
 
 #ifndef UI
     #define UI m_window->Ui()
@@ -105,7 +106,7 @@ void Connector::OnGeospatialReset()
 void Connector::OnImageAccept()
 {
     QString filename;
-    ImageLoader::t_optBorders optBorders;
+    db::t_optBorders optBorders;
 
     if (UI->imageLoadRadioButton->isChecked())
     {
@@ -131,54 +132,66 @@ void Connector::OnImageReset()
 
 void Connector::OnSourcesAccept()
 {
-    SourcesLoader::t_vSources vSources;
+    db::t_sources sources;
     QGridLayout* table = UI->sourceTableLayout;
 
     for (int row = 1; row < m_window->SourcesRows(); ++row)
     {
-        SourcesLoader::t_source source;
-        source.id = qobject_cast<QLabel*>(table->itemAtPosition(row, 0)->widget())->text().toInt();
-
-        QComboBox* comboBox = qobject_cast<QComboBox*>(table->itemAtPosition(row, 1)->widget());
-        if (comboBox->currentIndex() == 0)
-        {
-            MY_LOG("nuclide weren't chosen at source # " << row);
-            return;
-        }
-        else
-        {
-            source.nuclide = comboBox->currentText();
-        }
-
+        // получим координаты источника
         double x = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 2)->widget())->value();
         double y = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 3)->widget())->value();
 
+        // создадим объект источника с такими координатами
+        mt::t_source source;
+
         if (UI->coordinatesEPSG4326RadioButton->isChecked())
         {
-            source.coord = mt::t_epsg4326coord(x, y);
+            source.coordinates = mt::t_epsg4326coord(x, y);
         }
         else if (UI->coordinatesEPSG3857RadioButton->isChecked())
         {
-            source.coord = mt::t_epsg4326coord(mt::t_epsg3857coord(x, y));
+            source.coordinates = mt::t_epsg4326coord(mt::t_epsg3857coord(x, y));
         }
         else
         {
             // TODO
         }
 
+        // проинициализируем высоту
         source.height = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 4)->widget())->value();
-        source.temp = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 5)->widget())->value();
 
+        // проверим, есть ли уже источник с такими координатами и высотой в векторе
+        db::t_sources::iterator sourceIter = std::find(sources.begin(), sources.end(), source);
+        if (sourceIter == sources.end())
+        {
+            sources.push_back(source);
+            sourceIter = sources.end() - 1;
+        }
+
+        // проверим, задан ли нуклид
+        QComboBox* nuclideComboBox = qobject_cast<QComboBox*>(table->itemAtPosition(row, 1)->widget());
+        if (nuclideComboBox->currentIndex() == 0)
+        {
+                MY_LOG("nuclide weren't chosen at source # " << row);
+                return;
+        }
+
+        // создаем объект выброса, инициализируем индекс нуклида и температуру
+        mt::t_emission emission;
+        emission.nuclideIndex = nuclideComboBox->currentIndex();
+        emission.temperature = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 5)->widget())->value();
+
+        // инициализируем величину выброса
         if (UI->annualButton->isChecked())
         {
-            double emission = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 6)->widget())->value();
-            if (!emission)
+            double emissionValue = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 6)->widget())->value();
+            if (!emissionValue)
             {
                 MY_LOG("annual emission field is empty at source # " << row);
                 return;
             }
 
-            source.emission = emission;
+            emission.value = mt::t_emissionValue(emissionValue);
         }
         else
         {
@@ -193,16 +206,14 @@ void Connector::OnSourcesAccept()
                 return;
             }
 
-            source.firstQuarter = fisrtQuarter;
-            source.secondQuarter = secondQuarter;
-            source.fourthQuarter = thirdQuarter;
-            source.fourthQuarter = fourthQuarter;
+            emission.value = mt::t_emissionValue(fisrtQuarter, secondQuarter, thirdQuarter, fourthQuarter);
         }
 
-        vSources.push_back(source);
+        // добавляем объект выброса в источник
+        sourceIter->emissions.push_back(emission);
     }
 
-    m_data->AddSources(vSources);
+    m_data->AddSources(sources);
 }
 
 void Connector::OnSourcesReset()

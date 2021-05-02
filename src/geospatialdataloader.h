@@ -11,23 +11,6 @@ class GeospatialCsvParser;
 class GeospatialDataLoader : public BaseDataLoader
 {
 public:
-    enum t_microrelief : unsigned short
-    {
-        UNKNOWN,
-        SNOW,
-        SHORTGRASS,
-        TALLGRASS,
-        SCRUB_GROWTH,
-        FOREST,
-        BUILDINGS,
-        WATER
-    };
-    typedef struct point
-    {
-        mt::t_epsg4326coord coord;
-        t_microrelief microrelief;
-        short int elevation;
-    } t_point;
     GeospatialDataLoader();
     virtual ~GeospatialDataLoader();
     bool AddFromFile(const QString& filename);

@@ -51,7 +51,7 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
         while (!in.atEnd())
         {
             QString line = in.readLine();
-            t_point point;
+            DataBase::t_point point;
             CsvParser::t_lineStatus lineStatus = m_parser->ParseLine(line, point);
 
             if (lineStatus == CsvParser::COLUMNS_MISMATCH)

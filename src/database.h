@@ -2,19 +2,51 @@
 #define DATABASEMANAGER_H
 
 #include <vector>
+#include <QImage>
+#include <optional>
 
 #include "globaltypes.h"
-#include "geospatialdataloader.h"
-#include "imageloader.h"
-#include "sourcesloader.h"
 
 class DataBase
 {
 public:
     typedef std::vector<mt::t_observation> t_climateJournal;
-    typedef std::vector<GeospatialDataLoader::t_point> t_landscape;
-    typedef ImageLoader::t_image t_image;
-    typedef SourcesLoader::t_vSources t_sources;
+
+    enum t_microrelief : unsigned short
+    {
+        UNKNOWN,
+        SNOW,
+        SHORTGRASS,
+        TALLGRASS,
+        SCRUB_GROWTH,
+        FOREST,
+        BUILDINGS,
+        WATER
+    };
+    typedef struct point
+    {
+        mt::t_epsg4326coord coord;
+        t_microrelief microrelief;
+        short int elevation;
+    } t_point;
+    typedef std::vector<t_point> t_landscape;
+
+    typedef struct borders
+    {
+        mt::t_pseudoMercatorCoord nw; // nord west
+        mt::t_pseudoMercatorCoord ne; // nord east
+        mt::t_pseudoMercatorCoord sw; // south west
+        mt::t_pseudoMercatorCoord se; // south east
+    } t_borders;
+    typedef std::optional<t_borders> t_optBorders;
+    typedef struct image
+    {
+        QImage picture;
+        t_optBorders borders;
+    } t_image;
+
+    typedef std::vector<mt::t_source> t_sources;
+
     static DataBase& GetInstance();
     ~DataBase();
 
@@ -36,5 +68,7 @@ private:
     t_sources*          m_sources;
     mt::t_matrix*       m_matrix;
 };
+
+typedef DataBase db;
 
 #endif // DATABASEMANAGER_H

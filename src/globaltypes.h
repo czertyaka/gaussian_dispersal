@@ -72,6 +72,7 @@ namespace mt ///< my types
         double northing;
         epsg3857coord(double easting = 0, double northing = 0);
         epsg3857coord(const epsg4326coord& o);
+        bool operator==(const epsg3857coord& o) const;
     } t_epsg3857coord;
 
     typedef t_epsg3857coord t_pseudoMercatorCoord;
@@ -87,6 +88,7 @@ namespace mt ///< my types
         double lat;
         epsg4326coord(double lon = 0, double lat = 0, t_Unit unit = DEGREES);
         epsg4326coord(const epsg3857coord& o);
+        bool operator==(const epsg4326coord& o) const;
         void SetUnits(t_Unit unit);
     private:
         t_Unit m_unit;;
@@ -149,25 +151,54 @@ namespace mt ///< my types
         double avWindSpBySPCold[J] = {0}; ///< ср. скор. ветра при j−ой кат. уст. в холодное время года
         double avWindSpBySPWarm[J] = {0}; ///< ср. скор. ветра при j−ой кат. уст. в теплое время года
 
-        matrix()
-        {
-            for (size_t n = 0; n < N; ++n)
-            {
-                for (size_t k = 0; k < K; ++k)
-                {
-                    windSpRepByCPCold[n][k] = 0;
-                    windSpRepByCPWarm[n][k] = 0;
-                    for (size_t j = 0; j < J; ++j)
-                    {
-                        mCold[n][j][k] = 0;
-                        mWarm[n][j][k] = 0;
-                        wCold[n][j][k] = 0;
-                        wWarm[n][j][k] = 0;
-                    }
-                }
-            }
-        }
+        matrix();
     } t_matrix;
+
+    typedef struct quarterEmission
+    {
+        double fisrtQuarter;
+        double secondQuarter;
+        double thirdQuarter;
+        double fourthQuarter;
+    } t_quarterEmission;
+
+    typedef class emissionValue
+    {
+    public:
+        emissionValue();
+        emissionValue(double annualValue);
+        emissionValue(double fisrt, double second, double third, double fourth);
+        emissionValue& operator=(const emissionValue& o);
+        const std::optional<double>& getAnnual() const;
+        const std::optional<t_quarterEmission>& getQuarter() const;
+    private:
+        std::optional<double> m_annualValue;
+        std::optional<t_quarterEmission> m_quarterValue;
+    } t_emissionValue;
+
+    typedef size_t t_nuclideIndex;
+
+    typedef struct nuclide
+    {
+        t_nuclideIndex index;
+        QString name;
+    } t_nuclide;
+
+    typedef struct emission
+    {
+        t_nuclideIndex nuclideIndex;
+        double temperature;
+        t_emissionValue value;
+    } t_emission;
+
+    typedef struct source
+    {
+        typedef std::vector<emission> t_emissions;
+        t_epsg4326coord coordinates;
+        double height;
+        t_emissions emissions;
+        bool operator==(const source& o);
+    } t_source;
 }
 
 #endif // GLOBALTYPES_H
