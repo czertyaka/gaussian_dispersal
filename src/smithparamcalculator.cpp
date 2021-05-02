@@ -5,10 +5,10 @@
 
 #include <cmath>
 
-SmithParamCalculator::SmithParamCalculator(const mm::t_observation& obs) :
+SmithParamCalculator::SmithParamCalculator(const mt::t_observation& obs) :
     BaseCalculator(),
     m_obs(obs),
-    m_coord(mm::t_epsg4326coord())
+    m_coord(mt::t_epsg4326coord())
 {
 
 }
@@ -30,15 +30,15 @@ BaseCalculator::t_errorCode SmithParamCalculator::Execute()
     {
         switch (m_insolClass)
         {
-        case -3:   m_param = mm::cathG; break;
-        case -2:   m_param = mm::cathF; break;
-        case -1:   m_param = mm::cathF; break;
-        case 0:    m_param = mm::cathD; break;
-        case 1:    m_param = mm::cathC; break;
-        case 2:    m_param = mm::cathB; break;
-        case 3:    m_param = mm::cathA; break;
-        case 4:    m_param = mm::cathA; break;
-        case 5:    m_param = mm::cathA; break;
+        case -3:   m_param = mt::cathG; break;
+        case -2:   m_param = mt::cathF; break;
+        case -1:   m_param = mt::cathF; break;
+        case 0:    m_param = mt::cathD; break;
+        case 1:    m_param = mt::cathC; break;
+        case 2:    m_param = mt::cathB; break;
+        case 3:    m_param = mt::cathA; break;
+        case 4:    m_param = mt::cathA; break;
+        case 5:    m_param = mt::cathA; break;
         default:    break;
         }
     }
@@ -46,15 +46,15 @@ BaseCalculator::t_errorCode SmithParamCalculator::Execute()
     {
         switch (m_insolClass)
         {
-        case -3:   m_param = mm::cathG; break;
-        case -2:   m_param = mm::cathF; break;
-        case -1:   m_param = mm::cathE; break;
-        case 0:    m_param = mm::cathD; break;
-        case 1:    m_param = mm::cathC; break;
-        case 2:    m_param = mm::cathB; break;
-        case 3:    m_param = mm::cathB; break;
-        case 4:    m_param = mm::cathA; break;
-        case 5:    m_param = mm::cathA; break;
+        case -3:   m_param = mt::cathG; break;
+        case -2:   m_param = mt::cathF; break;
+        case -1:   m_param = mt::cathE; break;
+        case 0:    m_param = mt::cathD; break;
+        case 1:    m_param = mt::cathC; break;
+        case 2:    m_param = mt::cathB; break;
+        case 3:    m_param = mt::cathB; break;
+        case 4:    m_param = mt::cathA; break;
+        case 5:    m_param = mt::cathA; break;
         default: break;
         }
     }
@@ -62,15 +62,15 @@ BaseCalculator::t_errorCode SmithParamCalculator::Execute()
     {
         switch (m_insolClass)
         {
-        case -3:   m_param = mm::cathF; break;
-        case -2:   m_param = mm::cathF; break;
-        case -1:   m_param = mm::cathE; break;
-        case 0:    m_param = mm::cathD; break;
-        case 1:    m_param = mm::cathD; break;
-        case 2:    m_param = mm::cathC; break;
-        case 3:    m_param = mm::cathB; break;
-        case 4:    m_param = mm::cathB; break;
-        case 5:    m_param = mm::cathA; break;
+        case -3:   m_param = mt::cathF; break;
+        case -2:   m_param = mt::cathF; break;
+        case -1:   m_param = mt::cathE; break;
+        case 0:    m_param = mt::cathD; break;
+        case 1:    m_param = mt::cathD; break;
+        case 2:    m_param = mt::cathC; break;
+        case 3:    m_param = mt::cathB; break;
+        case 4:    m_param = mt::cathB; break;
+        case 5:    m_param = mt::cathA; break;
         default: break;
         }
     }
@@ -78,15 +78,15 @@ BaseCalculator::t_errorCode SmithParamCalculator::Execute()
     {
         switch (m_insolClass)
         {
-        case -3:   m_param = mm::cathF; break;
-        case -2:   m_param = mm::cathE; break;
-        case -1:   m_param = mm::cathD; break;
-        case 0:    m_param = mm::cathD; break;
-        case 1:    m_param = mm::cathD; break;
-        case 2:    m_param = mm::cathC; break;
-        case 3:    m_param = mm::cathB; break;
-        case 4:    m_param = mm::cathB; break;
-        case 5:    m_param = mm::cathA; break;
+        case -3:   m_param = mt::cathF; break;
+        case -2:   m_param = mt::cathE; break;
+        case -1:   m_param = mt::cathD; break;
+        case 0:    m_param = mt::cathD; break;
+        case 1:    m_param = mt::cathD; break;
+        case 2:    m_param = mt::cathC; break;
+        case 3:    m_param = mt::cathB; break;
+        case 4:    m_param = mt::cathB; break;
+        case 5:    m_param = mt::cathA; break;
         default: break;
         }
     }
@@ -94,15 +94,15 @@ BaseCalculator::t_errorCode SmithParamCalculator::Execute()
     {
         switch (m_insolClass)
         {
-        case -3:   m_param = mm::cathE; break;
-        case -2:   m_param = mm::cathE; break;
-        case -1:   m_param = mm::cathD; break;
-        case 0:    m_param = mm::cathD; break;
-        case 1:    m_param = mm::cathD; break;
-        case 2:    m_param = mm::cathC; break;
-        case 3:    m_param = mm::cathC; break;
-        case 4:    m_param = mm::cathB; break;
-        case 5:    m_param = mm::cathB; break;
+        case -3:   m_param = mt::cathE; break;
+        case -2:   m_param = mt::cathE; break;
+        case -1:   m_param = mt::cathD; break;
+        case 0:    m_param = mt::cathD; break;
+        case 1:    m_param = mt::cathD; break;
+        case 2:    m_param = mt::cathC; break;
+        case 3:    m_param = mt::cathC; break;
+        case 4:    m_param = mt::cathB; break;
+        case 5:    m_param = mt::cathB; break;
         default: break;
         }
     }
@@ -110,15 +110,15 @@ BaseCalculator::t_errorCode SmithParamCalculator::Execute()
     {
         switch (m_insolClass)
         {
-        case -3:   m_param = mm::cathE; break;
-        case -2:   m_param = mm::cathD; break;
-        case -1:   m_param = mm::cathD; break;
-        case 0:    m_param = mm::cathD; break;
-        case 1:    m_param = mm::cathD; break;
-        case 2:    m_param = mm::cathC; break;
-        case 3:    m_param = mm::cathC; break;
-        case 4:    m_param = mm::cathC; break;
-        case 5:    m_param = mm::cathB; break;
+        case -3:   m_param = mt::cathE; break;
+        case -2:   m_param = mt::cathD; break;
+        case -1:   m_param = mt::cathD; break;
+        case 0:    m_param = mt::cathD; break;
+        case 1:    m_param = mt::cathD; break;
+        case 2:    m_param = mt::cathC; break;
+        case 3:    m_param = mt::cathC; break;
+        case 4:    m_param = mt::cathC; break;
+        case 5:    m_param = mt::cathB; break;
         default: break;
         }
     }
@@ -126,27 +126,27 @@ BaseCalculator::t_errorCode SmithParamCalculator::Execute()
     {
         switch (m_insolClass)
         {
-        case -3:   m_param = mm::cathD; break;
-        case -2:   m_param = mm::cathD; break;
-        case -1:   m_param = mm::cathD; break;
-        case 0:    m_param = mm::cathD; break;
-        case 1:    m_param = mm::cathD; break;
-        case 2:    m_param = mm::cathD; break;
-        case 3:    m_param = mm::cathC; break;
-        case 4:    m_param = mm::cathC; break;
-        case 5:    m_param = mm::cathC; break;
+        case -3:   m_param = mt::cathD; break;
+        case -2:   m_param = mt::cathD; break;
+        case -1:   m_param = mt::cathD; break;
+        case 0:    m_param = mt::cathD; break;
+        case 1:    m_param = mt::cathD; break;
+        case 2:    m_param = mt::cathD; break;
+        case 3:    m_param = mt::cathC; break;
+        case 4:    m_param = mt::cathC; break;
+        case 5:    m_param = mt::cathC; break;
         default: break;
         }
     }
     else if (m_obs.windSpeed >= 7.5)
     {
-       m_param = mm::cathD;
+       m_param = mt::cathD;
     }
 
     return OK;
 }
 
-mm::t_smithParam SmithParamCalculator::Get() const
+mt::t_smithParam SmithParamCalculator::Get() const
 {
     return m_param;
 }
@@ -177,7 +177,7 @@ bool SmithParamCalculator::GetCoordinate()
         return false;
     }
 
-    m_coord.SetUnits(mm::t_epsg4326coord::RADIANS);
+    m_coord.SetUnits(mt::t_epsg4326coord::RADIANS);
 
     return true;
 }
@@ -191,7 +191,7 @@ void SmithParamCalculator::CalcSunDeclination()
 
 void SmithParamCalculator::CalcSunAngle()
 {
-    m_coord.SetUnits(mm::t_epsg4326coord::RADIANS);
+    m_coord.SetUnits(mt::t_epsg4326coord::RADIANS);
 
     double hourAngle = M_PI * ( static_cast<double>(m_obs.dateTime.time().hour()) / 12.0 - 1 );
     double sunAngleSin = sin(m_sunDecl) * sin(m_coord.lat) +
@@ -202,7 +202,7 @@ void SmithParamCalculator::CalcSunAngle()
 
 void SmithParamCalculator::CalcSetOfDay()
 {
-    m_coord.SetUnits(mm::t_epsg4326coord::RADIANS);
+    m_coord.SetUnits(mt::t_epsg4326coord::RADIANS);
 
     double beta = - ( 0.0145 + sin(m_sunDecl) * sin(m_coord.lat) ) /
                     ( cos(m_sunDecl) * cos(m_coord.lat) );
@@ -260,15 +260,15 @@ void SmithParamCalculator::CalcInsolClass()
 
 double SmithParamCalculator::CalcAlbedo()
 {
-    m_coord.SetUnits(mm::t_epsg4326coord::DEGREES);
+    m_coord.SetUnits(mt::t_epsg4326coord::DEGREES);
 
     if (m_coord.lat <= 90 && m_coord.lat > 70) { return 0.80; }
 
     switch (m_obs.dateTime.date().month())
     {
-    case mm::JAN: // зима
-    case mm::FEB:
-    case mm::DEC:
+    case mt::JAN: // зима
+    case mt::FEB:
+    case mt::DEC:
         if (m_coord.lat <= 70 && m_coord.lat > 60) { return 0.70; }
         if (m_coord.lat <= 60 && m_coord.lat > 50) { return 0.60; }
         if (m_coord.lat <= 50 && m_coord.lat > 40) { return 0.49; }
@@ -277,9 +277,9 @@ double SmithParamCalculator::CalcAlbedo()
         if (m_coord.lat <= 20 && m_coord.lat > 10) { return 0.24; }
         if (m_coord.lat <= 10 && m_coord.lat >= 0) { return 0.21; }
         break;
-    case mm::MAR: // весна
-    case mm::APR:
-    case mm::MAY:
+    case mt::MAR: // весна
+    case mt::APR:
+    case mt::MAY:
         if (m_coord.lat <= 70 && m_coord.lat > 60) { return 0.70; }
         if (m_coord.lat <= 60 && m_coord.lat > 50) { return 0.57; }
         if (m_coord.lat <= 50 && m_coord.lat > 40) { return 0.42; }
@@ -288,9 +288,9 @@ double SmithParamCalculator::CalcAlbedo()
         if (m_coord.lat <= 20 && m_coord.lat > 10) { return 0.24; }
         if (m_coord.lat <= 10 && m_coord.lat >= 0) { return 0.21; }
         break;
-    case mm::JUN: // лето
-    case mm::JUL:
-    case mm::AUG:
+    case mt::JUN: // лето
+    case mt::JUL:
+    case mt::AUG:
         if (m_coord.lat <= 70 && m_coord.lat > 60) { return 0.26; }
         if (m_coord.lat <= 60 && m_coord.lat > 50) { return 0.18; }
         if (m_coord.lat <= 50 && m_coord.lat > 40) { return 0.20; }
@@ -299,9 +299,9 @@ double SmithParamCalculator::CalcAlbedo()
         if (m_coord.lat <= 20 && m_coord.lat > 10) { return 0.22; }
         if (m_coord.lat <= 10 && m_coord.lat >= 0) { return 0.19; }
         break;
-    case mm::SEP: // осень
-    case mm::OCT:
-    case mm::NOV:
+    case mt::SEP: // осень
+    case mt::OCT:
+    case mt::NOV:
         if (m_coord.lat <= 70 && m_coord.lat > 60) { return 0.24; }
         if (m_coord.lat <= 60 && m_coord.lat > 50) { return 0.18; }
         if (m_coord.lat <= 50 && m_coord.lat > 40) { return 0.20; }

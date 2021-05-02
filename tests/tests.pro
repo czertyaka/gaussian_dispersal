@@ -14,10 +14,10 @@ INCLUDEPATH +=  $$SRC_DIR
 SOURCES += \
     tst_scattering_test.cpp \
     $$SRC_DIR/csvwriter.cpp \
-    $$SRC_DIR/meteorology.cpp \
+    $$SRC_DIR/globaltypes.cpp \
 
 HEADERS += \
     $$SRC_DIR/csvwriter.h \
-    $$SRC_DIR/meteorology.h \
+    $$SRC_DIR/globaltypes.h \
 
 DEFINES += "TESTING"

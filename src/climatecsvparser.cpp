@@ -40,7 +40,7 @@ void ClimateCsvParser::SetFormat(ClimateCsvParser::t_format format)
     }
 }
 
-CsvParser::t_lineStatus ClimateCsvParser::ParseLine(const QString& string, mm::t_observation &observation)
+CsvParser::t_lineStatus ClimateCsvParser::ParseLine(const QString& string, mt::t_observation &observation)
 {
     t_lineStatus status = SplitLine(string);
     if (status != OK)

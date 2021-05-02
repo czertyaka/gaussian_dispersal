@@ -12,11 +12,11 @@ public:
     t_errorCode Execute() override;
 private:
 
-    bool AddObservation(const mm::t_observation& obs);
+    bool AddObservation(const mt::t_observation& obs);
 
-    size_t GetJ(const mm::t_smithParam smithParam, bool& result) const;
+    size_t GetJ(const mt::t_smithParam smithParam, bool& result) const;
     size_t GetK(const double windSpeed, bool& result) const;
-    size_t GetN(const mm::t_windDir, bool& result) const;
+    size_t GetN(const mt::t_windDir, bool& result) const;
 
     void NormalizeMatrix();
     void CalcWindRose();
@@ -28,7 +28,7 @@ private:
     void CalcAverageWindSpeedBySmithParam();
 
     DataBase::t_climateJournal& m_journal;
-    mm::t_matrix&               m_matrix;
+    mt::t_matrix&               m_matrix;
 };
 
 #endif // MATRIXCALCULATOR_H

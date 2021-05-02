@@ -28,11 +28,11 @@ SOURCES += \
     datainterface.cpp \
     geospatialcsvparser.cpp \
     geospatialdataloader.cpp \
+    globaltypes.cpp \
     imageloader.cpp \
     main.cpp \
     mainwindow.cpp \
     matrixcalculator.cpp \
-    meteorology.cpp \
     rp5strategy.cpp \
     smithparamcalculator.cpp \
     sourcesloader.cpp
@@ -50,10 +50,10 @@ HEADERS += \
     datainterface.h \
     geospatialcsvparser.h \
     geospatialdataloader.h \
+    globaltypes.h \
     imageloader.h \
     mainwindow.h \
     matrixcalculator.h \
-    meteorology.h \
     rp5strategy.h \
     smithparamcalculator.h \
     sourcesloader.h

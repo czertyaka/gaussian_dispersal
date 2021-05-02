@@ -14,7 +14,7 @@ Rp5Strategy::Rp5Strategy() :
 
 }
 
-CsvParser::t_lineStatus Rp5Strategy::ParseLine(const QStringList &list, mm::t_observation &observation)
+CsvParser::t_lineStatus Rp5Strategy::ParseLine(const QStringList &list, mt::t_observation &observation)
 {   
     m_obs = &observation;
 
@@ -81,23 +81,23 @@ void Rp5Strategy::ParseTemper()
 
 bool Rp5Strategy::ParseWindDir()
 {
-    if      (m_DD == "Штиль, безветрие")                          { m_obs->windDir = mm::calm; }
-    else if (m_DD == "Ветер, дующий с севера")                    { m_obs->windDir = mm::N;    }
-    else if (m_DD == "Ветер, дующий с северо-северо-востока")     { m_obs->windDir = mm::NNE;  }
-    else if (m_DD == "Ветер, дующий с северо-востока")            { m_obs->windDir = mm::NE;   }
-    else if (m_DD == "Ветер, дующий с востоко-северо-востока")    { m_obs->windDir = mm::ENE;  }
-    else if (m_DD == "Ветер, дующий с востока")                   { m_obs->windDir = mm::E;    }
-    else if (m_DD == "Ветер, дующий с востоко-юго-востока")       { m_obs->windDir = mm::ESE;  }
-    else if (m_DD == "Ветер, дующий с юго-востока")               { m_obs->windDir = mm::SE;   }
-    else if (m_DD == "Ветер, дующий с юго-юго-востока")           { m_obs->windDir = mm::SSE;  }
-    else if (m_DD == "Ветер, дующий с юга")                       { m_obs->windDir = mm::S;    }
-    else if (m_DD == "Ветер, дующий с юго-юго-запада")            { m_obs->windDir = mm::SSW;  }
-    else if (m_DD == "Ветер, дующий с юго-запада")                { m_obs->windDir = mm::SW;   }
-    else if (m_DD == "Ветер, дующий с западо-юго-запада")         { m_obs->windDir = mm::WSW;  }
-    else if (m_DD == "Ветер, дующий с запада")                    { m_obs->windDir = mm::W;    }
-    else if (m_DD == "Ветер, дующий с западо-северо-запада")      { m_obs->windDir = mm::WNW;  }
-    else if (m_DD == "Ветер, дующий с северо-запада")             { m_obs->windDir = mm::NW;   }
-    else if (m_DD == "Ветер, дующий с северо-северо-запада")      { m_obs->windDir = mm::NNW;  }
+    if      (m_DD == "Штиль, безветрие")                          { m_obs->windDir = mt::calm; }
+    else if (m_DD == "Ветер, дующий с севера")                    { m_obs->windDir = mt::N;    }
+    else if (m_DD == "Ветер, дующий с северо-северо-востока")     { m_obs->windDir = mt::NNE;  }
+    else if (m_DD == "Ветер, дующий с северо-востока")            { m_obs->windDir = mt::NE;   }
+    else if (m_DD == "Ветер, дующий с востоко-северо-востока")    { m_obs->windDir = mt::ENE;  }
+    else if (m_DD == "Ветер, дующий с востока")                   { m_obs->windDir = mt::E;    }
+    else if (m_DD == "Ветер, дующий с востоко-юго-востока")       { m_obs->windDir = mt::ESE;  }
+    else if (m_DD == "Ветер, дующий с юго-востока")               { m_obs->windDir = mt::SE;   }
+    else if (m_DD == "Ветер, дующий с юго-юго-востока")           { m_obs->windDir = mt::SSE;  }
+    else if (m_DD == "Ветер, дующий с юга")                       { m_obs->windDir = mt::S;    }
+    else if (m_DD == "Ветер, дующий с юго-юго-запада")            { m_obs->windDir = mt::SSW;  }
+    else if (m_DD == "Ветер, дующий с юго-запада")                { m_obs->windDir = mt::SW;   }
+    else if (m_DD == "Ветер, дующий с западо-юго-запада")         { m_obs->windDir = mt::WSW;  }
+    else if (m_DD == "Ветер, дующий с запада")                    { m_obs->windDir = mt::W;    }
+    else if (m_DD == "Ветер, дующий с западо-северо-запада")      { m_obs->windDir = mt::WNW;  }
+    else if (m_DD == "Ветер, дующий с северо-запада")             { m_obs->windDir = mt::NW;   }
+    else if (m_DD == "Ветер, дующий с северо-северо-запада")      { m_obs->windDir = mt::NNW;  }
     else
     {
         MY_LOG("invalid  wind direction: \"" << m_DD << "\" at " << m_obs->dateTime.toString(DATETIME_FORMAT));

@@ -6,9 +6,9 @@
  * p. 44
 */
 
-#include "meteorology.h"
+#include "globaltypes.h"
 
-using namespace mm;
+using namespace mt;
 
 // WGS 84 / Pseudo-Mercator (EPSG CRS code 3857) Parameters
 static const double a = 6378137.0; ///<  ellipsoid semi-major axis, meters
@@ -24,7 +24,7 @@ epsg3857coord::epsg3857coord(double easting, double northing) :
 
 }
 
-epsg3857coord::epsg3857coord(const mm::epsg4326coord &o)
+epsg3857coord::epsg3857coord(const mt::epsg4326coord &o)
 {
     easting = FE + a * (RAD(o.lon) - lon_o);
     northing = FN + a * log(tan(M_PI/4 + RAD(o.lat)/2));
@@ -38,7 +38,7 @@ epsg4326coord::epsg4326coord(double lon, double lat, t_Unit unit) :
 
 }
 
-epsg4326coord::epsg4326coord(const mm::epsg3857coord &o)
+epsg4326coord::epsg4326coord(const mt::epsg3857coord &o)
 {
     double D = (FN - o.northing)/a;
     lat = DEG(M_PI/2 - 2*atan(exp(D)));

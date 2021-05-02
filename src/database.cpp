@@ -17,7 +17,7 @@ DataBase::~DataBase()
     delete m_matrix;
 }
 
-mm::t_matrix &DataBase::Matrix()
+mt::t_matrix &DataBase::Matrix()
 {
     return *m_matrix;
 }
@@ -190,6 +190,6 @@ DataBase::DataBase() :
     m_landscape(new t_landscape),
     m_image(new t_image),
     m_sources(new t_sources),
-    m_matrix(new mm::t_matrix)
+    m_matrix(new mt::t_matrix)
 {
 }

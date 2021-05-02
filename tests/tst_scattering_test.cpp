@@ -7,10 +7,10 @@
 #endif
 
 // add necessary includes here
-#include "meteorology.h"
+#include "globaltypes.h"
 #include "csvwriter.h"
 
-using namespace mm;
+using namespace mt;
 
 static void Show(const t_epsg3857coord& coord)
 {

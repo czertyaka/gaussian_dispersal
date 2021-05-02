@@ -36,7 +36,7 @@ BaseCalculator::t_errorCode MatrixCalculator::Execute()
     return OK;
 }
 
-bool MatrixCalculator::AddObservation(const mm::t_observation &obs)
+bool MatrixCalculator::AddObservation(const mt::t_observation &obs)
 {    
     SmithParamCalculator smithParamCalculator(obs);
     if (smithParamCalculator.Execute() == ERROR)
@@ -56,8 +56,8 @@ bool MatrixCalculator::AddObservation(const mm::t_observation &obs)
         return false;
     }
 
-    if ((obs.dateTime.date().month() >= mm::APR && obs.dateTime.date().day() > 15)
-            || (obs.dateTime.date().month() <= mm::OCT && obs.dateTime.date().day() <= 15))
+    if ((obs.dateTime.date().month() >= mt::APR && obs.dateTime.date().day() > 15)
+            || (obs.dateTime.date().month() <= mt::OCT && obs.dateTime.date().day() <= 15))
     {
         m_matrix.mWarm[n][j][k]++;
         m_matrix.MWarm++;
@@ -73,17 +73,17 @@ bool MatrixCalculator::AddObservation(const mm::t_observation &obs)
     return true;
 }
 
-size_t MatrixCalculator::GetJ(const mm::t_smithParam smithParam, bool& result) const
+size_t MatrixCalculator::GetJ(const mt::t_smithParam smithParam, bool& result) const
 {
     switch (smithParam)
     {
-    case mm::cathA: return 0;
-    case mm::cathB: return 1;
-    case mm::cathC: return 2;
-    case mm::cathD: return 3;
-    case mm::cathE: return 4;
-    case mm::cathF: return 5;
-    case mm::cathG: return 6;
+    case mt::cathA: return 0;
+    case mt::cathB: return 1;
+    case mt::cathC: return 2;
+    case mt::cathD: return 3;
+    case mt::cathE: return 4;
+    case mt::cathF: return 5;
+    case mt::cathG: return 6;
     default:
         MY_LOG("invalid smith param " << (int)smithParam);
         result = false;
@@ -112,27 +112,27 @@ size_t MatrixCalculator::GetK(const double windSpeed, bool &result) const
     return 0;
 }
 
-size_t MatrixCalculator::GetN(const mm::t_windDir windDir, bool &result) const
+size_t MatrixCalculator::GetN(const mt::t_windDir windDir, bool &result) const
 {
     switch (windDir)
     {
-    case mm::calm: return 0;
-    case mm::N:    return 0;
-    case mm::NNE:  return 1;
-    case mm::NE:   return 2;
-    case mm::ENE:  return 3;
-    case mm::E:    return 4;
-    case mm::ESE:  return 5;
-    case mm::SE:   return 6;
-    case mm::SSE:  return 7;
-    case mm::S:    return 8;
-    case mm::SSW:  return 9;
-    case mm::SW:   return 10;
-    case mm::WSW:  return 11;
-    case mm::W:    return 12;
-    case mm::WNW:  return 13;
-    case mm::NW:   return 14;
-    case mm::NNW:  return 15;
+    case mt::calm: return 0;
+    case mt::N:    return 0;
+    case mt::NNE:  return 1;
+    case mt::NE:   return 2;
+    case mt::ENE:  return 3;
+    case mt::E:    return 4;
+    case mt::ESE:  return 5;
+    case mt::SE:   return 6;
+    case mt::SSE:  return 7;
+    case mt::S:    return 8;
+    case mt::SSW:  return 9;
+    case mt::SW:   return 10;
+    case mt::WSW:  return 11;
+    case mt::W:    return 12;
+    case mt::WNW:  return 13;
+    case mt::NW:   return 14;
+    case mt::NNW:  return 15;
     default:
         MY_LOG("invalid wind direction " << (int)windDir);
         result = false;

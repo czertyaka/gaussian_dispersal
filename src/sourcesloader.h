@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "basedataloader.h"
-#include "meteorology.h"
+#include "globaltypes.h"
 
 class SourcesLoader : public BaseDataLoader
 {
@@ -15,7 +15,7 @@ public:
     {
         int                     id;
         QString                 nuclide;
-        mm::t_epsg4326coord     coord;
+        mt::t_epsg4326coord     coord;
         double                  height;
         double                  temp;
         std::optional<double>   emission;

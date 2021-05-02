@@ -1,7 +1,7 @@
 #ifndef CLIMATECSVPARSER_H
 #define CLIMATECSVPARSER_H
 
-#include "meteorology.h"
+#include "globaltypes.h"
 #include "csvparser.h"
 
 class ClimaticParsingStrategy;
@@ -18,7 +18,7 @@ public:
     ClimateCsvParser();
     ~ClimateCsvParser();
     void SetFormat(t_format format);
-    t_lineStatus ParseLine(const QString& string, mm::t_observation& observation);
+    t_lineStatus ParseLine(const QString& string, mt::t_observation& observation);
 private:
     t_format m_format; ///< формат обрабатываемого файла
     ClimaticParsingStrategy* m_strategy; ///< parsing strategy base class

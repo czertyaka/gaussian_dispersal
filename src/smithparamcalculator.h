@@ -2,15 +2,15 @@
 #define SMITHPARAMCALCULATOR_H
 
 #include "basecalculator.h"
-#include "meteorology.h"
+#include "globaltypes.h"
 
 class SmithParamCalculator : public BaseCalculator
 {
 public:
 
-    SmithParamCalculator(const mm::t_observation& obs);
+    SmithParamCalculator(const mt::t_observation& obs);
     t_errorCode Execute() override;
-    mm::t_smithParam Get() const;
+    mt::t_smithParam Get() const;
 
 private:
 
@@ -31,9 +31,9 @@ private:
     void CorrectionVI();
     void CorrectionVII();
 
-    mm::t_smithParam m_param;
+    mt::t_smithParam m_param;
 
-    const mm::t_observation& m_obs;
+    const mt::t_observation& m_obs;
 
     double  m_riseTime; ///< время восхода солнца, ч.
     double  m_setTime; ///< время захода солнца, ч
@@ -41,7 +41,7 @@ private:
     double  m_sunAngle; ///< высота солнца, град.
     int     m_insolClass; ///< класс инсоляции
 
-    mm::t_epsg4326coord m_coord;
+    mt::t_epsg4326coord m_coord;
 };
 
 #endif // SMITHPARAMCALCULATOR_H

@@ -1,5 +1,5 @@
-#ifndef METEOROLOGY_H
-#define METEOROLOGY_H
+#ifndef GLOBALTYPES_H
+#define GLOBALTYPES_H
 
 #include <QString>
 #include <QDateTime>
@@ -14,7 +14,7 @@
 #define DEG(radian) static_cast<double>(radian)/M_PI*180
 #endif
 
-namespace mm
+namespace mt ///< my types
 {
     enum t_windDir : const int
     {
@@ -170,4 +170,4 @@ namespace mm
     } t_matrix;
 }
 
-#endif // METEOROLOGY_H
+#endif // GLOBALTYPES_H

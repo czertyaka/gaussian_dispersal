@@ -155,11 +155,11 @@ void Connector::OnSourcesAccept()
 
         if (UI->coordinatesEPSG4326RadioButton->isChecked())
         {
-            source.coord = mm::t_epsg4326coord(x, y);
+            source.coord = mt::t_epsg4326coord(x, y);
         }
         else if (UI->coordinatesEPSG3857RadioButton->isChecked())
         {
-            source.coord = mm::t_epsg4326coord(mm::t_epsg3857coord(x, y));
+            source.coord = mt::t_epsg4326coord(mt::t_epsg3857coord(x, y));
         }
         else
         {

@@ -2,7 +2,7 @@
 #define IMAGEDATA_H
 
 #include "basedataloader.h"
-#include "meteorology.h"
+#include "globaltypes.h"
 
 #include <QImage>
 #include <optional>
@@ -12,10 +12,10 @@ class ImageLoader : public BaseDataLoader
 public:
     typedef struct borders
     {
-        mm::t_pseudoMercatorCoord nw; // nord west
-        mm::t_pseudoMercatorCoord ne; // nord east
-        mm::t_pseudoMercatorCoord sw; // south west
-        mm::t_pseudoMercatorCoord se; // south east
+        mt::t_pseudoMercatorCoord nw; // nord west
+        mt::t_pseudoMercatorCoord ne; // nord east
+        mt::t_pseudoMercatorCoord sw; // south west
+        mt::t_pseudoMercatorCoord se; // south east
     } t_borders;
     typedef std::optional<t_borders> t_optBorders;
     typedef struct image
