@@ -16,8 +16,8 @@ public:
         COLUMNS_MISMATCH
     };
     CsvParser();
-    void Init(const size_t columnsNumber, const QString& firstHeader, const char delimeter);
 protected:
+    void Init(const size_t columnsNumber, const QString& firstHeader, const char delimeter);
     t_lineStatus SplitLine(const QString& string);
     QStringList m_list;
 private:

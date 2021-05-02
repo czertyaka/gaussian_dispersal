@@ -176,17 +176,17 @@ namespace mt ///< my types
         std::optional<t_quarterEmission> m_quarterValue;
     } t_emissionValue;
 
-    typedef size_t t_nuclideIndex;
-
     typedef struct nuclide
     {
-        t_nuclideIndex index;
         QString name;
+        double halfLife;
+        bool operator<(const nuclide& o) const;
+        bool operator==(const nuclide& o) const;
     } t_nuclide;
 
     typedef struct emission
     {
-        t_nuclideIndex nuclideIndex;
+        QString nuclideName;
         double temperature;
         t_emissionValue value;
     } t_emission;
@@ -197,7 +197,7 @@ namespace mt ///< my types
         t_epsg4326coord coordinates;
         double height;
         t_emissions emissions;
-        bool operator==(const source& o);
+        bool operator==(const source& o) const;
     } t_source;
 }
 

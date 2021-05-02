@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1070</width>
-    <height>679</height>
+    <width>1262</width>
+    <height>731</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="climateTab">
        <attribute name="title">
@@ -945,8 +945,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>1012</width>
-               <height>62</height>
+               <width>1317</width>
+               <height>86</height>
               </rect>
              </property>
              <property name="sizePolicy">
@@ -1081,66 +1081,6 @@
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <item>
-                   <property name="text">
-                    <string>None</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Ar-41</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Kr-85</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Kr-85m</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Kr-87</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Kr-88</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Kr-89</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Xe-133</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Xe-135</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Xe-135m</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Xe-138</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Xe-137</string>
-                   </property>
-                  </item>
                  </widget>
                 </item>
                 <item row="0" column="9">
@@ -1475,8 +1415,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1070</width>
-     <height>20</height>
+     <width>1262</width>
+     <height>30</height>
     </rect>
    </property>
   </widget>
@@ -1840,7 +1780,7 @@
  <buttongroups>
   <buttongroup name="imageButtonGroup"/>
   <buttongroup name="buttonGroup"/>
-  <buttongroup name="BoundariesButtonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="BoundariesButtonGroup"/>
  </buttongroups>
 </ui>

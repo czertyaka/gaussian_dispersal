@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "database.h"
 
 #include <QAbstractSpinBox>
 #include <QFileDialog>
@@ -34,6 +35,17 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete m_ui;
+}
+
+void MainWindow::UpdateNuclides()
+{
+    m_ui->nuclideComboBox->addItem("None");
+
+    db::t_nuclides nuclides = DataBase::GetInstance().Nuclides();
+    for (db::t_nuclides::const_iterator iter = nuclides.cbegin(); iter != nuclides.cend(); ++iter)
+    {
+        m_ui->nuclideComboBox->addItem(iter->name);
+    }
 }
 
 void MainWindow::UpdateClimateStatusLabel(const bool ok)

@@ -178,7 +178,7 @@ void Connector::OnSourcesAccept()
 
         // создаем объект выброса, инициализируем индекс нуклида и температуру
         mt::t_emission emission;
-        emission.nuclideIndex = nuclideComboBox->currentIndex();
+        emission.nuclideName = nuclideComboBox->currentText();
         emission.temperature = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 5)->widget())->value();
 
         // инициализируем величину выброса

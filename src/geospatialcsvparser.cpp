@@ -25,7 +25,7 @@ GeospatialCsvParser::t_lineStatus GeospatialCsvParser::ParseLine(const QString &
     m_point->elevation = m_list.at(2).toShort(&casting);
     m_point->microrelief = ParseMicrorelief(m_list.at(1), &casting);
 
-    if (!casting || m_point->microrelief == DataBase::UNKNOWN)
+    if (!casting || m_point->microrelief == db::UNKNOWN)
     {
         return INVALID;
     }

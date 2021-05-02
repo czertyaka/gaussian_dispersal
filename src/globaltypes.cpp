@@ -129,7 +129,17 @@ const std::optional<t_quarterEmission>& emissionValue::getQuarter() const
     return m_quarterValue;
 }
 
-bool source::operator==(const source &o)
+bool source::operator==(const source &o) const
 {
     return coordinates == o.coordinates && height == o.height;
+}
+
+bool nuclide::operator<(const nuclide &o) const
+{
+    return name < o.name;
+}
+
+bool nuclide::operator==(const nuclide &o) const
+{
+    return name == o.name;
 }

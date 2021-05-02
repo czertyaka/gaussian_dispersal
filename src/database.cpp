@@ -1,6 +1,7 @@
 #include "database.h"
 #include "csvwriter.h"
 #include "datainterface.h"
+#include "nuclidesparser.h"
 
 DataBase &DataBase::GetInstance()
 {
@@ -15,11 +16,64 @@ DataBase::~DataBase()
     delete m_image;
     delete m_sources;
     delete m_matrix;
+    delete m_nuclides;
+}
+
+bool DataBase::Init()
+{
+    return InitNuclides();
+}
+
+bool DataBase::InitNuclides()
+{
+    QString filename = "../data/nuclides.csv";
+    QFile file(filename);
+    if (!file.open(QFile::ReadOnly | QFile::Text))
+    {
+        MY_LOG( "error opening " << filename);
+        return false;
+    }
+
+    QTextStream in(&file);
+    while (!in.atEnd())
+    {
+        QString line = in.readLine();
+
+        NuclidesParser parser;
+        mt::t_nuclide nuclide;
+        CsvParser::t_lineStatus lineStatus = parser.ParseLine(line, nuclide);
+
+        switch (lineStatus)
+        {
+        case CsvParser::NOT_A_DATA:
+            continue;
+            break;
+        case CsvParser::INVALID:
+        case CsvParser::COLUMNS_MISMATCH:
+            MY_LOG("error reading " << filename);
+            return false;
+            break;
+        case CsvParser::OK:
+            m_nuclides->insert(nuclide);
+            break;
+        default:
+            break;
+        }
+    }
+    file.close();
+
+    MY_LOG("added " << m_nuclides->size() << " nuclides");
+    return m_nuclides->size() != 0;
 }
 
 mt::t_matrix &DataBase::Matrix()
 {
     return *m_matrix;
+}
+
+DataBase::t_nuclides &DataBase::Nuclides()
+{
+    return *m_nuclides;
 }
 
 bool DataBase::SaveMatrix(const QString& directory)
@@ -190,6 +244,7 @@ DataBase::DataBase() :
     m_landscape(new t_landscape),
     m_image(new t_image),
     m_sources(new t_sources),
-    m_matrix(new mt::t_matrix)
+    m_matrix(new mt::t_matrix),
+    m_nuclides(new t_nuclides)
 {
 }

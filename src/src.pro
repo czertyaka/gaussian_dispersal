@@ -33,6 +33,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     matrixcalculator.cpp \
+    nuclidesparser.cpp \
     rp5strategy.cpp \
     smithparamcalculator.cpp \
     sourcesloader.cpp
@@ -54,6 +55,7 @@ HEADERS += \
     imageloader.h \
     mainwindow.h \
     matrixcalculator.h \
+    nuclidesparser.h \
     rp5strategy.h \
     smithparamcalculator.h \
     sourcesloader.h

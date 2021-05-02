@@ -24,6 +24,7 @@ public:
     Ui::MainWindow * Ui() { return m_ui; }
     int SourcesRows() { return m_row; }
     QString CurrentDirectory() { return m_dir.path(); }
+    void UpdateNuclides();
 
 private:
     enum t_coordinatesType

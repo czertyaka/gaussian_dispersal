@@ -4,6 +4,7 @@
 #include <vector>
 #include <QImage>
 #include <optional>
+#include <set>
 
 #include "globaltypes.h"
 
@@ -47,8 +48,14 @@ public:
 
     typedef std::vector<mt::t_source> t_sources;
 
+    typedef std::set<mt::t_nuclide> t_nuclides;
+
     static DataBase& GetInstance();
     ~DataBase();
+
+    // initialization
+    bool Init();
+    bool InitNuclides();
 
     // accessors
     t_climateJournal&   ClimateJournal();
@@ -56,6 +63,7 @@ public:
     t_image&            Image();
     t_sources&          Sources();
     mt::t_matrix&       Matrix();
+    t_nuclides&         Nuclides();
 
     // savers
     bool SaveMatrix(const QString& directory);
@@ -67,6 +75,7 @@ private:
     t_image*            m_image;
     t_sources*          m_sources;
     mt::t_matrix*       m_matrix;
+    t_nuclides*         m_nuclides;
 };
 
 typedef DataBase db;
