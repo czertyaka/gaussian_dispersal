@@ -4,6 +4,7 @@
 #include "database.h"
 
 #include <QFile>
+#include <cmath>
 
 GeospatialDataLoader::GeospatialDataLoader()
     : m_parser(new GeospatialCsvParser())
@@ -29,13 +30,12 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
         return false;
     }
 
-    DataBase::t_landscape* landscape = &(m_db.Landscape());
-    if (!CheckPointer(landscape, "error opening geospatial database"))
-    {
-        return false;
-    }
+    db::t_landscape landscape = m_db.Landscape();
+    landscape.clear();
 
-    landscape->clear();
+    db::t_coordSet coordSet = m_db.CoordSet();
+    coordSet.x.clear();
+    coordSet.y.clear();
 
     QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -51,7 +51,7 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
         while (!in.atEnd())
         {
             QString line = in.readLine();
-            DataBase::t_point point;
+            db::t_point point;
             CsvParser::t_lineStatus lineStatus = m_parser->ParseLine(line, point);
 
             if (lineStatus == CsvParser::COLUMNS_MISMATCH)
@@ -73,10 +73,13 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
             }
             else if (lineStatus == CsvParser::OK)
             {
-                landscape->push_back(point);
+                landscape.push_back(point);
+                coordSet.x.insert(point.coord.lon);
+                coordSet.y.insert(point.coord.lat);
                 pointsCounter++;
             }
         }
+
         MY_LOG("added " << pointsCounter
                << " geospatial points");
 
@@ -85,6 +88,26 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
             m_status = ERROR;
             return false;
         }
+
+        if (landscape.size() != coordSet.x.size() * coordSet.y.size())
+        {
+            MY_LOG("points in " << filename << " do not provide regular rectangular grid: "
+                   "found " << coordSet.x.size() << "x" << coordSet.y.size() << " unique "
+                   "coordinates with " << landscape.size() << " total points");
+            m_status = ERROR;
+            return false;
+        }
+
+        mt::t_epsg3857coord lowerLeft = mt::t_epsg3857coord(mt::t_epsg4326coord(landscape.begin()->coord.lon, landscape.begin()->coord.lat));
+        mt::t_epsg3857coord upperRight = mt::t_epsg3857coord(mt::t_epsg4326coord((landscape.end() - 1)->coord.lon, (landscape.end() - 1)->coord.lat));
+        double maxDistance = sqrt(pow(upperRight.easting - lowerLeft.easting, 2) + pow(upperRight.northing - lowerLeft.northing, 2));
+        if (maxDistance > 60000)
+        {
+            MY_LOG("maximum distance between points " << maxDistance << " km exceeds 2*30 km = 60 km");
+            m_status = ERROR;
+            return false;
+        }
+
     }
     file.close();
     MY_LOG("geospatial data read successfully");
@@ -94,10 +117,5 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
 
 void GeospatialDataLoader::Reset()
 {
-    DataBase::t_landscape* landscape = &(m_db.Landscape());
-    if(CheckPointer(landscape, "error opening geospatial database"))
-    {
-        landscape->clear();
-        m_status = NOT_READY;
-    }
+    DataBase::t_landscape landscape = m_db.Landscape();
 }
