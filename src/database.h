@@ -50,6 +50,12 @@ public:
 
     typedef std::set<mt::t_nuclide> t_nuclides;
 
+    typedef struct coordSet
+    {
+        std::set<double> x;
+        std::set<double> y;
+    } t_coordSet;
+
     static DataBase& GetInstance();
     ~DataBase();
 
@@ -64,6 +70,7 @@ public:
     t_sources&          Sources();
     mt::t_matrix&       Matrix();
     t_nuclides&         Nuclides();
+    t_coordSet&         CoordSet();
 
     // savers
     bool SaveMatrix(const QString& directory);
@@ -76,6 +83,7 @@ private:
     t_sources*          m_sources;
     mt::t_matrix*       m_matrix;
     t_nuclides*         m_nuclides;
+    t_coordSet*         m_coordSet;
 };
 
 typedef DataBase db;

@@ -3,6 +3,8 @@
 #include "datainterface.h"
 #include "nuclidesparser.h"
 
+#include <cassert>
+
 DataBase &DataBase::GetInstance()
 {
     static DataBase Instance;
@@ -17,6 +19,7 @@ DataBase::~DataBase()
     delete m_sources;
     delete m_matrix;
     delete m_nuclides;
+    delete m_coordSet;
 }
 
 bool DataBase::Init()
@@ -62,18 +65,26 @@ bool DataBase::InitNuclides()
     }
     file.close();
 
-    MY_LOG("added " << m_nuclides->size() << " nuclides");
+    MY_LOG("read " << m_nuclides->size() << " nuclides from " << filename);
     return m_nuclides->size() != 0;
 }
 
 mt::t_matrix &DataBase::Matrix()
 {
+    assert(m_matrix);
     return *m_matrix;
 }
 
 DataBase::t_nuclides &DataBase::Nuclides()
 {
+    assert(m_nuclides);
     return *m_nuclides;
+}
+
+DataBase::t_coordSet &DataBase::CoordSet()
+{
+    assert(m_nuclides);
+    return *m_coordSet;
 }
 
 bool DataBase::SaveMatrix(const QString& directory)
@@ -221,21 +232,25 @@ bool DataBase::SaveMatrix(const QString& directory)
 
 DataBase::t_climateJournal& DataBase::ClimateJournal()
 {
+    assert(m_climateJournal);
     return *m_climateJournal;
 }
 
 DataBase::t_landscape& DataBase::Landscape()
 {
+    assert(m_landscape);
     return *m_landscape;
 }
 
 DataBase::t_image& DataBase::Image()
 {
+    assert(m_image);
     return *m_image;
 }
 
 DataBase::t_sources& DataBase::Sources()
 {
+    assert(m_sources);
     return *m_sources;
 }
 
@@ -245,6 +260,7 @@ DataBase::DataBase() :
     m_image(new t_image),
     m_sources(new t_sources),
     m_matrix(new mt::t_matrix),
-    m_nuclides(new t_nuclides)
+    m_nuclides(new t_nuclides),
+    m_coordSet(new t_coordSet)
 {
 }
