@@ -4,6 +4,7 @@
 #include <QString>
 #include <QDateTime>
 #include <cmath>
+#include <QTextStream>
 
 #ifndef DATETIME_FORMAT
 #define DATETIME_FORMAT "MM-dd-yyyy hh:00:00"
@@ -89,9 +90,10 @@ namespace mt ///< my types
         epsg4326coord(double lon = 0, double lat = 0, t_Unit unit = DEGREES);
         epsg4326coord(const epsg3857coord& o);
         bool operator==(const epsg4326coord& o) const;
+        bool operator<(const epsg4326coord& o) const;
         void SetUnits(t_Unit unit);
     private:
-        t_Unit m_unit;;
+        t_Unit m_unit;
     } t_epsg4326coord;
 
     typedef struct observation
@@ -200,5 +202,7 @@ namespace mt ///< my types
         bool operator==(const source& o) const;
     } t_source;
 }
+
+QTextStream& operator<<(QTextStream &os, const mt::epsg4326coord &cd);
 
 #endif // GLOBALTYPES_H

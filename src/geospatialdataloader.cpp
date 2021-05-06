@@ -30,12 +30,12 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
         return false;
     }
 
-    db::t_landscape landscape = m_db.Landscape();
+    db::t_landscape& landscape = m_db.Landscape();
     landscape.clear();
 
-    db::t_coordSet coordSet = m_db.CoordSet();
-    coordSet.x.clear();
-    coordSet.y.clear();
+    db::t_coordSet& coordSet = m_db.CoordSet();
+    coordSet.lon.clear();
+    coordSet.lat.clear();
 
     QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -74,8 +74,8 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
             else if (lineStatus == CsvParser::OK)
             {
                 landscape.push_back(point);
-                coordSet.x.insert(point.coord.lon);
-                coordSet.y.insert(point.coord.lat);
+                coordSet.lon.insert(point.coord.lon);
+                coordSet.lat.insert(point.coord.lat);
                 pointsCounter++;
             }
         }
@@ -89,10 +89,10 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
             return false;
         }
 
-        if (landscape.size() != coordSet.x.size() * coordSet.y.size())
+        if (landscape.size() != coordSet.lon.size() * coordSet.lat.size())
         {
             MY_LOG("points in " << filename << " do not provide regular rectangular grid: "
-                   "found " << coordSet.x.size() << "x" << coordSet.y.size() << " unique "
+                   "found " << coordSet.lon.size() << "x" << coordSet.lat.size() << " unique "
                    "coordinates with " << landscape.size() << " total points");
             m_status = ERROR;
             return false;
@@ -117,5 +117,5 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
 
 void GeospatialDataLoader::Reset()
 {
-    DataBase::t_landscape landscape = m_db.Landscape();
+    db::t_landscape landscape = m_db.Landscape();
 }

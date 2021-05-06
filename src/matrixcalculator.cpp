@@ -14,7 +14,7 @@ MatrixCalculator::MatrixCalculator() :
 
 BaseCalculator::t_errorCode MatrixCalculator::Execute()
 {  
-    for (DataBase::t_climateJournal::iterator iter = m_db.ClimateJournal().begin();
+    for (db::t_climateJournal::iterator iter = m_db.ClimateJournal().begin();
          iter != m_db.ClimateJournal().end(); ++iter)
     {
         if (!AddObservation(*iter))

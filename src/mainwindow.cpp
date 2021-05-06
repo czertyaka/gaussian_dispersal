@@ -164,6 +164,7 @@ void MainWindow::CoordinatesToggled(t_coordinatesType type)
     double secondMax;
     double firstMin;
     double secondMin;
+    size_t decimals;
 
     switch (type)
     {
@@ -174,6 +175,7 @@ void MainWindow::CoordinatesToggled(t_coordinatesType type)
         secondMax = 85;
         firstMin = -180;
         secondMin = -85;
+        decimals = 5;
         break;
     case EPSG3857:
         m_ui->xLabel->setText("E, m");
@@ -182,6 +184,7 @@ void MainWindow::CoordinatesToggled(t_coordinatesType type)
         secondMax = 19971868.88;
         firstMin = -20037508.34;
         secondMin = -19971868.88;
+        decimals = 2;
         break;
     case RELATIVE:
         m_ui->xLabel->setText("x, %");
@@ -190,6 +193,7 @@ void MainWindow::CoordinatesToggled(t_coordinatesType type)
         secondMax = 100;
         firstMin = 0;
         secondMin = 0;
+        decimals = 2;
         break;
     }
 
@@ -199,6 +203,8 @@ void MainWindow::CoordinatesToggled(t_coordinatesType type)
         qobject_cast<QDoubleSpinBox*>(m_ui->sourceTableLayout->itemAtPosition(row, 3)->widget())->setMaximum(secondMax);
         qobject_cast<QDoubleSpinBox*>(m_ui->sourceTableLayout->itemAtPosition(row, 2)->widget())->setMinimum(firstMin);
         qobject_cast<QDoubleSpinBox*>(m_ui->sourceTableLayout->itemAtPosition(row, 3)->widget())->setMinimum(secondMin);
+        qobject_cast<QDoubleSpinBox*>(m_ui->sourceTableLayout->itemAtPosition(row, 2)->widget())->setDecimals(decimals);
+        qobject_cast<QDoubleSpinBox*>(m_ui->sourceTableLayout->itemAtPosition(row, 3)->widget())->setDecimals(decimals);
     }
 }
 

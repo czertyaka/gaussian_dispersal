@@ -12,6 +12,8 @@
 #include "matrixcalculator.h"
 #include "database.h"
 
+class TerrainCorrectionsCalculator;
+
 #ifndef MY_LOG
 #define MY_LOG( X ) { QString s; QTextStream str(&s); str << (__PRETTY_FUNCTION__) << ": " << X; DataInterface::GetInstance().AddLog(str); }
 #endif // MY_LOG
@@ -47,12 +49,13 @@ public slots:
 
 private:
     explicit DataInterface(QObject *parent = nullptr);
-    ClimaticVariablesLoader*    m_climaticVariablesLoader;
-    GeospatialDataLoader*       m_geospatialDataLoader;
-    ImageLoader*                m_imageLoader;
-    SourcesLoader*              m_sourcesLoader;
-    MatrixCalculator*           m_matrixCalculator;
-    DataBase&                   m_database;
+    ClimaticVariablesLoader*        m_climaticVariablesLoader;
+    GeospatialDataLoader*           m_geospatialDataLoader;
+    ImageLoader*                    m_imageLoader;
+    SourcesLoader*                  m_sourcesLoader;
+    MatrixCalculator*               m_matrixCalculator;
+    TerrainCorrectionsCalculator*   m_terrainCorrectionsCalculator;
+    DataBase&                       m_database;
 };
 
 #endif // DataInterface_H

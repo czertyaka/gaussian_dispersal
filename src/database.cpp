@@ -87,6 +87,11 @@ DataBase::t_coordSet &DataBase::CoordSet()
     return *m_coordSet;
 }
 
+DataBase::t_terrainCorrections &DataBase::TerrainCorrections()
+{
+    return m_terrainCorrection;
+}
+
 bool DataBase::SaveMatrix(const QString& directory)
 {
     {

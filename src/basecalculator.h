@@ -15,6 +15,7 @@ public:
     virtual t_errorCode Execute() = 0;
 protected:
     DataBase& m_db;
+    mutable t_errorCode m_error;
 };
 
 #endif // BASECALCULATOR_H

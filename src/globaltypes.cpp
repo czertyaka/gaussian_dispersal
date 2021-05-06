@@ -55,6 +55,11 @@ bool epsg4326coord::operator==(const epsg4326coord &o) const
     return lon == o.lon && lat == o.lat;
 }
 
+bool epsg4326coord::operator<(const epsg4326coord &o) const
+{
+    return lat < o.lat;
+}
+
 void epsg4326coord::SetUnits(epsg4326coord::t_Unit unit)
 {
     if (unit != m_unit)
@@ -142,4 +147,10 @@ bool nuclide::operator<(const nuclide &o) const
 bool nuclide::operator==(const nuclide &o) const
 {
     return name == o.name;
+}
+
+QTextStream& operator<<(QTextStream &os, const mt::epsg4326coord &cd)
+{
+    os << " lon = " << cd.lon << ", lat = " << cd.lat;
+    return os;
 }

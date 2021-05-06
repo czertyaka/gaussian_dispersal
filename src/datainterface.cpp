@@ -1,17 +1,19 @@
 #include "datainterface.h"
+#include "terraincorrectionscalculator.h"
 
 /**
  * @brief DataInterface::DataInterface
  * @param parent
  */
-DataInterface::DataInterface(QObject *parent)
-    : QObject(parent)
-    , m_climaticVariablesLoader(new ClimaticVariablesLoader)
-    , m_geospatialDataLoader(new GeospatialDataLoader)
-    , m_imageLoader(new ImageLoader)
-    , m_sourcesLoader(new SourcesLoader)
-    , m_matrixCalculator(new MatrixCalculator)
-    , m_database(DataBase::GetInstance())
+DataInterface::DataInterface(QObject *parent) :
+    QObject(parent),
+    m_climaticVariablesLoader(new ClimaticVariablesLoader),
+    m_geospatialDataLoader(new GeospatialDataLoader),
+    m_imageLoader(new ImageLoader),
+    m_sourcesLoader(new SourcesLoader),
+    m_matrixCalculator(new MatrixCalculator),
+    m_terrainCorrectionsCalculator(new TerrainCorrectionsCalculator),
+    m_database(DataBase::GetInstance())
 {
 
 }
@@ -29,6 +31,7 @@ DataInterface::~DataInterface()
     delete m_imageLoader;
     delete m_sourcesLoader;
     delete m_matrixCalculator;
+    delete m_terrainCorrectionsCalculator;
 }
 
 void DataInterface::AddLog(const QTextStream &stream)
@@ -95,6 +98,7 @@ void DataInterface::OnSourcesReset()
 
 void DataInterface::OnStart()
 {
+    MY_LOG("repeatability matrix calculation: start")
     if (m_matrixCalculator->Execute() == BaseCalculator::OK)
     {
         MY_LOG("repeatability matrix calculation: done");
@@ -105,6 +109,18 @@ void DataInterface::OnStart()
         MY_LOG("repeatability matrix calculation: error, "
                "aborting calculation");
         MatrixDone(false);
+        return;
+    }
+
+    MY_LOG("terrain corrections calculation: start")
+    if (m_terrainCorrectionsCalculator->Execute() == BaseCalculator::OK)
+    {
+        MY_LOG("terrain corrections calculation: done");
+    }
+    else
+    {
+        MY_LOG("terrain corrections calculation: error, "
+               "aborting calculation");
         return;
     }
 }

@@ -36,7 +36,8 @@ SOURCES += \
     nuclidesparser.cpp \
     rp5strategy.cpp \
     smithparamcalculator.cpp \
-    sourcesloader.cpp
+    sourcesloader.cpp \
+    terraincorrectionscalculator.cpp
 
 HEADERS += \
     basecalculator.h \
@@ -58,7 +59,8 @@ HEADERS += \
     nuclidesparser.h \
     rp5strategy.h \
     smithparamcalculator.h \
-    sourcesloader.h
+    sourcesloader.h \
+    terraincorrectionscalculator.h
 
 FORMS += \
     mainwindow.ui

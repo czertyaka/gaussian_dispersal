@@ -52,9 +52,12 @@ public:
 
     typedef struct coordSet
     {
-        std::set<double> x;
-        std::set<double> y;
+        std::set<double> lat;
+        std::set<double> lon;
     } t_coordSet;
+
+    typedef std::vector<double> t_sourceTerrainCorrections;
+    typedef std::vector<t_sourceTerrainCorrections> t_terrainCorrections;
 
     static DataBase& GetInstance();
     ~DataBase();
@@ -64,26 +67,28 @@ public:
     bool InitNuclides();
 
     // accessors
-    t_climateJournal&   ClimateJournal();
-    t_landscape&        Landscape();
-    t_image&            Image();
-    t_sources&          Sources();
-    mt::t_matrix&       Matrix();
-    t_nuclides&         Nuclides();
-    t_coordSet&         CoordSet();
+    t_climateJournal&       ClimateJournal();
+    t_landscape&            Landscape();
+    t_image&                Image();
+    t_sources&              Sources();
+    mt::t_matrix&           Matrix();
+    t_nuclides&             Nuclides();
+    t_coordSet&             CoordSet();
+    t_terrainCorrections&   TerrainCorrections();
 
     // savers
     bool SaveMatrix(const QString& directory);
 
 private:
     DataBase();
-    t_climateJournal*   m_climateJournal; ///< журнал климатических измерений
-    t_landscape*        m_landscape; ///< массив точек с высотами и типом местности
-    t_image*            m_image; ///< изображение подложки
-    t_sources*          m_sources; ///< источники выбросов
-    mt::t_matrix*       m_matrix; ///< матрица повторяемости и другие климатические параметры
-    t_nuclides*         m_nuclides; ///< список еуклидов, считанных из файла и используемых в программе
-    t_coordSet*         m_coordSet; ///< набор координат прямоугольного массива, используется для адресации вектора @ref m_landscape
+    t_climateJournal*       m_climateJournal; ///< журнал климатических измерений
+    t_landscape*            m_landscape; ///< массив точек с высотами и типом местности
+    t_image*                m_image; ///< изображение подложки
+    t_sources*              m_sources; ///< источники выбросов
+    mt::t_matrix*           m_matrix; ///< матрица повторяемости и другие климатические параметры
+    t_nuclides*             m_nuclides; ///< список еуклидов, считанных из файла и используемых в программе
+    t_coordSet*             m_coordSet; ///< набор координат прямоугольного массива, используется для адресации вектора @ref m_landscape
+    t_terrainCorrections    m_terrainCorrection; ///< поправки на рельеф
 };
 
 typedef DataBase db;
