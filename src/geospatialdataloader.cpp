@@ -33,6 +33,8 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
     db::t_landscape& landscape = m_db.Landscape();
     landscape.clear();
 
+    std::set<db::t_point> landscapeSet;
+
     db::t_coordSet& coordSet = m_db.CoordSet();
     coordSet.lon.clear();
     coordSet.lat.clear();
@@ -73,11 +75,16 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
             }
             else if (lineStatus == CsvParser::OK)
             {
-                landscape.push_back(point);
+                landscapeSet.insert(point);
                 coordSet.lon.insert(point.coord.lon);
                 coordSet.lat.insert(point.coord.lat);
                 pointsCounter++;
             }
+        }
+
+        for (auto it = landscapeSet.cbegin(); it != landscapeSet.cend(); ++it)
+        {
+            landscape.push_back(*it);
         }
 
         MY_LOG("added " << pointsCounter

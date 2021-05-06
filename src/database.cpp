@@ -269,3 +269,8 @@ DataBase::DataBase() :
     m_coordSet(new t_coordSet)
 {
 }
+
+bool DataBase::point::operator<(const DataBase::point &o) const
+{
+    return coord.lat != o.coord.lat ? coord.lat < o.coord.lat : coord.lon < o.coord.lon;
+}

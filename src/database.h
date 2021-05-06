@@ -29,6 +29,7 @@ public:
         mt::t_epsg4326coord coord;
         t_microrelief microrelief;
         short int elevation;
+        bool operator<(const point& o) const;
     } t_point;
     typedef std::vector<t_point> t_landscape;
 
