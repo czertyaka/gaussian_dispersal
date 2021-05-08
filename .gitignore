@@ -74,6 +74,9 @@ Thumbs.db
 # CSV
 *.csv
 
+# Image
+*.png
+
 # Custom
 out/
 output/
