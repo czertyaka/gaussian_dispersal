@@ -92,6 +92,11 @@ DataBase::t_terrainCorrections &DataBase::TerrainCorrections()
     return m_terrainCorrection;
 }
 
+DataBase::t_distanceMasks &DataBase::Distances()
+{
+    return m_distanceMasks;
+}
+
 bool DataBase::SaveMatrix(const QString& directory)
 {
     {

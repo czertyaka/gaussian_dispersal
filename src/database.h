@@ -60,6 +60,16 @@ public:
     typedef std::vector<double> t_sourceTerrainCorrections;
     typedef std::vector<t_sourceTerrainCorrections> t_terrainCorrections;
 
+    typedef struct distanceMask
+    {
+        const mt::t_source& source;
+        std::vector<double> distances;
+        std::vector<bool> valid; ///< true if corresponding point is within model
+        distanceMask(const mt::t_source& source) : source(source) {}
+    } t_distanceMask;
+
+    typedef std::vector<t_distanceMask> t_distanceMasks;
+
     static DataBase& GetInstance();
     ~DataBase();
 
@@ -76,6 +86,7 @@ public:
     t_nuclides&             Nuclides();
     t_coordSet&             CoordSet();
     t_terrainCorrections&   TerrainCorrections();
+    t_distanceMasks&        Distances();
 
     // savers
     bool SaveMatrix(const QString& directory);
@@ -90,6 +101,7 @@ private:
     t_nuclides*             m_nuclides; ///< список еуклидов, считанных из файла и используемых в программе
     t_coordSet*             m_coordSet; ///< набор координат прямоугольного массива, используется для адресации вектора @ref m_landscape
     t_terrainCorrections    m_terrainCorrection; ///< поправки на рельеф
+    t_distanceMasks         m_distanceMasks; ///< массивы расстояний до источника
 };
 
 typedef DataBase db;
