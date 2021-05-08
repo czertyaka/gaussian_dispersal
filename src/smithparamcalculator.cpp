@@ -8,7 +8,7 @@
 SmithParamCalculator::SmithParamCalculator(const mt::t_observation& obs) :
     BaseCalculator(),
     m_obs(obs),
-    m_coord(mt::t_epsg4326coord())
+    m_coord(t_epsg4326coord())
 {
 
 }
@@ -177,7 +177,7 @@ bool SmithParamCalculator::GetCoordinate()
         return false;
     }
 
-    m_coord.SetUnits(mt::t_epsg4326coord::RADIANS);
+    m_coord.SetUnits(t_epsg4326coord::RADIANS);
 
     return true;
 }
@@ -191,7 +191,7 @@ void SmithParamCalculator::CalcSunDeclination()
 
 void SmithParamCalculator::CalcSunAngle()
 {
-    m_coord.SetUnits(mt::t_epsg4326coord::RADIANS);
+    m_coord.SetUnits(t_epsg4326coord::RADIANS);
 
     double hourAngle = M_PI * ( static_cast<double>(m_obs.dateTime.time().hour()) / 12.0 - 1 );
     double sunAngleSin = sin(m_sunDecl) * sin(m_coord.lat) +
@@ -202,7 +202,7 @@ void SmithParamCalculator::CalcSunAngle()
 
 void SmithParamCalculator::CalcSetOfDay()
 {
-    m_coord.SetUnits(mt::t_epsg4326coord::RADIANS);
+    m_coord.SetUnits(t_epsg4326coord::RADIANS);
 
     double beta = - ( 0.0145 + sin(m_sunDecl) * sin(m_coord.lat) ) /
                     ( cos(m_sunDecl) * cos(m_coord.lat) );
@@ -260,7 +260,7 @@ void SmithParamCalculator::CalcInsolClass()
 
 double SmithParamCalculator::CalcAlbedo()
 {
-    m_coord.SetUnits(mt::t_epsg4326coord::DEGREES);
+    m_coord.SetUnits(t_epsg4326coord::DEGREES);
 
     if (m_coord.lat <= 90 && m_coord.lat > 70) { return 0.80; }
 

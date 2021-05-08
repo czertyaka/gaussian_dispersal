@@ -41,7 +41,7 @@ private:
     double  m_sunAngle; ///< высота солнца, град.
     int     m_insolClass; ///< класс инсоляции
 
-    mt::t_epsg4326coord m_coord;
+    t_epsg4326coord m_coord;
 };
 
 #endif // SMITHPARAMCALCULATOR_H

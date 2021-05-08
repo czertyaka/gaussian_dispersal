@@ -16,7 +16,7 @@ public:
     {
         int                     id;
         QString                 nuclide;
-        mt::t_epsg4326coord     coord;
+        t_epsg4326coord     coord;
         double                  height;
         double                  temp;
         std::optional<double>   emission;

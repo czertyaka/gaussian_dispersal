@@ -26,7 +26,7 @@ public:
     };
     typedef struct point
     {
-        mt::t_epsg4326coord coord;
+        t_epsg4326coord coord;
         t_microrelief microrelief;
         short int elevation;
     } t_point;
@@ -34,10 +34,10 @@ public:
 
     typedef struct borders
     {
-        mt::t_pseudoMercatorCoord nw; // nord west
-        mt::t_pseudoMercatorCoord ne; // nord east
-        mt::t_pseudoMercatorCoord sw; // south west
-        mt::t_pseudoMercatorCoord se; // south east
+        t_pseudoMercatorCoord nw; // nord west
+        t_pseudoMercatorCoord ne; // nord east
+        t_pseudoMercatorCoord sw; // south west
+        t_pseudoMercatorCoord se; // south east
     } t_borders;
     typedef std::optional<t_borders> t_optBorders;
     typedef struct image

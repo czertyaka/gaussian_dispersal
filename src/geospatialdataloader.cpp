@@ -98,8 +98,8 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
             return false;
         }
 
-        mt::t_epsg3857coord lowerLeft = mt::t_epsg3857coord(mt::t_epsg4326coord(landscape.begin()->coord.lon, landscape.begin()->coord.lat));
-        mt::t_epsg3857coord upperRight = mt::t_epsg3857coord(mt::t_epsg4326coord((landscape.end() - 1)->coord.lon, (landscape.end() - 1)->coord.lat));
+        t_epsg3857coord lowerLeft = t_epsg3857coord(t_epsg4326coord(landscape.begin()->coord.lon, landscape.begin()->coord.lat));
+        t_epsg3857coord upperRight = t_epsg3857coord(t_epsg4326coord((landscape.end() - 1)->coord.lon, (landscape.end() - 1)->coord.lat));
         double maxDistance = sqrt(pow(upperRight.easting - lowerLeft.easting, 2) + pow(upperRight.northing - lowerLeft.northing, 2));
         if (maxDistance > 60000)
         {

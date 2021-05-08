@@ -76,6 +76,8 @@ Thumbs.db
 
 # Image
 *.png
+*.jpeg
+*.jpg
 
 # Custom
 out/

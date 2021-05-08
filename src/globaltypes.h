@@ -5,6 +5,8 @@
 #include <QDateTime>
 #include <cmath>
 
+#include "geography.h"
+
 #ifndef DATETIME_FORMAT
 #define DATETIME_FORMAT "MM-dd-yyyy hh:00:00"
 #endif
@@ -63,36 +65,6 @@ namespace mt ///< my types
         NOV = 11,
         DEC = 12
     };
-
-    struct epsg4326coord;
-
-    typedef struct epsg3857coord
-    {
-        double easting;
-        double northing;
-        epsg3857coord(double easting = 0, double northing = 0);
-        epsg3857coord(const epsg4326coord& o);
-        bool operator==(const epsg3857coord& o) const;
-    } t_epsg3857coord;
-
-    typedef t_epsg3857coord t_pseudoMercatorCoord;
-
-    typedef struct epsg4326coord
-    {
-        enum t_Unit
-        {
-            DEGREES,
-            RADIANS
-        };
-        double lon;
-        double lat;
-        epsg4326coord(double lon = 0, double lat = 0, t_Unit unit = DEGREES);
-        epsg4326coord(const epsg3857coord& o);
-        bool operator==(const epsg4326coord& o) const;
-        void SetUnits(t_Unit unit);
-    private:
-        t_Unit m_unit;;
-    } t_epsg4326coord;
 
     typedef struct observation
     {
@@ -194,6 +166,7 @@ namespace mt ///< my types
     typedef struct source
     {
         typedef std::vector<emission> t_emissions;
+
         t_epsg4326coord coordinates;
         double height;
         t_emissions emissions;
