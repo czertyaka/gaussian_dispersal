@@ -73,6 +73,11 @@ void MainWindow::OnClimateDone(const bool ok)
     m_ui->climateSaveButton->setEnabled(ok);
 }
 
+void MainWindow::OnTerrainDone(const bool ok)
+{
+    m_ui->geoSaveButton->setEnabled(ok);
+}
+
 /**
  * @brief MainWindow::CustomUiSettings All the setups and connections within GUI only
  */

@@ -34,6 +34,7 @@ signals:
     void UpdateImageStatusLabel(const bool ok);
     void UpdateSourcesStatusLabel(const bool ok);
     void MatrixDone(const bool ok);
+    void TerrainDone(const bool ok);
 
 public slots:
     bool AddClimaticJournal(const QString& filename, ClimateCsvParser::t_format format);
@@ -45,7 +46,8 @@ public slots:
     bool AddSources(const db::t_sources& vSources);
     void OnSourcesReset();
     void OnStart();
-    void SaveClimate(const QString directiry);
+    void SaveClimate(const QString& directory);
+    void SaveTerrain(const QString& directory);
 
 private:
     explicit DataInterface(QObject *parent = nullptr);

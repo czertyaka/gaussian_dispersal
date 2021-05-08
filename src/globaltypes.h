@@ -195,6 +195,7 @@ namespace mt ///< my types
 
     typedef struct source
     {
+        uint8_t id;
         typedef std::vector<emission> t_emissions;
         t_epsg4326coord coordinates;
         double height;

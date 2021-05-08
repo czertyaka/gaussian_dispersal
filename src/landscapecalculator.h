@@ -13,7 +13,7 @@ public:
     t_errorCode Execute() override;
 private:
     void CalculateDistances(db::t_distanceMask& distanceMask);
-    bool CalculateCorrections(db::t_sourceTerrainCorrections& corrs, const mt::t_source& source);
+    bool CalculateCorrections(db::t_srcTerrainCorrections& corrs, const mt::t_source& source);
     double CalcSlope(const db::t_landscape::const_iterator point, const mt::t_source &source) const;
     double CalcCorrection(const double slope) const;
 

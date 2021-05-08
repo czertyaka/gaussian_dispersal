@@ -57,8 +57,13 @@ public:
         std::set<double> lon;
     } t_coordSet;
 
-    typedef std::vector<double> t_sourceTerrainCorrections;
-    typedef std::vector<t_sourceTerrainCorrections> t_terrainCorrections;
+    typedef struct srcTerrainCorrections
+    {
+        const mt::t_source& source;
+        std::vector<double> data;
+        srcTerrainCorrections(const mt::t_source& source) : source(source) {}
+    } t_srcTerrainCorrections;
+    typedef std::vector<t_srcTerrainCorrections> t_terrainCorrections;
 
     typedef struct distanceMask
     {
@@ -90,6 +95,7 @@ public:
 
     // savers
     bool SaveMatrix(const QString& directory);
+    bool SaveCorrections(const QString& directory);
 
 private:
     DataBase();

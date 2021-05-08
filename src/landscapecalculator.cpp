@@ -51,8 +51,8 @@ BaseCalculator::t_errorCode LandscapeCalculator::Execute()
 
 
         // allocate new array of terrain corrections for current source coordinates
-        db::t_sourceTerrainCorrections corrs;
-        corrs.resize(m_db.Landscape().size());
+        db::t_srcTerrainCorrections corrs(*iter);
+        corrs.data.resize(m_db.Landscape().size());
 
         // fill it
         if (!CalculateCorrections(corrs, *iter))
@@ -84,7 +84,7 @@ void LandscapeCalculator::CalculateDistances(db::t_distanceMask& distanceMask)
     }
 }
 
-bool LandscapeCalculator::CalculateCorrections(db::t_sourceTerrainCorrections &corrs, const mt::t_source &source)
+bool LandscapeCalculator::CalculateCorrections(db::t_srcTerrainCorrections &corrs, const mt::t_source &source)
 { 
     // we will treat vector as 2-D array from now on
     // the values in landscape vector stored in [lat][lon] order
@@ -97,7 +97,7 @@ bool LandscapeCalculator::CalculateCorrections(db::t_sourceTerrainCorrections &c
             // calculation is needed
             if (!m_db.Distances().back().mask.at(y * m_xDim + x))
             {
-                corrs.at(y * m_xDim + x) = 0;
+                corrs.data.at(y * m_xDim + x) = 0;
                 break;
             }
 
@@ -112,7 +112,7 @@ bool LandscapeCalculator::CalculateCorrections(db::t_sourceTerrainCorrections &c
                 return false;
             }
 
-            corrs.at(y * m_xDim + x) = CalcCorrection(slope);
+            corrs.data.at(y * m_xDim + x) = CalcCorrection(slope);
 
             // and then again
             if (m_error)

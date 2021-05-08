@@ -47,6 +47,8 @@ Connector::Connector(MainWindow& window, DataInterface& data, QObject* parent)
     connect(UI->geoAcceptButton, &QPushButton::clicked, this, &Connector::UpdateStartButton);
     connect(UI->geoResetButton, &QPushButton::clicked, this, &Connector::UpdateStartButton);
     connect(m_data, &DataInterface::UpdateGeoStatusLabel, m_window, &MainWindow::UpdateGeoStatusLabel);
+    connect(m_data, &DataInterface::TerrainDone, m_window, &MainWindow::OnTerrainDone);
+    connect(UI->geoSaveButton, &QPushButton::clicked, m_data, [=](){ m_data->SaveTerrain(m_window->CurrentDirectory()); } );
 
     // background image
     connect(UI->imageAcceptButton, &QPushButton::clicked, this, &Connector::OnImageAccept);
@@ -143,6 +145,7 @@ void Connector::OnSourcesAccept()
 
         // создадим объект источника с такими координатами
         mt::t_source source;
+        source.id = static_cast<uint8_t>(row);
 
         if (UI->coordinatesEPSG4326RadioButton->isChecked())
         {

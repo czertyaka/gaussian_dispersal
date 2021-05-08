@@ -240,6 +240,39 @@ bool DataBase::SaveMatrix(const QString& directory)
     return true;
 }
 
+bool DataBase::SaveCorrections(const QString &directory)
+{
+    for (auto srcIter = m_terrainCorrection.cbegin();
+         srcIter != m_terrainCorrection.cend(); ++srcIter)
+    {
+        QString filename = directory + "terrain-corrections-src-#"
+                            + QString::number(srcIter->source.id) + ".csv";
+        CsvWriter writer(filename, 3);
+        if (!writer.Init())
+        {
+            MY_LOG("error writing to " << filename);
+            return false;
+        }
+
+        QTextStream comment;
+        comment << "Terrain corrections for source #" << srcIter->source.id <<
+                   " with coordiantes " << srcIter->source.coordinates;
+        writer.AddComment(comment.readAll());
+        writer.AddItem("Latitude");
+        writer.AddItem("Longitude");
+        writer.AddItem("Terrain correction");
+
+        for (size_t i = 0; i < srcIter->data.size(); ++i)
+        {
+            writer.AddItem(m_landscape->at(i).coord.lat);
+            writer.AddItem(m_landscape->at(i).coord.lon);
+            writer.AddItem(srcIter->data.at(i));
+        }
+    }
+
+    return true;
+}
+
 DataBase::t_climateJournal& DataBase::ClimateJournal()
 {
     assert(m_climateJournal);

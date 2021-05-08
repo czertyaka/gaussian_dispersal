@@ -102,13 +102,13 @@ void DataInterface::OnStart()
     if (m_matrixCalculator->Execute() == BaseCalculator::OK)
     {
         MY_LOG("repeatability matrix calculation: done");
-        MatrixDone(true);
+        emit MatrixDone(true);
     }
     else
     {
         MY_LOG("repeatability matrix calculation: error, "
                "aborting calculation");
-        MatrixDone(false);
+        emit MatrixDone(false);
         return;
     }
 
@@ -116,20 +116,29 @@ void DataInterface::OnStart()
     if (m_landscapeCalculator->Execute() == BaseCalculator::OK)
     {
         MY_LOG("terrain corrections calculation: done");
+        emit TerrainDone(true);
     }
     else
     {
         MY_LOG("terrain corrections calculation: error, "
                "aborting calculation");
+        emit TerrainDone(false);
         return;
     }
 }
 
-void DataInterface::SaveClimate(const QString directory)
+void DataInterface::SaveClimate(const QString& directory)
 {
     if (!m_database.SaveMatrix(directory))
     {
         MY_LOG("error saving repeatability matrix");
-        return;
+    }
+}
+
+void DataInterface::SaveTerrain(const QString &directory)
+{
+    if (!m_database.SaveCorrections(directory))
+    {
+        MY_LOG("error saving terrain corrections")
     }
 }

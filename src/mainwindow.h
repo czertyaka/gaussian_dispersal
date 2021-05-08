@@ -40,6 +40,7 @@ public slots:
     void UpdateImageStatusLabel(const bool ok);
     void UpdateSourcesStatusLabel(const bool ok);
     void OnClimateDone(const bool ok);
+    void OnTerrainDone(const bool ok);
 
 private slots:
     void ResetSpinBoxes();
