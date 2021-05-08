@@ -64,7 +64,7 @@ public:
     {
         const mt::t_source& source;
         std::vector<double> distances;
-        std::vector<bool> valid; ///< true if corresponding point is within model
+        std::vector<bool> mask; ///< true if corresponding point is within model
         distanceMask(const mt::t_source& source) : source(source) {}
     } t_distanceMask;
 

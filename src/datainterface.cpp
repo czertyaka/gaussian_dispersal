@@ -1,5 +1,5 @@
 #include "datainterface.h"
-#include "terraincorrectionscalculator.h"
+#include "landscapecalculator.h"
 
 /**
  * @brief DataInterface::DataInterface
@@ -12,7 +12,7 @@ DataInterface::DataInterface(QObject *parent) :
     m_imageLoader(new ImageLoader),
     m_sourcesLoader(new SourcesLoader),
     m_matrixCalculator(new MatrixCalculator),
-    m_terrainCorrectionsCalculator(new TerrainCorrectionsCalculator),
+    m_landscapeCalculator(new LandscapeCalculator),
     m_database(DataBase::GetInstance())
 {
 
@@ -31,7 +31,7 @@ DataInterface::~DataInterface()
     delete m_imageLoader;
     delete m_sourcesLoader;
     delete m_matrixCalculator;
-    delete m_terrainCorrectionsCalculator;
+    delete m_landscapeCalculator;
 }
 
 void DataInterface::AddLog(const QTextStream &stream)
@@ -113,7 +113,7 @@ void DataInterface::OnStart()
     }
 
     MY_LOG("terrain corrections calculation: start")
-    if (m_terrainCorrectionsCalculator->Execute() == BaseCalculator::OK)
+    if (m_landscapeCalculator->Execute() == BaseCalculator::OK)
     {
         MY_LOG("terrain corrections calculation: done");
     }

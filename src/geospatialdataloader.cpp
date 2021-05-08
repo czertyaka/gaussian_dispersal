@@ -87,8 +87,8 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
             landscape.push_back(*it);
         }
 
-        MY_LOG("added " << pointsCounter
-               << " geospatial points");
+        MY_LOG("added " << pointsCounter << " (" << coordSet.lat.size()
+               << "x" << coordSet.lon.size() << ") geospatial points");
 
         if (!pointsCounter)
         {
@@ -104,17 +104,6 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
             m_status = ERROR;
             return false;
         }
-
-        mt::t_epsg3857coord lowerLeft = mt::t_epsg3857coord(mt::t_epsg4326coord(landscape.begin()->coord.lon, landscape.begin()->coord.lat));
-        mt::t_epsg3857coord upperRight = mt::t_epsg3857coord(mt::t_epsg4326coord((landscape.end() - 1)->coord.lon, (landscape.end() - 1)->coord.lat));
-        double maxDistance = sqrt(pow(upperRight.easting - lowerLeft.easting, 2) + pow(upperRight.northing - lowerLeft.northing, 2));
-        if (maxDistance > 60000)
-        {
-            MY_LOG("maximum distance between points " << maxDistance << " km exceeds 2*30 km = 60 km");
-            m_status = ERROR;
-            return false;
-        }
-
     }
     file.close();
     MY_LOG("geospatial data read successfully");

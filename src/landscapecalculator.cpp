@@ -1,12 +1,13 @@
-#include "terraincorrectionscalculator.h"
+#include "landscapecalculator.h"
 #include "database.h"
 #include "datainterface.h"
+#include "geography.h"
 
 #include <cstdlib>
 #include <cmath>
 #include <limits>
 
-TerrainCorrectionsCalculator::TerrainCorrectionsCalculator() :
+LandscapeCalculator::LandscapeCalculator() :
     BaseCalculator(),
     m_xDim(m_db.CoordSet().lon.size()),
     m_yDim(m_db.CoordSet().lat.size())
@@ -14,12 +15,12 @@ TerrainCorrectionsCalculator::TerrainCorrectionsCalculator() :
 
 }
 
-TerrainCorrectionsCalculator::~TerrainCorrectionsCalculator()
+LandscapeCalculator::~LandscapeCalculator()
 {
 
 }
 
-BaseCalculator::t_errorCode TerrainCorrectionsCalculator::Execute()
+BaseCalculator::t_errorCode LandscapeCalculator::Execute()
 {
     m_xDim = m_db.CoordSet().lon.size();
     m_yDim = m_db.CoordSet().lat.size();
@@ -39,7 +40,17 @@ BaseCalculator::t_errorCode TerrainCorrectionsCalculator::Execute()
                 return ERROR;
         }
 
-        // allocate new array of terrain corrections for curren source coordinates
+        // allocate new array of distance mask for current source
+        db::t_distanceMask distanceMask(*iter);
+        distanceMask.distances.resize(m_db.Landscape().size());
+        distanceMask.mask.resize(m_db.Landscape().size());
+
+        // calculate distances
+        CalculateDistances(distanceMask);
+        m_db.Distances().push_back(distanceMask);
+
+
+        // allocate new array of terrain corrections for current source coordinates
         db::t_sourceTerrainCorrections corrs;
         corrs.resize(m_db.Landscape().size());
 
@@ -58,7 +69,22 @@ BaseCalculator::t_errorCode TerrainCorrectionsCalculator::Execute()
     return OK;
 }
 
-bool TerrainCorrectionsCalculator::CalculateCorrections(db::t_sourceTerrainCorrections &corrs, const mt::t_source &source)
+void LandscapeCalculator::CalculateDistances(db::t_distanceMask& distanceMask)
+{
+    for (size_t y = 0; y < m_yDim; ++y)
+    {
+        for (size_t x = 0; x < m_xDim; ++x)
+        {
+            db::t_landscape::const_iterator pointIt = m_db.Landscape().begin() + y * m_xDim + x;
+            double distance = calculate_distance(distanceMask.source.coordinates, pointIt->coord);
+
+            distanceMask.distances.at(y * m_xDim + x) = distance;
+            distanceMask.mask.at(y * m_xDim + x) = distance < gaussian_model_limit;
+        }
+    }
+}
+
+bool LandscapeCalculator::CalculateCorrections(db::t_sourceTerrainCorrections &corrs, const mt::t_source &source)
 { 
     // we will treat vector as 2-D array from now on
     // the values in landscape vector stored in [lat][lon] order
@@ -67,6 +93,14 @@ bool TerrainCorrectionsCalculator::CalculateCorrections(db::t_sourceTerrainCorre
     {
         for (size_t x = 0; x < m_xDim; ++x)
         {
+            // if distance between point and source is higher than 30 km - no
+            // calculation is needed
+            if (!m_db.Distances().back().mask.at(y * m_xDim + x))
+            {
+                corrs.at(y * m_xDim + x) = 0;
+                break;
+            }
+
             db::t_landscape::const_iterator point = m_db.Landscape().begin() + y * m_xDim + x;
 
             // calculate slope
@@ -91,7 +125,7 @@ bool TerrainCorrectionsCalculator::CalculateCorrections(db::t_sourceTerrainCorre
     return true;
 }
 
-double TerrainCorrectionsCalculator::CalcSlope(const db::t_landscape::const_iterator point, const mt::t_source &source) const
+double LandscapeCalculator::CalcSlope(const db::t_landscape::const_iterator point, const mt::t_source &source) const
 {
     if (point->coord == source.coordinates)
     {
@@ -186,7 +220,7 @@ double TerrainCorrectionsCalculator::CalcSlope(const db::t_landscape::const_iter
     return slope;
 }
 
-double TerrainCorrectionsCalculator::CalcCorrection(const double slope) const
+double LandscapeCalculator::CalcCorrection(const double slope) const
 {
     double correction;
     double localSlope = slope;

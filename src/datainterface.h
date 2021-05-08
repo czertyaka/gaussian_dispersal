@@ -12,7 +12,7 @@
 #include "matrixcalculator.h"
 #include "database.h"
 
-class TerrainCorrectionsCalculator;
+class LandscapeCalculator;
 
 #ifndef MY_LOG
 #define MY_LOG( X ) { QString s; QTextStream str(&s); str << (__PRETTY_FUNCTION__) << ": " << X; DataInterface::GetInstance().AddLog(str); }
@@ -54,7 +54,7 @@ private:
     ImageLoader*                    m_imageLoader;
     SourcesLoader*                  m_sourcesLoader;
     MatrixCalculator*               m_matrixCalculator;
-    TerrainCorrectionsCalculator*   m_terrainCorrectionsCalculator;
+    LandscapeCalculator*            m_landscapeCalculator;
     DataBase&                       m_database;
 };
 

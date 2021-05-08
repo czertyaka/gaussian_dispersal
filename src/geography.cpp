@@ -31,13 +31,13 @@ static inline double haversine_formula(const double lat1, const double lat2,
 }
 
 /**
- * @brief distance Uses habersine formula for sphere to calculate distance
- *        between two points on earth
+ * @brief calculate_distance Uses habersine formula for sphere to
+ *        calculate distance between two points on earth
  * @param p1 Firts point coordinates
  * @param p2 Second point coordinates
  * @return Distance beyween point 1 and point 2
  */
-double distance(t_epsg4326coord p1, t_epsg4326coord p2)
+double calculate_distance(t_epsg4326coord p1, t_epsg4326coord p2)
 {
     p1.SetUnits(t_epsg4326coord::RADIANS);
     p2.SetUnits(t_epsg4326coord::RADIANS);

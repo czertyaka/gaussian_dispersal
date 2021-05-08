@@ -31,14 +31,14 @@ SOURCES += \
     geospatialdataloader.cpp \
     globaltypes.cpp \
     imageloader.cpp \
+    landscapecalculator.cpp \
     main.cpp \
     mainwindow.cpp \
     matrixcalculator.cpp \
     nuclidesparser.cpp \
     rp5strategy.cpp \
     smithparamcalculator.cpp \
-    sourcesloader.cpp \
-    terraincorrectionscalculator.cpp
+    sourcesloader.cpp
 
 HEADERS += \
     basecalculator.h \
@@ -56,13 +56,13 @@ HEADERS += \
     geospatialdataloader.h \
     globaltypes.h \
     imageloader.h \
+    landscapecalculator.h \
     mainwindow.h \
     matrixcalculator.h \
     nuclidesparser.h \
     rp5strategy.h \
     smithparamcalculator.h \
-    sourcesloader.h \
-    terraincorrectionscalculator.h
+    sourcesloader.h
 
 FORMS += \
     mainwindow.ui
