@@ -72,7 +72,7 @@ Thumbs.db
 *.exe
 
 # CSV
-# *.csv
+*.csv
 
 # Custom
 out/
