@@ -25,6 +25,9 @@ BaseCalculator::t_errorCode LandscapeCalculator::Execute()
     m_xDim = m_db.CoordSet().lon.size();
     m_yDim = m_db.CoordSet().lat.size();
 
+    m_db.TerrainCorrections().clear();
+    m_db.Distances().clear();
+
     // calculate array for each source coordinate
     for (auto iter = m_db.Sources().cbegin(); iter != m_db.Sources().cend(); ++iter)
     {

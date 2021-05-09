@@ -104,7 +104,7 @@ private:
     t_image*                m_image; ///< изображение подложки
     t_sources*              m_sources; ///< источники выбросов
     mt::t_matrix*           m_matrix; ///< матрица повторяемости и другие климатические параметры
-    t_nuclides*             m_nuclides; ///< список еуклидов, считанных из файла и используемых в программе
+    t_nuclides*             m_nuclides; ///< список нуклидов, считанных из файла и используемых в программе
     t_coordSet*             m_coordSet; ///< набор координат прямоугольного массива, используется для адресации вектора @ref m_landscape
     t_terrainCorrections    m_terrainCorrection; ///< поправки на рельеф
     t_distanceMasks         m_distanceMasks; ///< массивы расстояний до источника

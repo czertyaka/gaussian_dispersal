@@ -145,7 +145,7 @@ void Connector::OnSourcesAccept()
 
         // создадим объект источника с такими координатами
         mt::t_source source;
-        source.id = static_cast<uint8_t>(row);
+        source.id = sources.size() + 1;
         source.SetRawCoordinates(x, y);
 
         if (UI->coordinatesEPSG4326RadioButton->isChecked())
