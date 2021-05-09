@@ -246,7 +246,7 @@ bool DataBase::SaveCorrections(const QString &directory)
     for (auto srcIter = m_terrainCorrection.cbegin();
          srcIter != m_terrainCorrection.cend(); ++srcIter)
     {
-        QString filename = directory + "terrain-corrections-src-#"
+        QString filename = directory + "/terrain-corrections-src-"
                             + QString::number(srcIter->source.id) + ".csv";
         CsvWriter writer(filename, 3);
         if (!writer.Init())
@@ -255,10 +255,11 @@ bool DataBase::SaveCorrections(const QString &directory)
             return false;
         }
 
-        QTextStream comment;
+        QString buff;
+        QTextStream comment(&buff);
         comment << "Terrain corrections for source #" << srcIter->source.id <<
                    " with coordiantes " << srcIter->source.coordinates;
-        writer.AddComment(comment.readAll());
+        writer.AddComment(*comment.string());
         writer.AddItem("Latitude");
         writer.AddItem("Longitude");
         writer.AddItem("Terrain correction");
@@ -269,6 +270,8 @@ bool DataBase::SaveCorrections(const QString &directory)
             writer.AddItem(m_landscape->at(i).coord.lon);
             writer.AddItem(srcIter->data.at(i));
         }
+
+        MY_LOG("finished writing to " << filename);
     }
 
     return true;

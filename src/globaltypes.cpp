@@ -81,6 +81,7 @@ void Source::InitCoordinates()
         assert(m_rawY <= 100);
 #ifndef TESTING
         const DataBase::t_coordSet& set = DataBase::GetInstance().CoordSet();
+        assert(set.lat.size() && set.lon.size());
         double lon = m_rawX / 100 * (*(--set.lon.end()) - *set.lon.begin()) + *set.lon.begin();
         double lat = m_rawY / 100 * (*(--set.lat.end()) - *set.lat.begin()) + *set.lat.begin();
 #else
