@@ -163,15 +163,30 @@ namespace mt ///< my types
         t_emissionValue value;
     } t_emission;
 
-    typedef struct source
+    class Source
     {
+    public:
         typedef std::vector<emission> t_emissions;
-
+        enum t_coordType
+        {
+            EPSG4326,
+            EPSG3857,
+            RELATIVE
+        };
         t_epsg4326coord coordinates;
         double height;
         t_emissions emissions;
-        bool operator==(const source& o) const;
-    } t_source;
+        bool operator==(const Source& o) const;
+        void InitCoordinates();
+        void SetRawCoordinates(double x, double y);
+        void SetType(t_coordType type);
+    private:
+        double m_rawX;
+        double m_rawY;
+        t_coordType m_coordType;
+    };
+
+    typedef Source t_source;
 }
 
 #endif // GLOBALTYPES_H

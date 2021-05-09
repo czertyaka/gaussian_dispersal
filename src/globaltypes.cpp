@@ -1,11 +1,4 @@
-/*
- * based on https://www.iogp.org/wp-content/uploads/2019/09/373-07-02.pdf
- *
- * IOGP Publication 373-7-2 – Geomatics Guidance Note number 7, part 2 – September 2019
- * Coordinate Conversions and Transformations including Formulas
- * p. 44
-*/
-
+#include "database.h"
 #include "globaltypes.h"
 #include "geography.h"
 
@@ -68,9 +61,46 @@ const std::optional<t_quarterEmission>& emissionValue::getQuarter() const
     return m_quarterValue;
 }
 
-bool source::operator==(const source &o) const
+bool Source::operator==(const Source &o) const
 {
     return coordinates == o.coordinates && height == o.height;
+}
+
+void Source::InitCoordinates()
+{
+    switch (m_coordType)
+    {
+    case EPSG4326:
+        coordinates = t_epsg4326coord(m_rawX, m_rawY);
+        break;
+    case EPSG3857:
+        coordinates = t_epsg4326coord(t_epsg4326coord(m_rawX, m_rawY));
+        break;
+    case RELATIVE:
+        assert(m_rawX <= 100);
+        assert(m_rawY <= 100);
+#ifndef TESTING
+        const DataBase::t_coordSet& set = DataBase::GetInstance().CoordSet();
+        double lon = m_rawX / 100 * (*(--set.x.end()) - *set.x.begin()) + *set.x.begin();
+        double lat = m_rawY / 100 * (*(--set.y.end()) - *set.y.begin()) + *set.y.begin();
+#else
+        double lon = 0;
+        double lat = 0;
+#endif
+        coordinates = t_epsg4326coord(lon, lat);
+        break;
+    }
+}
+
+void Source::SetRawCoordinates(double x, double y)
+{
+    m_rawX = x;
+    m_rawY = y;
+}
+
+void Source::SetType(Source::t_coordType type)
+{
+    m_coordType = type;
 }
 
 bool nuclide::operator<(const nuclide &o) const

@@ -83,7 +83,7 @@ DataBase::t_nuclides &DataBase::Nuclides()
 
 DataBase::t_coordSet &DataBase::CoordSet()
 {
-    assert(m_nuclides);
+    assert(m_coordSet);
     return *m_coordSet;
 }
 

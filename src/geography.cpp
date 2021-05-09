@@ -1,3 +1,11 @@
+/*
+ * based on https://www.iogp.org/wp-content/uploads/2019/09/373-07-02.pdf
+ *
+ * IOGP Publication 373-7-2 – Geomatics Guidance Note number 7, part 2 – September 2019
+ * Coordinate Conversions and Transformations including Formulas
+ * p. 44
+*/
+
 #include "geography.h"
 #include "globaltypes.h"
 

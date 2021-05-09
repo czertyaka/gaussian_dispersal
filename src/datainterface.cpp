@@ -1,4 +1,5 @@
 #include "datainterface.h"
+#include "database.h"
 
 /**
  * @brief DataInterface::DataInterface
@@ -95,6 +96,13 @@ void DataInterface::OnSourcesReset()
 
 void DataInterface::OnStart()
 {
+    // init source coordinates
+    for (auto src = m_database.Sources().begin();
+         src != m_database.Sources().end(); ++src)
+    {
+        src->InitCoordinates();
+    }
+
     if (m_matrixCalculator->Execute() == BaseCalculator::OK)
     {
         MY_LOG("repeatability matrix calculation: done");
