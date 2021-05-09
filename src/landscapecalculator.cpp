@@ -210,8 +210,8 @@ double LandscapeCalculator::CalcSlope(const db::t_landscape::const_iterator poin
     }
 
     // calculate slope value
-    mt::t_epsg3857coord pointCoord = mt::t_epsg3857coord(point->coord);
-    mt::t_epsg3857coord prevCoord = mt::t_epsg3857coord(prevPoint->coord);
+    t_epsg3857coord pointCoord = t_epsg3857coord(point->coord);
+    t_epsg3857coord prevCoord = t_epsg3857coord(prevPoint->coord);
 
     double slope = static_cast<double>(point->elevation - prevPoint->elevation) /
                     std::sqrt( std::pow(pointCoord.easting - prevCoord.easting, 2) +

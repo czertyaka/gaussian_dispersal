@@ -1,5 +1,6 @@
 #include "datainterface.h"
 #include "landscapecalculator.h"
+#include "database.h"
 
 /**
  * @brief DataInterface::DataInterface
@@ -98,6 +99,13 @@ void DataInterface::OnSourcesReset()
 
 void DataInterface::OnStart()
 {
+    // init source coordinates
+    for (auto src = m_database.Sources().begin();
+         src != m_database.Sources().end(); ++src)
+    {
+        src->InitCoordinates();
+    }
+
     MY_LOG("repeatability matrix calculation: start")
     if (m_matrixCalculator->Execute() == BaseCalculator::OK)
     {

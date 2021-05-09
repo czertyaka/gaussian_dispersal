@@ -4,7 +4,8 @@
 #include <QString>
 #include <QDateTime>
 #include <cmath>
-#include <QTextStream>
+
+#include "geography.h"
 
 #ifndef DATETIME_FORMAT
 #define DATETIME_FORMAT "MM-dd-yyyy hh:00:00"
@@ -64,37 +65,6 @@ namespace mt ///< my types
         NOV = 11,
         DEC = 12
     };
-
-    struct epsg4326coord;
-
-    typedef struct epsg3857coord
-    {
-        double easting;
-        double northing;
-        epsg3857coord(double easting = 0, double northing = 0);
-        epsg3857coord(const epsg4326coord& o);
-        bool operator==(const epsg3857coord& o) const;
-    } t_epsg3857coord;
-
-    typedef t_epsg3857coord t_pseudoMercatorCoord;
-
-    typedef struct epsg4326coord
-    {
-        enum t_Unit
-        {
-            DEGREES,
-            RADIANS
-        };
-        double lon;
-        double lat;
-        epsg4326coord(double lon = 0, double lat = 0, t_Unit unit = DEGREES);
-        epsg4326coord(const epsg3857coord& o);
-        bool operator==(const epsg4326coord& o) const;
-        bool operator<(const epsg4326coord& o) const;
-        void SetUnits(t_Unit unit);
-    private:
-        t_Unit m_unit;
-    } t_epsg4326coord;
 
     typedef struct observation
     {
@@ -193,17 +163,31 @@ namespace mt ///< my types
         t_emissionValue value;
     } t_emission;
 
-    typedef struct source
+    class Source
     {
+    public:
         uint8_t id;
         typedef std::vector<emission> t_emissions;
+        enum t_coordType
+        {
+            EPSG4326,
+            EPSG3857,
+            RELATIVE
+        };
         t_epsg4326coord coordinates;
         double height;
         t_emissions emissions;
-        bool operator==(const source& o) const;
-    } t_source;
-}
+        bool operator==(const Source& o) const;
+        void InitCoordinates();
+        void SetRawCoordinates(double x, double y);
+        void SetType(t_coordType type);
+    private:
+        double m_rawX;
+        double m_rawY;
+        t_coordType m_coordType;
+    };
 
-QTextStream& operator<<(QTextStream &os, const mt::epsg4326coord &cd);
+    typedef Source t_source;
+}
 
 #endif // GLOBALTYPES_H

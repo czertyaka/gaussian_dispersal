@@ -1,81 +1,8 @@
-/*
- * based on https://www.iogp.org/wp-content/uploads/2019/09/373-07-02.pdf
- *
- * IOGP Publication 373-7-2 – Geomatics Guidance Note number 7, part 2 – September 2019
- * Coordinate Conversions and Transformations including Formulas
- * p. 44
-*/
-
+#include "database.h"
 #include "globaltypes.h"
+#include "geography.h"
 
 using namespace mt;
-
-// WGS 84 / Pseudo-Mercator (EPSG CRS code 3857) Parameters
-static const double a = 6378137.0; ///<  ellipsoid semi-major axis, meters
-//static const double lat_o = 0; ///< Latitude of natural origin, rad;  not in use
-static const double lon_o = 0; ///< Longitude of natural origin, rad
-static const double FE = 0; ///< False easting, meters
-static const double FN = 0; ///< False northing, meters
-
-epsg3857coord::epsg3857coord(double easting, double northing) :
-    easting(easting),
-    northing(northing)
-{
-
-}
-
-epsg3857coord::epsg3857coord(const mt::epsg4326coord &o)
-{
-    easting = FE + a * (RAD(o.lon) - lon_o);
-    northing = FN + a * log(tan(M_PI/4 + RAD(o.lat)/2));
-}
-
-bool epsg3857coord::operator==(const epsg3857coord &o) const
-{
-    return easting == o.easting && northing == o.northing;
-}
-
-epsg4326coord::epsg4326coord(double lon, double lat, t_Unit unit) :
-    lon(lon),
-    lat(lat),
-    m_unit(unit)
-{
-
-}
-
-epsg4326coord::epsg4326coord(const mt::epsg3857coord &o)
-{
-    double D = (FN - o.northing)/a;
-    lat = DEG(M_PI/2 - 2*atan(exp(D)));
-    lon = DEG((o.easting - FE)/a + lon_o);
-}
-
-bool epsg4326coord::operator==(const epsg4326coord &o) const
-{
-    return lon == o.lon && lat == o.lat;
-}
-
-bool epsg4326coord::operator<(const epsg4326coord &o) const
-{
-    return lat < o.lat;
-}
-
-void epsg4326coord::SetUnits(epsg4326coord::t_Unit unit)
-{
-    if (unit != m_unit)
-    {
-        switch (unit)
-        {
-        case DEGREES:
-            lon = DEG(lon);
-            lat = DEG(lat);
-            break;
-        case RADIANS:
-            lon = RAD(lon);
-            lat = RAD(lat);
-        }
-    }
-}
 
 matrix::matrix()
 {
@@ -134,9 +61,46 @@ const std::optional<t_quarterEmission>& emissionValue::getQuarter() const
     return m_quarterValue;
 }
 
-bool source::operator==(const source &o) const
+bool Source::operator==(const Source &o) const
 {
     return coordinates == o.coordinates && height == o.height;
+}
+
+void Source::InitCoordinates()
+{
+    switch (m_coordType)
+    {
+    case EPSG4326:
+        coordinates = t_epsg4326coord(m_rawX, m_rawY);
+        break;
+    case EPSG3857:
+        coordinates = t_epsg4326coord(t_epsg4326coord(m_rawX, m_rawY));
+        break;
+    case RELATIVE:
+        assert(m_rawX <= 100);
+        assert(m_rawY <= 100);
+#ifndef TESTING
+        const DataBase::t_coordSet& set = DataBase::GetInstance().CoordSet();
+        double lon = m_rawX / 100 * (*(--set.lon.end()) - *set.lon.begin()) + *set.lon.begin();
+        double lat = m_rawY / 100 * (*(--set.lat.end()) - *set.lat.begin()) + *set.lat.begin();
+#else
+        double lon = 0;
+        double lat = 0;
+#endif
+        coordinates = t_epsg4326coord(lon, lat);
+        break;
+    }
+}
+
+void Source::SetRawCoordinates(double x, double y)
+{
+    m_rawX = x;
+    m_rawY = y;
+}
+
+void Source::SetType(Source::t_coordType type)
+{
+    m_coordType = type;
 }
 
 bool nuclide::operator<(const nuclide &o) const
@@ -147,10 +111,4 @@ bool nuclide::operator<(const nuclide &o) const
 bool nuclide::operator==(const nuclide &o) const
 {
     return name == o.name;
-}
-
-QTextStream& operator<<(QTextStream &os, const mt::epsg4326coord &cd)
-{
-    os << " lon = " << cd.lon << ", lat = " << cd.lat;
-    return os;
 }

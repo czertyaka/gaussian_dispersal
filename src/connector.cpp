@@ -146,18 +146,19 @@ void Connector::OnSourcesAccept()
         // создадим объект источника с такими координатами
         mt::t_source source;
         source.id = static_cast<uint8_t>(row);
+        source.SetRawCoordinates(x, y);
 
         if (UI->coordinatesEPSG4326RadioButton->isChecked())
         {
-            source.coordinates = mt::t_epsg4326coord(x, y);
+            source.SetType(mt::t_source::EPSG4326);
         }
         else if (UI->coordinatesEPSG3857RadioButton->isChecked())
         {
-            source.coordinates = mt::t_epsg4326coord(mt::t_epsg3857coord(x, y));
+            source.SetType(mt::t_source::EPSG3857);
         }
         else
         {
-            // TODO
+            source.SetType(mt::t_source::RELATIVE);
         }
 
         // проинициализируем высоту
