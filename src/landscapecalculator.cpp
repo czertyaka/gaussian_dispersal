@@ -96,14 +96,6 @@ bool LandscapeCalculator::CalculateCorrections(db::t_srcTerrainCorrections &corr
     {
         for (size_t x = 0; x < m_xDim; ++x)
         {
-            // if distance between point and source is higher than 30 km - no
-            // calculation is needed
-            if (!m_db.Distances().back().mask.at(y * m_xDim + x))
-            {
-                corrs.data.at(y * m_xDim + x) = 0;
-                break;
-            }
-
             db::t_landscape::const_iterator point = m_db.Landscape().begin() + y * m_xDim + x;
 
             // calculate slope
