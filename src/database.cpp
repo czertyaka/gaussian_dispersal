@@ -246,32 +246,68 @@ bool DataBase::SaveCorrections(const QString &directory)
     for (auto srcIter = m_terrainCorrection.cbegin();
          srcIter != m_terrainCorrection.cend(); ++srcIter)
     {
-        QString filename = directory + "/terrain-corrections-src-"
-                            + QString::number(srcIter->source.id) + ".csv";
-        CsvWriter writer(filename, 3);
-        if (!writer.Init())
         {
-            MY_LOG("error writing to " << filename);
-            return false;
+            QString filename = directory + "/terrain-corrections-src-"
+                    + QString::number(srcIter->source.id) + ".csv";
+            CsvWriter writer(filename, 3);
+            if (!writer.Init())
+            {
+                MY_LOG("error writing to " << filename);
+                return false;
+            }
+
+            QString buff;
+            QTextStream comment(&buff);
+            comment << "Terrain corrections for source #" << srcIter->source.id <<
+                       " with coordiantes " << srcIter->source.coordinates;
+            writer.AddComment(*comment.string());
+            writer.AddItem("Latitude");
+            writer.AddItem("Longitude");
+            writer.AddItem("Terrain correction");
+
+            for (size_t i = 0; i < srcIter->data.size(); ++i)
+            {
+                writer.AddItem(m_landscape->at(i).coord.lat);
+                writer.AddItem(m_landscape->at(i).coord.lon);
+                writer.AddItem(srcIter->data.at(i));
+            }
+
+            MY_LOG("finished writing to " << filename);
         }
+    }
 
-        QString buff;
-        QTextStream comment(&buff);
-        comment << "Terrain corrections for source #" << srcIter->source.id <<
-                   " with coordiantes " << srcIter->source.coordinates;
-        writer.AddComment(*comment.string());
-        writer.AddItem("Latitude");
-        writer.AddItem("Longitude");
-        writer.AddItem("Terrain correction");
-
-        for (size_t i = 0; i < srcIter->data.size(); ++i)
+    for (auto iter = m_distanceMasks.cbegin();
+         iter != m_distanceMasks.cend(); ++iter)
+    {
         {
-            writer.AddItem(m_landscape->at(i).coord.lat);
-            writer.AddItem(m_landscape->at(i).coord.lon);
-            writer.AddItem(srcIter->data.at(i));
-        }
+            QString filename = directory + "/distance-mask-src-"
+                    + QString::number(iter->source.id) + ".csv";
+            CsvWriter writer(filename, 3);
+            if (!writer.Init())
+            {
+                MY_LOG("error writing to " << filename);
+                return false;
+            }
 
-        MY_LOG("finished writing to " << filename);
+            QString buff;
+            QTextStream comment(&buff);
+            comment << "Disatnce mask for source #" << iter->source.id <<
+                       " with coordiantes " << iter->source.coordinates;
+            writer.AddComment(*comment.string());
+            writer.AddComment("1 if distance between source and point is less than 30 km, 0 if vice versa");
+            writer.AddItem("Latitude");
+            writer.AddItem("Longitude");
+            writer.AddItem("Mask");
+
+            for (size_t i = 0; i < iter->mask.size(); ++i)
+            {
+                writer.AddItem(m_landscape->at(i).coord.lat);
+                writer.AddItem(m_landscape->at(i).coord.lon);
+                writer.AddItem(iter->mask.at(i));
+            }
+
+            MY_LOG("finished writing to " << filename);
+        }
     }
 
     return true;
