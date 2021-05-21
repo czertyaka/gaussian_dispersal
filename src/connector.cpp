@@ -108,7 +108,7 @@ void Connector::OnGeospatialReset()
 void Connector::OnImageAccept()
 {
     QString filename;
-    db::t_optBorders optBorders;
+    dbt::t_optBorders optBorders;
 
     if (UI->imageLoadRadioButton->isChecked())
     {
@@ -134,7 +134,7 @@ void Connector::OnImageReset()
 
 void Connector::OnSourcesAccept()
 {
-    db::t_sources sources;
+    dbt::t_sources sources;
     QGridLayout* table = UI->sourceTableLayout;
 
     for (int row = 1; row < m_window->SourcesRows(); ++row)
@@ -165,7 +165,7 @@ void Connector::OnSourcesAccept()
         source.height = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 4)->widget())->value();
 
         // проверим, есть ли уже источник с такими координатами и высотой в векторе
-        db::t_sources::iterator sourceIter = std::find(sources.begin(), sources.end(), source);
+        dbt::t_sources::iterator sourceIter = std::find(sources.begin(), sources.end(), source);
         if (sourceIter == sources.end())
         {
             sources.push_back(source);

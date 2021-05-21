@@ -73,7 +73,7 @@ void DataInterface::OnGeospatialReset()
     m_geospatialDataLoader->Reset();
 }
 
-bool DataInterface::AddImage(const QString &filename, const db::t_optBorders& optBorders)
+bool DataInterface::AddImage(const QString &filename, const dbt::t_optBorders& optBorders)
 {
     bool result = m_imageLoader->AddImage(filename, optBorders);
     emit UpdateImageStatusLabel(result);

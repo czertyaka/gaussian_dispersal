@@ -348,7 +348,7 @@ DataBase::DataBase() :
 {
 }
 
-bool DataBase::point::operator<(const DataBase::point &o) const
+bool dbt::point::operator<(const dbt::point &o) const
 {
     return coord.lat != o.coord.lat ? coord.lat < o.coord.lat : coord.lon < o.coord.lon;
 }

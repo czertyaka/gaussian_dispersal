@@ -9,7 +9,7 @@ ImageLoader::ImageLoader()
 
 }
 
-bool ImageLoader::AddImage(const QString &filename, const db::t_optBorders& optBorders)
+bool ImageLoader::AddImage(const QString &filename, const dbt::t_optBorders& optBorders)
 {
     if (filename.isEmpty())
     {
@@ -18,7 +18,7 @@ bool ImageLoader::AddImage(const QString &filename, const db::t_optBorders& optB
         return false;
     }
 
-    db::t_image* image = &(m_db.Image());
+    dbt::t_image* image = &(m_db.Image());
     if (!CheckPointer(image, "error opening database for image"))
     {
         m_status = ERROR;

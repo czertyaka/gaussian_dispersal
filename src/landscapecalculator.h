@@ -3,7 +3,7 @@
 
 #include "basecalculator.h"
 #include "globaltypes.h"
-#include "database.h"
+#include "databasetypes.h"
 
 class LandscapeCalculator : public BaseCalculator
 {
@@ -12,9 +12,9 @@ public:
     virtual ~LandscapeCalculator();
     t_errorCode Execute() override;
 private:
-    void CalculateDistances(db::t_distanceMask& distanceMask);
-    bool CalculateCorrections(db::t_srcTerrainCorrections& corrs, const mt::t_source& source);
-    double CalcSlope(const db::t_landscape::const_iterator point, const mt::t_source &source) const;
+    void CalculateDistances(dbt::t_distanceMask& distanceMask);
+    bool CalculateCorrections(dbt::t_srcTerrainCorrections& corrs, const mt::t_source& source);
+    double CalcSlope(const dbt::t_landscape::const_iterator point, const mt::t_source &source) const;
     double CalcCorrection(const double slope) const;
 
     size_t m_xDim;

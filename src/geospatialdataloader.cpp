@@ -30,12 +30,12 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
         return false;
     }
 
-    db::t_landscape& landscape = m_db.Landscape();
+    dbt::t_landscape& landscape = m_db.Landscape();
     landscape.clear();
 
-    std::set<db::t_point> landscapeSet;
+    std::set<dbt::t_point> landscapeSet;
 
-    db::t_coordSet& coordSet = m_db.CoordSet();
+    dbt::t_coordSet& coordSet = m_db.CoordSet();
     coordSet.lon.clear();
     coordSet.lat.clear();
 
@@ -53,7 +53,7 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
         while (!in.atEnd())
         {
             QString line = in.readLine();
-            db::t_point point;
+            dbt::t_point point;
             CsvParser::t_lineStatus lineStatus = m_parser->ParseLine(line, point);
 
             if (lineStatus == CsvParser::COLUMNS_MISMATCH)
@@ -113,5 +113,5 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
 
 void GeospatialDataLoader::Reset()
 {
-    db::t_landscape landscape = m_db.Landscape();
+    dbt::t_landscape landscape = m_db.Landscape();
 }

@@ -44,7 +44,7 @@ BaseCalculator::t_errorCode LandscapeCalculator::Execute()
         }
 
         // allocate new array of distance mask for current source
-        db::t_distanceMask distanceMask(*iter);
+        dbt::t_distanceMask distanceMask(*iter);
         distanceMask.distances.resize(m_db.Landscape().size());
         distanceMask.mask.resize(m_db.Landscape().size());
 
@@ -54,7 +54,7 @@ BaseCalculator::t_errorCode LandscapeCalculator::Execute()
 
 
         // allocate new array of terrain corrections for current source coordinates
-        db::t_srcTerrainCorrections corrs(*iter);
+        dbt::t_srcTerrainCorrections corrs(*iter);
         corrs.data.resize(m_db.Landscape().size());
 
         // fill it
@@ -72,13 +72,13 @@ BaseCalculator::t_errorCode LandscapeCalculator::Execute()
     return OK;
 }
 
-void LandscapeCalculator::CalculateDistances(db::t_distanceMask& distanceMask)
+void LandscapeCalculator::CalculateDistances(dbt::t_distanceMask& distanceMask)
 {
     for (size_t y = 0; y < m_yDim; ++y)
     {
         for (size_t x = 0; x < m_xDim; ++x)
         {
-            db::t_landscape::const_iterator pointIt = m_db.Landscape().begin() + y * m_xDim + x;
+            dbt::t_landscape::const_iterator pointIt = m_db.Landscape().begin() + y * m_xDim + x;
             double distance = calculate_distance(distanceMask.source.coordinates, pointIt->coord);
 
             distanceMask.distances.at(y * m_xDim + x) = distance;
@@ -87,7 +87,7 @@ void LandscapeCalculator::CalculateDistances(db::t_distanceMask& distanceMask)
     }
 }
 
-bool LandscapeCalculator::CalculateCorrections(db::t_srcTerrainCorrections &corrs, const mt::t_source &source)
+bool LandscapeCalculator::CalculateCorrections(dbt::t_srcTerrainCorrections &corrs, const mt::t_source &source)
 { 
     // we will treat vector as 2-D array from now on
     // the values in landscape vector stored in [lat][lon] order
@@ -96,7 +96,7 @@ bool LandscapeCalculator::CalculateCorrections(db::t_srcTerrainCorrections &corr
     {
         for (size_t x = 0; x < m_xDim; ++x)
         {
-            db::t_landscape::const_iterator point = m_db.Landscape().begin() + y * m_xDim + x;
+            dbt::t_landscape::const_iterator point = m_db.Landscape().begin() + y * m_xDim + x;
 
             // calculate slope
             double slope = CalcSlope(point, source);
@@ -120,7 +120,7 @@ bool LandscapeCalculator::CalculateCorrections(db::t_srcTerrainCorrections &corr
     return true;
 }
 
-double LandscapeCalculator::CalcSlope(const db::t_landscape::const_iterator point, const mt::t_source &source) const
+double LandscapeCalculator::CalcSlope(const dbt::t_landscape::const_iterator point, const mt::t_source &source) const
 {
     if (point->coord == source.coordinates)
     {
@@ -140,7 +140,7 @@ double LandscapeCalculator::CalcSlope(const db::t_landscape::const_iterator poin
     double lat = point->coord.lat;
     double lon = point->coord.lon;
 
-    db::t_landscape::const_iterator prevPoint;
+    dbt::t_landscape::const_iterator prevPoint;
 
     // get quarter encoding
     t_quarter quarter = static_cast<t_quarter>((lon < lon0) << 1 | (lat < lat0));
