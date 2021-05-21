@@ -12,9 +12,9 @@ public:
     virtual ~LandscapeCalculator();
     t_errorCode Execute() override;
 private:
-    void CalculateDistances(dbt::t_distanceMask& distanceMask);
+    void CalculateDistances(const size_t srcId, dbt::t_distanceMask& distanceMask);
     bool CalculateCorrections(dbt::t_srcTerrainCorrections& corrs, const mt::t_source& source);
-    double CalcSlope(const dbt::t_landscape::const_iterator point, const mt::t_source &source) const;
+    double CalcSlope(const double x, const double y, const mt::t_source &source) const;
     double CalcCorrection(const double slope) const;
 
     size_t m_xDim;

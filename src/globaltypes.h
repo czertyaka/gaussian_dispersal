@@ -166,7 +166,6 @@ namespace mt ///< my types
     class Source
     {
     public:
-        uint8_t id;
         typedef std::vector<emission> t_emissions;
         enum t_coordType
         {
@@ -177,7 +176,6 @@ namespace mt ///< my types
         t_epsg4326coord coordinates;
         double height;
         t_emissions emissions;
-        bool operator==(const Source& o) const;
         void InitCoordinates();
         void SetRawCoordinates(double x, double y);
         void SetType(t_coordType type);

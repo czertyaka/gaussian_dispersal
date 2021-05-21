@@ -12,6 +12,7 @@
 #include <QComboBox>
 #include <QDoubleSpinBox>
 #include <algorithm>
+#include <functional>
 
 #ifndef UI
     #define UI m_window->Ui()
@@ -145,7 +146,6 @@ void Connector::OnSourcesAccept()
 
         // создадим объект источника с такими координатами
         mt::t_source source;
-        source.id = sources.size() + 1;
         source.SetRawCoordinates(x, y);
 
         if (UI->coordinatesEPSG4326RadioButton->isChecked())
@@ -164,12 +164,12 @@ void Connector::OnSourcesAccept()
         // проинициализируем высоту
         source.height = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 4)->widget())->value();
 
-        // проверим, есть ли уже источник с такими координатами и высотой в векторе
-        dbt::t_sources::iterator sourceIter = std::find(sources.begin(), sources.end(), source);
+        // проверим, есть ли уже источник с такими координатами и высотой в set
+        size_t id = std::hash<double>{}(source.height * x * y);
+        dbt::t_sources::iterator sourceIter = sources.find(id);
         if (sourceIter == sources.end())
         {
-            sources.push_back(source);
-            sourceIter = sources.end() - 1;
+            sourceIter = sources.insert(std::make_pair(id, source)).first;
         }
 
         // проверим, задан ли нуклид
@@ -214,7 +214,7 @@ void Connector::OnSourcesAccept()
         }
 
         // добавляем объект выброса в источник
-        sourceIter->emissions.push_back(emission);
+        sourceIter->second.emissions.push_back(emission);
     }
 
     m_data->AddSources(sources);

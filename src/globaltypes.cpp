@@ -61,12 +61,6 @@ const std::optional<t_quarterEmission>& emissionValue::getQuarter() const
     return m_quarterValue;
 }
 
-bool Source::operator==(const Source &o) const
-{
-    return m_rawX == o.m_rawX && m_rawY == o.m_rawY &&
-            m_coordType == o.m_coordType && height == o.height;
-}
-
 void Source::InitCoordinates()
 {
     switch (m_coordType)

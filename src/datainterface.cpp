@@ -103,7 +103,7 @@ void DataInterface::OnStart()
     for (auto src = m_database.Sources().begin();
          src != m_database.Sources().end(); ++src)
     {
-        src->InitCoordinates();
+        src->second.InitCoordinates();
     }
 
     MY_LOG("repeatability matrix calculation: start")
