@@ -18,21 +18,16 @@ bool ImageLoader::AddImage(const QString &filename, const dbt::t_optBorders& opt
         return false;
     }
 
-    dbt::t_image* image = &(m_db.Image());
-    if (!CheckPointer(image, "error opening database for image"))
-    {
-        m_status = ERROR;
-        return false;
-    }
+    dbt::t_image& image = m_db.Image();
 
-    if (!image->picture.load(filename))
+    if (!image.picture.load(filename))
     {
         MY_LOG("error loading picture " << filename);
         m_status = NOT_READY;
         return false;
     }
 
-    image->borders = optBorders;
+    image.borders = optBorders;
 
     MY_LOG("image " << filename << " were loaded successfully");
     m_status = READY;

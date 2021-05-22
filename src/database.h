@@ -12,15 +12,15 @@ class DataBase
 {
 public:
 
-    typedef dbt::t_climateJournal t_climateJournal;
-    typedef dbt::t_landscape t_landscape;
-    typedef dbt::t_image t_image;
-    typedef dbt::t_sources t_sources;
-    typedef dbt::t_matrix t_matrix;
-    typedef dbt::t_nuclides t_nuclides;
-    typedef dbt::t_coordSet t_coordSet;
-    typedef dbt::t_terrainCorrections t_terrainCorrections;
-    typedef dbt::t_distanceMasks t_distanceMasks;
+    typedef dbt::t_climateJournal           t_climateJournal;
+    typedef dbt::t_landscape                t_landscape;
+    typedef dbt::t_image                    t_image;
+    typedef dbt::t_sourcesTable             t_sourcesTable;
+    typedef dbt::t_matrix                   t_matrix;
+    typedef dbt::t_nuclidesSet              t_nuclidesSet;
+    typedef dbt::t_coordSet                 t_coordSet;
+    typedef dbt::t_terrainCorrectionsTable  t_terrainCorrectionsTable;
+    typedef dbt::t_distancesTable           t_distancesTable;
 
     static DataBase& GetInstance();
     ~DataBase();
@@ -30,15 +30,15 @@ public:
     bool InitNuclides();
 
     // accessors
-    t_climateJournal&       ClimateJournal();
-    t_landscape&            Landscape();
-    t_image&                Image();
-    t_sources&              Sources();
-    t_matrix&           Matrix();
-    t_nuclides&             Nuclides();
-    t_coordSet&             CoordSet();
-    t_terrainCorrections&   TerrainCorrections();
-    t_distanceMasks&        Distances();
+    t_climateJournal&           ClimateJournal();
+    t_landscape&                Landscape();
+    t_image&                    Image();
+    t_sourcesTable&             Sources();
+    t_matrix&                   Matrix();
+    t_nuclidesSet&              Nuclides();
+    t_coordSet&                 CoordSet();
+    t_terrainCorrectionsTable&  TerrainCorrections();
+    t_distancesTable&           Distances();
 
     // savers
     bool SaveMatrix(const QString& directory);
@@ -46,15 +46,15 @@ public:
 
 private:
     DataBase();
-    t_climateJournal*       m_climateJournal; ///< журнал климатических измерений
-    t_landscape*            m_landscape; ///< массив точек с высотами и типом местности
-    t_image*                m_image; ///< изображение подложки
-    t_sources*              m_sources; ///< источники выбросов
-    t_matrix*               m_matrix; ///< матрица повторяемости и другие климатические параметры
-    t_nuclides*             m_nuclides; ///< список нуклидов, считанных из файла и используемых в программе
-    t_coordSet*             m_coordSet; ///< набор координат прямоугольного массива, используется для адресации вектора @ref m_landscape
-    t_terrainCorrections    m_terrainCorrection; ///< поправки на рельеф
-    t_distanceMasks         m_distanceMasks; ///< массивы расстояний до источника
+    t_climateJournal            m_climateJournal; ///< журнал климатических измерений
+    t_landscape                 m_landscape; ///< массив точек с высотами и типом местности
+    t_image                     m_image; ///< изображение подложки
+    t_sourcesTable              m_sources; ///< источники выбросов
+    t_matrix                    m_matrix; ///< матрица повторяемости и другие климатические параметры
+    t_nuclidesSet               m_nuclides; ///< список нуклидов, считанных из файла и используемых в программе
+    t_coordSet                  m_coordSet; ///< набор координат прямоугольного массива, используется для адресации вектора @ref m_landscape
+    t_terrainCorrectionsTable   m_terrainCorrection; ///< поправки на рельеф
+    t_distancesTable            m_distanceTable; ///< массивы расстояний до источника
 };
 
 typedef DataBase db;

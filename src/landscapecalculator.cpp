@@ -46,16 +46,16 @@ BaseCalculator::t_errorCode LandscapeCalculator::Execute()
         }
 
         // allocate new array of distance mask for current source
-        dbt::t_distanceMask distanceMask;
-        distanceMask.distances.Init(m_db.Landscape());
-        distanceMask.mask.Init(m_db.Landscape());
+        dbt::t_distances distances;
+        distances.value.Init(m_db.Landscape());
+        distances.mask.Init(m_db.Landscape());
 
         // calculate distances
-        CalculateDistances(iter->first, distanceMask);
-        m_db.Distances().insert(std::make_pair(iter->first, distanceMask));
+        CalculateDistances(iter->first, distances);
+        m_db.Distances().insert(std::make_pair(iter->first, distances));
 
         // allocate new array of terrain corrections for current source coordinates
-        dbt::t_srcTerrainCorrections corrs;
+        dbt::t_terrainCorrections corrs;
         corrs.Init(m_db.Landscape());
 
         // fill it
@@ -73,7 +73,7 @@ BaseCalculator::t_errorCode LandscapeCalculator::Execute()
     return OK;
 }
 
-void LandscapeCalculator::CalculateDistances(const size_t srcId, dbt::t_distanceMask& distanceMask)
+void LandscapeCalculator::CalculateDistances(const size_t srcId, dbt::t_distances& distances)
 {
     for (size_t y = 0; y < m_yDim; ++y)
     {
@@ -82,13 +82,13 @@ void LandscapeCalculator::CalculateDistances(const size_t srcId, dbt::t_distance
             const dbt::t_point& point = m_db.Landscape().at(x, y);
             double distance = calculate_distance(m_db.Sources().find(srcId)->second.coordinates, point.coord);
 
-            distanceMask.distances.at(x, y) = distance;
-            distanceMask.mask.at(x, y) = distance < gaussian_model_limit;
+            distances.value.at(x, y) = distance;
+            distances.mask.at(x, y) = distance < gaussian_model_limit;
         }
     }
 }
 
-bool LandscapeCalculator::CalculateCorrections(dbt::t_srcTerrainCorrections &corrs, const mt::t_source &source)
+bool LandscapeCalculator::CalculateCorrections(dbt::t_terrainCorrections &corrs, const mt::t_source &source)
 { 
     for (size_t y = 0; y < m_yDim; ++y)
     {

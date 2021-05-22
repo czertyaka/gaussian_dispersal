@@ -20,23 +20,24 @@ namespace mt ///< my types
 {
     enum t_windDir : const int
     {
-        calm = 0,
-        N    = 1,
-        NNE  = 2,
-        NE   = 3,
-        ENE  = 4,
-        E    = 5,
-        ESE  = 6,
-        SE   = 7,
-        SSE  = 8,
-        S    = 9,
-        SSW  = 10,
-        SW   = 11,
-        WSW  = 12,
-        W    = 13,
-        WNW  = 14,
-        NW   = 15,
-        NNW  = 16
+        N,
+        NNE,
+        NE,
+        ENE,
+        E,
+        ESE,
+        SE,
+        SSE,
+        S,
+        SSW,
+        SW,
+        WSW,
+        W,
+        WNW,
+        NW,
+        NNW,
+        WIND_DIR_COUNT = NNW,
+        calm
     };
 
     enum t_smithParam : const int

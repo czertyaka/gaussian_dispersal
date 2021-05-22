@@ -20,7 +20,6 @@ public:
 protected:
     t_status m_status;
     DataBase& m_db;
-    bool CheckPointer(void* ptr, const QString& msg);
 };
 
 #endif // DATAMANAGER_H

@@ -8,15 +8,3 @@ BaseDataLoader::BaseDataLoader()
 {
 
 }
-
-bool BaseDataLoader::CheckPointer(void *ptr, const QString &msg)
-{
-    if (!ptr)
-    {
-        MY_LOG(msg);
-        m_status = ERROR;
-        return false;
-    }
-
-    return true;
-}

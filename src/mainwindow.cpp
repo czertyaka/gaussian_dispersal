@@ -41,8 +41,8 @@ void MainWindow::UpdateNuclides()
 {
     m_ui->nuclideComboBox->addItem("None");
 
-    db::t_nuclides nuclides = DataBase::GetInstance().Nuclides();
-    for (db::t_nuclides::const_iterator iter = nuclides.cbegin(); iter != nuclides.cend(); ++iter)
+    db::t_nuclidesSet nuclides = DataBase::GetInstance().Nuclides();
+    for (db::t_nuclidesSet::const_iterator iter = nuclides.cbegin(); iter != nuclides.cend(); ++iter)
     {
         m_ui->nuclideComboBox->addItem(iter->name);
     }

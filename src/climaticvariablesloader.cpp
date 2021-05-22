@@ -24,7 +24,7 @@ ClimaticVariablesLoader::~ClimaticVariablesLoader()
 bool ClimaticVariablesLoader::AddJournal(const QString &filename, ClimateCsvParser::t_format format)
 {
     m_parser->SetFormat(format);
-    DataBase::t_climateJournal* climateJournal = &(m_db.ClimateJournal());
+    DataBase::t_climateJournal& climateJournal = m_db.ClimateJournal();
 
     if (filename.isEmpty())
     {
@@ -32,12 +32,7 @@ bool ClimaticVariablesLoader::AddJournal(const QString &filename, ClimateCsvPars
         return false;
     }
 
-    if (!CheckPointer(climateJournal, "error opening climate journal database"))
-    {
-        return false;
-    }
-
-    climateJournal->clear();
+    climateJournal.clear();
 
     QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -78,7 +73,7 @@ bool ClimaticVariablesLoader::AddJournal(const QString &filename, ClimateCsvPars
 
             if (lineStatus == CsvParser::OK)
             {
-                climateJournal->push_back(observation);
+                climateJournal.push_back(observation);
                 addedObservationsCounter++;
             }
             else if (lineStatus == CsvParser::INVALID)
@@ -113,10 +108,6 @@ bool ClimaticVariablesLoader::AddJournal(const QString &filename, ClimateCsvPars
 
 void ClimaticVariablesLoader::Reset()
 {
-    DataBase::t_climateJournal* climateJournal = &(m_db.ClimateJournal());
-    if (CheckPointer(climateJournal, "error opening climate journal database"))
-    {
-        climateJournal->clear();
-        m_status = NOT_READY;
-    }
+    m_db.ClimateJournal().clear();
+    m_status = NOT_READY;
 }

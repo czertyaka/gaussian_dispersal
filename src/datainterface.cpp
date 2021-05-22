@@ -85,7 +85,7 @@ void DataInterface::OnImageReset()
     m_imageLoader->Reset();
 }
 
-bool DataInterface::AddSources(const DataBase::t_sources& sources)
+bool DataInterface::AddSources(const DataBase::t_sourcesTable& sources)
 {
     bool result = m_sourcesLoader->AddSources(sources);
     emit UpdateSourcesStatusLabel(result);

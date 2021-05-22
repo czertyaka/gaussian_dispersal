@@ -135,7 +135,7 @@ void Connector::OnImageReset()
 
 void Connector::OnSourcesAccept()
 {
-    dbt::t_sources sources;
+    dbt::t_sourcesTable sources;
     QGridLayout* table = UI->sourceTableLayout;
 
     for (int row = 1; row < m_window->SourcesRows(); ++row)
@@ -166,7 +166,7 @@ void Connector::OnSourcesAccept()
 
         // проверим, есть ли уже источник с такими координатами и высотой в set
         size_t id = std::hash<double>{}(source.height * x * y);
-        dbt::t_sources::iterator sourceIter = sources.find(id);
+        dbt::t_sourcesTable::iterator sourceIter = sources.find(id);
         if (sourceIter == sources.end())
         {
             sourceIter = sources.insert(std::make_pair(id, source)).first;

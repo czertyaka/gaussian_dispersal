@@ -43,7 +43,7 @@ public slots:
     void OnGeospatialReset();
     bool AddImage(const QString& filename, const dbt::t_optBorders& optBorders);
     void OnImageReset();
-    bool AddSources(const db::t_sources& vSources);
+    bool AddSources(const dbt::t_sourcesTable& vSources);
     void OnSourcesReset();
     void OnStart();
     void SaveClimate(const QString& directory);
