@@ -118,7 +118,7 @@ bool LandscapeCalculator::CalculateCorrections(dbt::t_srcTerrainCorrections &cor
 
 double LandscapeCalculator::CalcSlope(const double x, const double y, const mt::t_source &source) const
 {
-    dbt::t_point& point = m_db.Landscape().at(x, y);
+    dbt::t_point point(m_db.Landscape().at(x, y));
     if (point.coord == source.coordinates)
     {
         return 0;
@@ -137,7 +137,7 @@ double LandscapeCalculator::CalcSlope(const double x, const double y, const mt::
     double lat = point.coord.lat;
     double lon = point.coord.lon;
 
-    dbt::t_point& prevPoint = point;
+    dbt::t_point prevPoint;
 
     // get quarter encoding
     t_quarter quarter = static_cast<t_quarter>((lon < lon0) << 1 | (lat < lat0));

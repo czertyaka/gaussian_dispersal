@@ -243,12 +243,16 @@ bool DataBase::SaveMatrix(const QString& directory)
 
 bool DataBase::SaveCorrections(const QString &directory)
 {
+    size_t counter = 0;
+
     for (auto it = m_terrainCorrection.cbegin();
          it != m_terrainCorrection.cend(); ++it)
     {
         {
+            ++counter;
+
             QString filename = directory + "/terrain-corrections-src-"
-                    + QString::number(it->first) + ".csv";
+                    + QString::number(counter) + ".csv";
             CsvWriter writer(filename, 3);
             if (!writer.Init())
             {
@@ -258,7 +262,7 @@ bool DataBase::SaveCorrections(const QString &directory)
 
             QString buff;
             QTextStream comment(&buff);
-            comment << "Terrain corrections for source #" << it->first <<
+            comment << "Terrain corrections for source #" << counter <<
                        " with coordiantes " << m_sources->find(it->first)->second.coordinates;
             writer.AddComment(*comment.string());
             writer.AddItem("Latitude");
@@ -276,12 +280,16 @@ bool DataBase::SaveCorrections(const QString &directory)
         }
     }
 
+    counter = 0;
+
     for (auto iter = m_distanceMasks.cbegin();
          iter != m_distanceMasks.cend(); ++iter)
     {
         {
+            ++counter;
+
             QString filename = directory + "/distance-mask-src-"
-                    + QString::number(iter->first) + ".csv";
+                    + QString::number(counter) + ".csv";
             CsvWriter writer(filename, 3);
             if (!writer.Init())
             {
@@ -291,7 +299,7 @@ bool DataBase::SaveCorrections(const QString &directory)
 
             QString buff;
             QTextStream comment(&buff);
-            comment << "Disatnce mask for source #" << iter->first <<
+            comment << "Disatnce mask for source #" << counter <<
                        " with coordiantes " << m_sources->find(iter->first)->second.coordinates;
             writer.AddComment(*comment.string());
             writer.AddComment("1 if distance between source and point is less than 30 km, 0 if vice versa");
@@ -303,7 +311,7 @@ bool DataBase::SaveCorrections(const QString &directory)
             {
                 writer.AddItem(m_landscape->at(i).coord.lat);
                 writer.AddItem(m_landscape->at(i).coord.lon);
-                writer.AddItem(iter->second.mask.at(i));
+                writer.AddItem(static_cast<bool>(iter->second.mask.at(i)));
             }
 
             MY_LOG("finished writing to " << filename);
