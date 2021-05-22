@@ -6,6 +6,7 @@
 #include <set>
 #include <map>
 #include <QImage>
+#include <stdexcept>
 
 namespace dbt
 {
@@ -59,6 +60,16 @@ public:
         this->resize(m_xDim * m_yDim);
         return *this;
     }
+    vectorAsArray& SetDims(const size_t xDim, const size_t yDim)
+    {
+        m_xDim = xDim;
+        m_yDim = yDim;
+        if (this->size() != xDim * yDim)
+        {
+            throw std::invalid_argument("x dim and y dim don't fit array size");
+        }
+        return *this;
+    }
     T& at(const size_t x, const size_t y)
     {
         return this->std::vector<T>::at(y * m_xDim + x);
@@ -74,6 +85,12 @@ public:
     const T& at(const size_t i) const
     {
         return this->std::vector<T>::at(i);
+    }
+    void clear()
+    {
+        m_xDim = 0;
+        m_yDim = 0;
+        this->std::vector<T>::clear();
     }
     size_t XDim() const { return m_xDim; }
     size_t YDim() const { return m_yDim; }

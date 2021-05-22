@@ -96,11 +96,16 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
             return false;
         }
 
-        if (landscape.size() != coordSet.lon.size() * coordSet.lat.size())
+        try
+        {
+            landscape.SetDims(coordSet.lon.size(), coordSet.lat.size());
+        }
+        catch (std::invalid_argument& ex)
         {
             MY_LOG("points in " << filename << " do not provide regular rectangular grid: "
                    "found " << coordSet.lon.size() << "x" << coordSet.lat.size() << " unique "
                    "coordinates with " << landscape.size() << " total points");
+            MY_LOG(ex.what());
             m_status = ERROR;
             return false;
         }
