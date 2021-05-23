@@ -7,7 +7,6 @@
 
 #include "basedataloader.h"
 #include "globaltypes.h"
-#include "databasetypes.h"
 
 class SourcesLoader : public BaseDataLoader
 {
@@ -28,7 +27,7 @@ public:
     typedef std::vector<t_source> t_vSources;
     SourcesLoader();
     virtual ~SourcesLoader() = default;
-    bool AddSources(const dbt::t_sourcesTable& vSources);
+    bool AddSources(const mt::t_sourcesTable& sources, const mt::t_emissionsTable& emissions);
     void Reset() override;
 };
 

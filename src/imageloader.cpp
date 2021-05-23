@@ -9,7 +9,7 @@ ImageLoader::ImageLoader()
 
 }
 
-bool ImageLoader::AddImage(const QString &filename, const dbt::t_optBorders& optBorders)
+bool ImageLoader::AddImage(const QString &filename, const mt::t_optBorders& optBorders)
 {
     if (filename.isEmpty())
     {
@@ -18,7 +18,7 @@ bool ImageLoader::AddImage(const QString &filename, const dbt::t_optBorders& opt
         return false;
     }
 
-    dbt::t_image& image = m_db.Image();
+    mt::t_image& image = m_db.Image();
 
     if (!image.picture.load(filename))
     {

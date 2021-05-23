@@ -109,7 +109,7 @@ void Connector::OnGeospatialReset()
 void Connector::OnImageAccept()
 {
     QString filename;
-    dbt::t_optBorders optBorders;
+    mt::t_optBorders optBorders;
 
     if (UI->imageLoadRadioButton->isChecked())
     {
@@ -135,7 +135,9 @@ void Connector::OnImageReset()
 
 void Connector::OnSourcesAccept()
 {
-    dbt::t_sourcesTable sources;
+    mt::t_sourcesTable sources;
+    mt::t_emissionsTable emissions;
+
     QGridLayout* table = UI->sourceTableLayout;
 
     for (int row = 1; row < m_window->SourcesRows(); ++row)
@@ -164,13 +166,9 @@ void Connector::OnSourcesAccept()
         // проинициализируем высоту
         source.height = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 4)->widget())->value();
 
-        // проверим, есть ли уже источник с такими координатами и высотой в set
-        size_t id = std::hash<double>{}(source.height * x * y);
-        dbt::t_sourcesTable::iterator sourceIter = sources.find(id);
-        if (sourceIter == sources.end())
-        {
-            sourceIter = sources.insert(std::make_pair(id, source)).first;
-        }
+        // вставим значение в таблицу
+        mt::t_sourceId sourceId = std::hash<double>{}(source.height * x * y);
+        sources.insert(std::make_pair(sourceId, source));
 
         // проверим, задан ли нуклид
         QComboBox* nuclideComboBox = qobject_cast<QComboBox*>(table->itemAtPosition(row, 1)->widget());
@@ -180,9 +178,19 @@ void Connector::OnSourcesAccept()
             return;
         }
 
+        // на всякий случай проверяем имя нуклида
+        mt::t_nuclideName nuclideName = nuclideComboBox->currentText();
+        mt::t_nuclidesTable& nuclidesTable = DataBase::GetInstance().Nuclides();
+        if (nuclidesTable.find(nuclideName) == nuclidesTable.end())
+        {
+            MY_LOG("unknown nuclide name at source # " << row);
+            return;
+        }
+
         // создаем объект выброса, инициализируем индекс нуклида и температуру
         mt::t_emission emission;
-        emission.nuclideName = nuclideComboBox->currentText();
+        emission.source = sourceId;
+        emission.nuclideName = nuclideName;
         emission.temperature = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(row, 5)->widget())->value();
 
         // инициализируем величину выброса
@@ -195,7 +203,7 @@ void Connector::OnSourcesAccept()
                 return;
             }
 
-            emission.value = mt::t_emissionValue(emissionValue);
+            emission.value = mt::t_emissionValueHandler(emissionValue);
         }
         else
         {
@@ -210,14 +218,15 @@ void Connector::OnSourcesAccept()
                 return;
             }
 
-            emission.value = mt::t_emissionValue(fisrtQuarter, secondQuarter, thirdQuarter, fourthQuarter);
+            emission.value = mt::t_emissionValueHandler(fisrtQuarter, secondQuarter, thirdQuarter, fourthQuarter);
         }
 
-        // добавляем объект выброса в источник
-        sourceIter->second.emissions.push_back(emission);
+        // add emission
+        mt::t_emissionId emissionId = row;
+        emissions.insert(std::make_pair(emissionId, emission));
     }
 
-    m_data->AddSources(sources);
+    m_data->AddSources(sources, emissions);
 }
 
 void Connector::OnSourcesReset()

@@ -7,16 +7,20 @@ SourcesLoader::SourcesLoader()
 
 }
 
-bool SourcesLoader::AddSources(const DataBase::t_sourcesTable &sources)
+bool SourcesLoader::AddSources(const mt::t_sourcesTable& sources, const mt::t_emissionsTable& emissions)
 {
-    DataBase::t_sourcesTable& dbSources = m_db.Sources();
+    Reset();
 
-    dbSources.clear();
-
+    db::t_sourcesTable& dbSources = m_db.Sources();
     dbSources = sources;
+
+    db::t_emissionsTable& dbEmissions = m_db.Emissions();
+    dbEmissions = emissions;
+
     m_status = READY;
 
     MY_LOG(dbSources.size() << " sources were successfully added");
+    MY_LOG(dbEmissions.size() << " emissions were succesfully added");
 
     return true;
 }
@@ -24,5 +28,6 @@ bool SourcesLoader::AddSources(const DataBase::t_sourcesTable &sources)
 void SourcesLoader::Reset()
 {
     m_db.Sources().clear();
+    m_db.Emissions().clear();
     m_status = NOT_READY;
 }

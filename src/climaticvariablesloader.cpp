@@ -23,6 +23,8 @@ ClimaticVariablesLoader::~ClimaticVariablesLoader()
 
 bool ClimaticVariablesLoader::AddJournal(const QString &filename, ClimateCsvParser::t_format format)
 {
+    Reset();
+
     m_parser->SetFormat(format);
     DataBase::t_climateJournal& climateJournal = m_db.ClimateJournal();
 
@@ -31,8 +33,6 @@ bool ClimaticVariablesLoader::AddJournal(const QString &filename, ClimateCsvPars
         MY_LOG("climate filename field is empty");
         return false;
     }
-
-    climateJournal.clear();
 
     QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text))

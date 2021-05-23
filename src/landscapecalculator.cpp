@@ -46,7 +46,7 @@ BaseCalculator::t_errorCode LandscapeCalculator::Execute()
         }
 
         // allocate new array of distance mask for current source
-        dbt::t_distances distances;
+        mt::t_distances distances;
         distances.value.Init(m_db.Landscape());
         distances.mask.Init(m_db.Landscape());
 
@@ -55,7 +55,7 @@ BaseCalculator::t_errorCode LandscapeCalculator::Execute()
         m_db.Distances().insert(std::make_pair(iter->first, distances));
 
         // allocate new array of terrain corrections for current source coordinates
-        dbt::t_terrainCorrections corrs;
+        mt::t_terrainCorrections corrs;
         corrs.Init(m_db.Landscape());
 
         // fill it
@@ -73,13 +73,13 @@ BaseCalculator::t_errorCode LandscapeCalculator::Execute()
     return OK;
 }
 
-void LandscapeCalculator::CalculateDistances(const size_t srcId, dbt::t_distances& distances)
+void LandscapeCalculator::CalculateDistances(const size_t srcId, mt::t_distances& distances)
 {
     for (size_t y = 0; y < m_yDim; ++y)
     {
         for (size_t x = 0; x < m_xDim; ++x)
         {
-            const dbt::t_point& point = m_db.Landscape().at(x, y);
+            const mt::t_point& point = m_db.Landscape().at(x, y);
             double distance = calculate_distance(m_db.Sources().find(srcId)->second.coordinates, point.coord);
 
             distances.value.at(x, y) = distance;
@@ -88,7 +88,7 @@ void LandscapeCalculator::CalculateDistances(const size_t srcId, dbt::t_distance
     }
 }
 
-bool LandscapeCalculator::CalculateCorrections(dbt::t_terrainCorrections &corrs, const mt::t_source &source)
+bool LandscapeCalculator::CalculateCorrections(mt::t_terrainCorrections &corrs, const mt::t_source &source)
 { 
     for (size_t y = 0; y < m_yDim; ++y)
     {
@@ -118,7 +118,7 @@ bool LandscapeCalculator::CalculateCorrections(dbt::t_terrainCorrections &corrs,
 
 double LandscapeCalculator::CalcSlope(const double x, const double y, const mt::t_source &source) const
 {
-    dbt::t_point point(m_db.Landscape().at(x, y));
+    mt::t_point point(m_db.Landscape().at(x, y));
     if (point.coord == source.coordinates)
     {
         return 0;
@@ -137,7 +137,7 @@ double LandscapeCalculator::CalcSlope(const double x, const double y, const mt::
     double lat = point.coord.lat;
     double lon = point.coord.lon;
 
-    dbt::t_point prevPoint;
+    mt::t_point prevPoint;
 
     // get quarter encoding
     t_quarter quarter = static_cast<t_quarter>((lon < lon0) << 1 | (lat < lat0));

@@ -10,7 +10,6 @@
 #include "sourcesloader.h"
 #include "imageloader.h"
 #include "matrixcalculator.h"
-#include "databasetypes.h"
 
 class LandscapeCalculator;
 
@@ -41,9 +40,9 @@ public slots:
     void OnClimateReset();
     bool AddGeospatialData(const QString& filename);
     void OnGeospatialReset();
-    bool AddImage(const QString& filename, const dbt::t_optBorders& optBorders);
+    bool AddImage(const QString& filename, const mt::t_optBorders& optBorders);
     void OnImageReset();
-    bool AddSources(const dbt::t_sourcesTable& vSources);
+    bool AddSources(const mt::t_sourcesTable& sources, const mt::t_emissionsTable& emissions);
     void OnSourcesReset();
     void OnStart();
     void SaveClimate(const QString& directory);

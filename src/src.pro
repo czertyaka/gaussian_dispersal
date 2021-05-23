@@ -50,7 +50,6 @@ HEADERS += \
     csvparser.h \
     csvwriter.h \
     database.h \
-    databasetypes.h \
     datainterface.h \
     geography.h \
     geospatialcsvparser.h \

@@ -56,7 +56,7 @@ const std::optional<double> &emissionValue::getAnnual() const
     return m_annualValue;
 }
 
-const std::optional<t_quarterEmission>& emissionValue::getQuarter() const
+const std::optional<t_quarterEmissionValue>& emissionValue::getQuarter() const
 {
     return m_quarterValue;
 }
@@ -97,14 +97,4 @@ void Source::SetRawCoordinates(double x, double y)
 void Source::SetType(Source::t_coordType type)
 {
     m_coordType = type;
-}
-
-bool nuclide::operator<(const nuclide &o) const
-{
-    return name < o.name;
-}
-
-bool nuclide::operator==(const nuclide &o) const
-{
-    return name == o.name;
 }

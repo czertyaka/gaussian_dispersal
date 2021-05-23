@@ -5,17 +5,18 @@ NuclidesParser::NuclidesParser()
     Init(2, "name", ';');
 }
 
-CsvParser::t_lineStatus NuclidesParser::ParseLine(const QString &string, mt::t_nuclide &nuclide)
+CsvParser::t_lineStatus NuclidesParser::ParseLine(const QString &line, mt::t_nuclideInfo &nuclideInfo,
+                                                  QString& nuclideName)
 {
-    t_lineStatus status = CsvParser::SplitLine(string);
+    t_lineStatus status = CsvParser::SplitLine(line);
     if (status != OK)
     {
         return status;
     }
 
     bool casting = true;
-    nuclide.name = m_list.at(0);
-    nuclide.halfLife = m_list.at(1).toFloat(&casting);
+    nuclideName = m_list.at(0);
+    nuclideInfo.halflife = m_list.at(1).toFloat(&casting);
 
     if (!casting)
     {

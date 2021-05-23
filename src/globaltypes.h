@@ -4,6 +4,10 @@
 #include <QString>
 #include <QDateTime>
 #include <cmath>
+#include <set>
+#include <map>
+#include <QImage>
+#include <stdexcept>
 
 #include "geography.h"
 
@@ -18,6 +22,7 @@
 
 namespace mt ///< my types
 {
+    ///< wind directions
     enum t_windDir : const int
     {
         N,
@@ -36,10 +41,11 @@ namespace mt ///< my types
         WNW,
         NW,
         NNW,
-        WIND_DIR_COUNT = NNW,
+        WIND_DIR_COUNT,
         calm
     };
 
+    ///< athmosphere stability categories
     enum t_smithParam : const int
     {
         cathA = 1,
@@ -51,6 +57,7 @@ namespace mt ///< my types
         cathG = 7
     };
 
+    ///< obv, why nit just use Qt here?
     enum month_t : const int
     {
         JAN = 1,
@@ -67,6 +74,7 @@ namespace mt ///< my types
         DEC = 12
     };
 
+    ///< single climatic obserevation to ba added to journal
     typedef struct observation
     {
         QDateTime dateTime; ///< дата и время наблюдения
@@ -82,9 +90,10 @@ namespace mt ///< my types
         double temper; ///< температура, град. Цельсия
     } t_observation;
 
+    ///< joint frequency of wind direction sector n, stability category j and wind speed class k
     typedef struct matrix
     {
-        static const int N = 16; ///< количество интервалов направления ветра
+        static const int N = WIND_DIR_COUNT; ///< количество интервалов направления ветра
         static const int J = 7; ///< количество интервалов категорий устойчивости атмосферы
         static const int K = 8; ///< количество интервалов скорости ветра
 
@@ -127,14 +136,19 @@ namespace mt ///< my types
         matrix();
     } t_matrix;
 
+    ///< emission value, GBq
+    typedef double t_emissionValue;
+
+    ///< emession values by year quarter
     typedef struct quarterEmission
     {
-        double fisrtQuarter;
-        double secondQuarter;
-        double thirdQuarter;
-        double fourthQuarter;
-    } t_quarterEmission;
+        t_emissionValue fisrtQuarter;
+        t_emissionValue secondQuarter;
+        t_emissionValue thirdQuarter;
+        t_emissionValue fourthQuarter;
+    } t_quarterEmissionValue;
 
+    ///< emission value to handle and amange annual and quarterly emissions value
     typedef class emissionValue
     {
     public:
@@ -142,28 +156,48 @@ namespace mt ///< my types
         emissionValue(double annualValue);
         emissionValue(double fisrt, double second, double third, double fourth);
         emissionValue& operator=(const emissionValue& o);
-        const std::optional<double>& getAnnual() const;
-        const std::optional<t_quarterEmission>& getQuarter() const;
+        const std::optional<t_emissionValue>& getAnnual() const;
+        const std::optional<t_quarterEmissionValue>& getQuarter() const;
     private:
-        std::optional<double> m_annualValue;
-        std::optional<t_quarterEmission> m_quarterValue;
-    } t_emissionValue;
+        std::optional<t_emissionValue> m_annualValue;
+        std::optional<t_quarterEmissionValue> m_quarterValue;
+    } t_emissionValueHandler;
 
-    typedef struct nuclide
+    ///< nuclide info
+    typedef struct nuclideInfo
     {
-        QString name;
-        double halfLife;
-        bool operator<(const nuclide& o) const;
-        bool operator==(const nuclide& o) const;
-    } t_nuclide;
+        double halflife;
+    } t_nuclideInfo;
 
+    ///< nuclide identificator is it's name
+    typedef QString t_nuclideName;
+
+    ///< nuclide handler
+    typedef std::map<t_nuclideName, t_nuclideInfo> t_nuclidesTable;
+
+    ///< generic id typedef
+    typedef size_t t_id;
+
+    ///< id of unique source (e.g. tube)
+    typedef t_id t_sourceId;
+
+    ///< data unit in emissions table
     typedef struct emission
     {
-        QString nuclideName;
+        t_sourceId source;
+        t_nuclideName nuclideName;
         double temperature;
-        t_emissionValue value;
+        t_emissionValueHandler value;
     } t_emission;
 
+    ///< id of unique source (e.g. tube)
+    typedef t_id t_emissionId;
+
+    ///< emissions table
+    typedef std::unordered_map<t_emissionId, t_emission> t_emissionsTable;
+
+    ///< source manager with unobvious coordinates managing
+    /// (but me, me knowsss yess... me won't forgetssss no...)
     class Source
     {
     public:
@@ -176,7 +210,6 @@ namespace mt ///< my types
         };
         t_epsg4326coord coordinates;
         double height;
-        t_emissions emissions;
         void InitCoordinates();
         void SetRawCoordinates(double x, double y);
         void SetType(t_coordType type);
@@ -187,6 +220,151 @@ namespace mt ///< my types
     };
 
     typedef Source t_source;
-}
+
+    ///< table of sources with their id's
+    typedef std::unordered_map<t_sourceId, t_source> t_sourcesTable;
+
+    ///< vector that can be treated as 2-D array via operator()
+    ///< also reimplemented some other methods
+    template <typename T>
+    class vectorAsArray : public std::vector<T>
+    {
+    public:
+        vectorAsArray() : std::vector<T>(), m_xDim(0) {}
+        vectorAsArray& Init(const size_t xDim, const size_t yDim)
+        {
+            m_xDim = xDim;
+            m_yDim = xDim;
+            this->resize(xDim * yDim);
+            return *this;
+        }
+        template<typename M>
+        vectorAsArray& Init(const vectorAsArray<M>& o)
+        {
+            m_xDim = o.XDim();
+            m_yDim = o.YDim();
+            this->resize(m_xDim * m_yDim);
+            return *this;
+        }
+        vectorAsArray& SetDims(const size_t xDim, const size_t yDim)
+        {
+            m_xDim = xDim;
+            m_yDim = yDim;
+            if (this->size() != xDim * yDim)
+            {
+                throw std::invalid_argument("x dim and y dim don't fit array size");
+            }
+            return *this;
+        }
+        T& at(const size_t x, const size_t y)
+        {
+            return this->std::vector<T>::at(y * m_xDim + x);
+        }
+        T& at(const size_t i)
+        {
+            return this->std::vector<T>::at(i);
+        }
+        const T& at(const size_t x, const size_t y) const
+        {
+            return this->std::vector<T>::at(y * m_xDim + x);
+        }
+        const T& at(const size_t i) const
+        {
+            return this->std::vector<T>::at(i);
+        }
+        void clear()
+        {
+            m_xDim = 0;
+            m_yDim = 0;
+            this->std::vector<T>::clear();
+        }
+        size_t XDim() const { return m_xDim; }
+        size_t YDim() const { return m_yDim; }
+    private:
+        size_t m_xDim;
+        size_t m_yDim;
+    };
+
+    ///< long term meteorological information for the site of interest
+    typedef std::vector<mt::t_observation> t_climateJournal;
+
+    ///< microrelief types
+    enum t_microrelief : unsigned short
+    {
+        UNKNOWN,
+        SNOW,
+        SHORTGRASS,
+        TALLGRASS,
+        SCRUB_GROWTH,
+        FOREST,
+        BUILDINGS,
+        WATER
+    };
+
+    ///< struct for geospatial point info
+    typedef struct point
+    {
+        t_epsg4326coord coord;
+        t_microrelief microrelief;
+        short int elevation;
+        bool operator<(const point &o) const
+        {
+            return coord.lat != o.coord.lat ? coord.lat < o.coord.lat : coord.lon < o.coord.lon;
+        }
+    } t_point;
+
+    ///< landscape container
+    typedef vectorAsArray<t_point> t_landscape;
+
+    ///< coordinates of image borders
+    typedef struct borders
+    {
+        t_pseudoMercatorCoord nw; // nord west
+        t_pseudoMercatorCoord ne; // nord east
+        t_pseudoMercatorCoord sw; // south west
+        t_pseudoMercatorCoord se; // south east
+    } t_borders;
+
+    ///< we don't necessary need them tho...
+    typedef std::optional<t_borders> t_optBorders;
+
+    ///< struct to store image info
+    typedef struct image
+    {
+        QImage picture;
+        t_optBorders borders;
+    } t_image;
+
+    ///< set of coordinates correspomding to the landscape 2-D array
+    typedef struct coordSet
+    {
+        std::set<double> lon;
+        std::set<double> lat;
+    } t_coordSet;
+
+    ///< terrain corrections array
+    typedef vectorAsArray<double> t_terrainCorrections;
+
+    ///< map containing terrain corrections for the source id
+    typedef std::unordered_map<t_sourceId, t_terrainCorrections> t_terrainCorrectionsTable;
+
+    ///< distances cache
+    typedef struct distances
+    {
+        vectorAsArray<double> value;
+        vectorAsArray<char> mask; ///< true if corresponding point is within model
+    } t_distances;
+
+    ///< array of distances from source to point, some kind of cache
+    ///< may not need it tho, if that's so, get rid of this shit
+    typedef std::unordered_map<t_sourceId, t_distances> t_distancesTable;
+
+    ///< array of concentrations for source & nuclide combination
+    typedef vectorAsArray<double> t_concentrations;
+
+    ///< key here is hash of source & nuclide combination
+    typedef std::unordered_map<t_emissionId, t_concentrations> t_concentrationsTable;
+
+} // namespace mt
 
 #endif // GLOBALTYPES_H

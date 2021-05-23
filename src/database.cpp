@@ -37,8 +37,9 @@ bool DataBase::InitNuclides()
         QString line = in.readLine();
 
         NuclidesParser parser;
-        mt::t_nuclide nuclide;
-        CsvParser::t_lineStatus lineStatus = parser.ParseLine(line, nuclide);
+        QString nuclideName;
+        mt::t_nuclideInfo nuclideInfo;
+        CsvParser::t_lineStatus lineStatus = parser.ParseLine(line, nuclideInfo, nuclideName);
 
         switch (lineStatus)
         {
@@ -51,7 +52,7 @@ bool DataBase::InitNuclides()
             return false;
             break;
         case CsvParser::OK:
-            m_nuclides.insert(nuclide);
+            m_nuclidesTable.insert(std::make_pair(nuclideName, nuclideInfo));
             break;
         default:
             break;
@@ -59,8 +60,8 @@ bool DataBase::InitNuclides()
     }
     file.close();
 
-    MY_LOG("read " << m_nuclides.size() << " nuclides from " << filename);
-    return m_nuclides.size() != 0;
+    MY_LOG("read " << m_nuclidesTable.size() << " nuclides from " << filename);
+    return m_nuclidesTable.size() != 0;
 }
 
 mt::t_matrix &DataBase::Matrix()
@@ -68,9 +69,9 @@ mt::t_matrix &DataBase::Matrix()
     return m_matrix;
 }
 
-DataBase::t_nuclidesSet& DataBase::Nuclides()
+DataBase::t_nuclidesTable& DataBase::Nuclides()
 {
-    return m_nuclides;
+    return m_nuclidesTable;
 }
 
 DataBase::t_coordSet &DataBase::CoordSet()
@@ -86,6 +87,11 @@ DataBase::t_terrainCorrectionsTable &DataBase::TerrainCorrections()
 DataBase::t_distancesTable &DataBase::Distances()
 {
     return m_distanceTable;
+}
+
+DataBase::t_emissionsTable &DataBase::Emissions()
+{
+    return m_emissionsTable;
 }
 
 bool DataBase::SaveMatrix(const QString& directory)
