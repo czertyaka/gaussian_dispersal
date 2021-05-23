@@ -38,7 +38,8 @@ private slots:
     void test_3857to4326();
     void test_4326to3857();
     void test_csvWriter();
-
+    void test_degreesToWindDir();
+    void test_interpoltedSlice();
 };
 
 scattering_test::scattering_test()
@@ -136,7 +137,7 @@ void scattering_test::test_csvWriter()
     QString dir = QDir::currentPath();
 
     {
-        CsvWriter writer(dir + "\test1.csv", 2);
+        CsvWriter writer(dir + "/test1.csv", 2);
         QVERIFY(writer.Init());
 
         writer.AddComment("comment");
@@ -144,6 +145,36 @@ void scattering_test::test_csvWriter()
         writer.AddItem(0.2);
         writer.AddItem('v');
         writer.AddItem("haha");
+    }
+}
+
+void scattering_test::test_degreesToWindDir()
+{
+    QVERIFY(degree_to_dir(0) == E);
+    QVERIFY(degree_to_dir(-4) == E);
+    QVERIFY(degree_to_dir(363) == E);
+    QVERIFY(degree_to_dir(-350) == E);
+    QVERIFY(degree_to_dir(10) == E);
+    QVERIFY(degree_to_dir(89) == N);
+    QVERIFY(degree_to_dir(90) == N);
+    QVERIFY(degree_to_dir(91) == N);
+}
+
+void scattering_test::test_interpoltedSlice()
+{
+    std::array<double, WIND_DIR_COUNT> array = {1, 3, 2, 5, 4, 7, 6, 9, 8,
+                                                11, 10, 13, 12, 15, 14, 16};
+    InterpolatedSlice interp;
+    interp.Init(array);
+
+    QString dir = QDir::currentPath();
+    CsvWriter writer(dir + "/test2.csv", 2);
+    QVERIFY(writer.Init());
+
+    for (double degree = -2*360; degree < 2*360; ++degree)
+    {
+        writer.AddItem(degree);
+        writer.AddItem(interp(degree));
     }
 }
 

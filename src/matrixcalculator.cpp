@@ -1,6 +1,7 @@
 #include "matrixcalculator.h"
 #include "smithparamcalculator.h"
 #include "datainterface.h"
+#include "globaltypes.h"
 
 #include <QDateTime>
 
@@ -353,5 +354,26 @@ void MatrixCalculator::CalcAverageWindSpeedBySmithParam()
         m_matrix.avWindSpBySPWarm[j] = m_matrix.MWarm != 0 ?
                                  static_cast<double>(sumWarm) / static_cast<double>(m_matrix.MWarm) :
                                  0;
+    }
+}
+
+void MatrixCalculator::CalcInterpolation()
+{
+    for (size_t j = 0; j < m_matrix.J; ++j)
+    {
+        for (size_t k = 0; k < m_matrix.K; ++k)
+        {
+            mt::InterpolatedSlice::t_nodes coldNodes;
+            mt::InterpolatedSlice::t_nodes warmNodes;
+
+            for (size_t n = 0; n < m_matrix.N; ++n)
+            {
+                coldNodes[n] = m_matrix.wCold[n][j][k];
+                warmNodes[n] = m_matrix.wWarm[n][j][k];
+            }
+
+            m_matrix.interpCold[j][k].Init(coldNodes);
+            m_matrix.interpWarm[j][k].Init(warmNodes);
+        }
     }
 }

@@ -33,6 +33,7 @@ bool CsvWriter::Init()
     if (!m_file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         MY_LOG("error creating output file " << m_filename);
+        MY_LOG(m_file.errorString());
         return false;
     }
 

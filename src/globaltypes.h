@@ -23,27 +23,29 @@
 namespace mt ///< my types
 {
     ///< wind directions
-    enum t_windDir : const int
+    enum t_windDir : const size_t
     {
         N,
-        NNE,
-        NE,
-        ENE,
-        E,
-        ESE,
-        SE,
-        SSE,
-        S,
-        SSW,
-        SW,
-        WSW,
-        W,
-        WNW,
-        NW,
         NNW,
+        NW,
+        WNW,
+        W,
+        WSW,
+        SW,
+        SSW,
+        S,
+        SSE,
+        SE,
+        ESE,
+        E,
+        ENE,
+        NE,
+        NNE,
         WIND_DIR_COUNT,
         calm
     };
+
+    t_windDir degree_to_dir(double degree);
 
     ///< athmosphere stability categories
     enum t_smithParam : const int
@@ -90,17 +92,35 @@ namespace mt ///< my types
         double temper; ///< температура, град. Цельсия
     } t_observation;
 
+    class InterpolatedSlice
+    {
+    public:
+        typedef std::array<double, WIND_DIR_COUNT> t_nodes;
+        InterpolatedSlice();
+        double operator()(double degree) const;
+        void Init(t_nodes& nodes);
+    private:
+        typedef struct coeffs
+        {
+            double a;
+            double b;
+            double c;
+            double d;
+        } t_coeffs;
+        t_coeffs m_coeffs[WIND_DIR_COUNT]; ///< interpolating coeffs
+    };
+
     ///< joint frequency of wind direction sector n, stability category j and wind speed class k
-    typedef struct matrix
+    struct Matrix
     {
         static const int N = WIND_DIR_COUNT; ///< количество интервалов направления ветра
         static const int J = 7; ///< количество интервалов категорий устойчивости атмосферы
         static const int K = 8; ///< количество интервалов скорости ветра
 
-        const double windDirVals[N] = {0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5, 180, 202.5, 225,
-                                       247.5, 270, 292.5, 315, 337.5};
-        const char smithParamVals[J] = {'A', 'B', 'C', 'D', 'E', 'F', 'G'};
-        const double windSpeedVals[K] = { 0.5, 1, 2, 3, 4.5, 6.5, 9, 12};
+        static constexpr double windDirVals[N] = {90, 112.5, 135, 157.5, 180, 202.5, 225,
+                                       247.5, 270, 292.5, 315, 337.5, 0, 22.5, 45, 67.5};
+        static constexpr char smithParamVals[J] = {'A', 'B', 'C', 'D', 'E', 'F', 'G'};
+        static constexpr double windSpeedVals[K] = { 0.5, 1, 2, 3, 4.5, 6.5, 9, 12};
 
         int mCold[N][J][K]; ///< ненормированная матрица холодного времени года
         int mWarm[N][J][K]; ///< ненормированная матрица теплого времени года
@@ -133,8 +153,13 @@ namespace mt ///< my types
         double avWindSpBySPCold[J] = {0}; ///< ср. скор. ветра при j−ой кат. уст. в холодное время года
         double avWindSpBySPWarm[J] = {0}; ///< ср. скор. ветра при j−ой кат. уст. в теплое время года
 
-        matrix();
-    } t_matrix;
+        InterpolatedSlice interpCold[J][K]; ///< object handling interpolated slice of matrix for cold season
+        InterpolatedSlice interpWarm[J][K]; ///< object handling interpolated slice of matrix for warm season
+
+        Matrix();
+    };
+
+    typedef Matrix t_matrix;
 
     ///< emission value, GBq
     typedef double t_emissionValue;
