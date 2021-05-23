@@ -26,6 +26,7 @@ private:
     void CalcSmithParamRepeatability();
     void CalcAverageWindSpeedByCompPoint();
     void CalcAverageWindSpeedBySmithParam();
+    void CalcInterpolation();
 
     DataBase::t_climateJournal& m_journal;
     mt::t_matrix&               m_matrix;
