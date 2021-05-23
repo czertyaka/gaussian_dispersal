@@ -21,6 +21,7 @@ public:
     typedef dbt::t_coordSet                 t_coordSet;
     typedef dbt::t_terrainCorrectionsTable  t_terrainCorrectionsTable;
     typedef dbt::t_distancesTable           t_distancesTable;
+    typedef dbt::t_srcNuclideTable          t_srcNuclideTable;
 
     static DataBase& GetInstance();
     ~DataBase();
@@ -55,6 +56,8 @@ private:
     t_coordSet                  m_coordSet; ///< набор координат прямоугольного массива, используется для адресации вектора @ref m_landscape
     t_terrainCorrectionsTable   m_terrainCorrection; ///< поправки на рельеф
     t_distancesTable            m_distanceTable; ///< массивы расстояний до источника
+    t_srcNuclideTable           m_srcNuclideTable; ///< table of unique source & nuclide combination
+
 };
 
 typedef DataBase db;

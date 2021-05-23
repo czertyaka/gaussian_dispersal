@@ -176,8 +176,8 @@ void Connector::OnSourcesAccept()
         QComboBox* nuclideComboBox = qobject_cast<QComboBox*>(table->itemAtPosition(row, 1)->widget());
         if (nuclideComboBox->currentIndex() == 0)
         {
-                MY_LOG("nuclide weren't chosen at source # " << row);
-                return;
+            MY_LOG("nuclide weren't chosen at source # " << row);
+            return;
         }
 
         // создаем объект выброса, инициализируем индекс нуклида и температуру
