@@ -21,7 +21,7 @@ LandscapeCalculator::~LandscapeCalculator()
 
 }
 
-BaseCalculator::t_errorCode LandscapeCalculator::Execute()
+BaseCalculator::t_returnCode LandscapeCalculator::Execute()
 {
     m_xDim = m_db.CoordSet().lon.size();
     m_yDim = m_db.CoordSet().lat.size();

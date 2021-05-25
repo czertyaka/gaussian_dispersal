@@ -13,7 +13,7 @@ SmithParamCalculator::SmithParamCalculator(const mt::t_observation& obs) :
 
 }
 
-BaseCalculator::t_errorCode SmithParamCalculator::Execute()
+BaseCalculator::t_returnCode SmithParamCalculator::Execute()
 {
     if (!GetCoordinate())
     {

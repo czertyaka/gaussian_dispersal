@@ -9,7 +9,7 @@ class MatrixCalculator : public BaseCalculator
 public:
     MatrixCalculator();
     virtual ~MatrixCalculator() = default;
-    t_errorCode Execute() override;
+    t_returnCode Execute() override;
 private:
 
     bool AddObservation(const mt::t_observation& obs);

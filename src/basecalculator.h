@@ -7,15 +7,15 @@ class BaseCalculator
 {
 public:
     BaseCalculator();
-    enum t_errorCode
+    enum t_returnCode
     {
         OK,
         ERROR
     };
-    virtual t_errorCode Execute() = 0;
+    virtual t_returnCode Execute() = 0;
 protected:
     DataBase& m_db;
-    mutable t_errorCode m_error;
+    mutable t_returnCode m_error;
 };
 
 #endif // BASECALCULATOR_H

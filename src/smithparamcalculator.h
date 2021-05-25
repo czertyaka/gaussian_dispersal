@@ -9,7 +9,7 @@ class SmithParamCalculator : public BaseCalculator
 public:
 
     SmithParamCalculator(const mt::t_observation& obs);
-    t_errorCode Execute() override;
+    t_returnCode Execute() override;
     mt::t_smithParam Get() const;
 
 private:

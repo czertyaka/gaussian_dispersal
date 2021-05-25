@@ -9,7 +9,7 @@ class LandscapeCalculator : public BaseCalculator
 public:
     LandscapeCalculator();
     virtual ~LandscapeCalculator();
-    t_errorCode Execute() override;
+    t_returnCode Execute() override;
 private:
     void CalculateDistances(const size_t srcId, mt::t_distances& distances);
     bool CalculateCorrections(mt::t_terrainCorrections& corrs, const mt::t_source& source);
