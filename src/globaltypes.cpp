@@ -200,3 +200,52 @@ mt::t_windDir mt::degree_to_dir(double degree)
     return static_cast<t_windDir>(std::distance(windDirsDegrees.begin(),
            std::lower_bound(windDirsDegrees.begin(), windDirsDegrees.end(), degree)));
 }
+
+ConcentrationsTable::ConcentrationsTable(const t_dilutionFactorsTable &dilutionfactorsTable) :
+    m_dilutionsTable(dilutionfactorsTable)
+{
+    Update();
+}
+
+/**
+ * @brief ConcentrationsTable::Update Clears itself and adds concentrations
+ *        from dilutions table
+ */
+void ConcentrationsTable::Update()
+{
+    clear();
+    for (auto it = m_dilutionsTable.begin(); it != m_dilutionsTable.end(); ++it)
+    {
+        t_concentrations concenatrtions;
+        concenatrtions.m_dilutionFactors = &(it->second);
+        concenatrtions.m_emissionValue = DataBase::GetInstance().Emissions().
+                find(it->first)->second.value;
+        insert(std::make_pair(it->first, concenatrtions));
+    }
+}
+
+/**
+ * @brief Concentrations::at Returns a concentration based on dilution factors
+ * @param x
+ * @param y
+ * @return
+ */
+double Concentrations::at(const size_t x, const size_t y)
+{
+    // TODO: add quarterly values
+    assert(m_emissionValue.getAnnual().has_value());
+    return m_emissionValue.getAnnual().value() * m_dilutionFactors->at(x, y);
+}
+
+/**
+ * @brief Concentrations::at Returns a concentration based on dilution factors
+ * @param x
+ * @param y
+ * @return
+ */
+double Concentrations::at(const size_t i)
+{
+    // TODO: add quarterly values
+    assert(m_emissionValue.getAnnual().has_value());
+    return m_emissionValue.getAnnual().value() * m_dilutionFactors->at(i);
+}

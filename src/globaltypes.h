@@ -249,7 +249,7 @@ namespace mt ///< my types
     ///< table of sources with their id's
     typedef std::unordered_map<t_sourceId, t_source> t_sourcesTable;
 
-    ///< vector that can be treated as 2-D array via operator()
+    ///< vector that can be treated as 2-D array via at()
     ///< also reimplemented some other methods
     template <typename T>
     class vectorAsArray : public std::vector<T>
@@ -385,10 +385,39 @@ namespace mt ///< my types
     typedef std::unordered_map<t_sourceId, t_distances> t_distancesTable;
 
     ///< array of concentrations for source & nuclide combination
-    typedef vectorAsArray<double> t_concentrations;
+    typedef vectorAsArray<double> t_dilutionFactors;
 
     ///< key here is hash of source & nuclide combination
-    typedef std::unordered_map<t_emissionId, t_concentrations> t_concentrationsTable;
+    typedef std::unordered_map<t_emissionId, t_dilutionFactors> t_dilutionFactorsTable;
+
+    class ConcentrationsTable;
+
+    ///< we don't need to allocate another arrays for concentrations
+    /// so it's a class storing a pointer to dilutions array and returning
+    /// the concentration value by value
+    class Concentrations
+    {
+    public:
+        double at(const size_t x, const size_t y);
+        double at(const size_t i);
+        friend ConcentrationsTable;
+    private:
+        const t_dilutionFactors* m_dilutionFactors;
+        t_emissionValueHandler m_emissionValue;
+    };
+
+    typedef Concentrations t_concentrations;
+
+    ///< and this is a table which set all the t_concentrations objects
+    class ConcentrationsTable :
+            public std::unordered_map<t_emissionId, t_concentrations>
+    {
+    public:
+        ConcentrationsTable(const t_dilutionFactorsTable& dilutionfactorsTable);
+        void Update();
+    private:
+        const t_dilutionFactorsTable& m_dilutionsTable;
+    };
 
 } // namespace mt
 

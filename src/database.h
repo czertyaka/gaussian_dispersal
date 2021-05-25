@@ -28,7 +28,6 @@ public:
 
     // initialization
     bool Init();
-    bool InitNuclides();
 
     // accessors
     t_climateJournal&           ClimateJournal();
@@ -48,6 +47,8 @@ public:
 
 private:
     DataBase();
+    bool InitNuclides();
+
     t_climateJournal            m_climateJournal; ///< журнал климатических измерений
     t_landscape                 m_landscape; ///< массив точек с высотами и типом местности
     t_image                     m_image; ///< изображение подложки

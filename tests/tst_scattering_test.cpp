@@ -9,6 +9,22 @@
 // add necessary includes here
 #include "globaltypes.h"
 #include "csvwriter.h"
+#include "database.h"
+
+DataBase& DataBase::GetInstance()
+{
+    static DataBase self;
+    return self;
+}
+
+DataBase::DataBase() {}
+
+DataBase::~DataBase() {}
+
+DataBase::t_emissionsTable &DataBase::Emissions()
+{
+    return m_emissionsTable;
+}
 
 using namespace mt;
 
