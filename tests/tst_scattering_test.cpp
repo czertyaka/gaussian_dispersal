@@ -28,6 +28,11 @@ DataBase::t_emissionsTable &DataBase::Emissions()
     return m_emissionsTable;
 }
 
+DataBase::t_sourcesTable &DataBase::Sources()
+{
+    return m_sources;
+}
+
 using namespace mt;
 
 static void Show(const t_epsg3857coord& coord)

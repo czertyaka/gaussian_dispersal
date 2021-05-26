@@ -94,6 +94,16 @@ DataBase::t_emissionsTable &DataBase::Emissions()
     return m_emissionsTable;
 }
 
+DataBase::t_dilutionFactorsTable& DataBase::Dilutions()
+{
+    return m_dilutionFactorsTable;
+}
+
+DataBase::t_concentrationsTable& DataBase::Concentrations()
+{
+    return m_concentrationsTable;
+}
+
 bool DataBase::SaveMatrix(const QString& directory)
 {
     {

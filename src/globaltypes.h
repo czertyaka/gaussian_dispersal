@@ -423,4 +423,6 @@ namespace mt ///< my types
 
 } // namespace mt
 
+QTextStream& operator<<(QTextStream &os, const mt::t_emission &em);
+
 #endif // GLOBALTYPES_H

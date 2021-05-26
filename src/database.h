@@ -32,18 +32,18 @@ public:
     bool Init();
 
     // accessors
-    t_climateJournal&               ClimateJournal();
-    t_landscape&                    Landscape();
-    t_image&                        Image();
-    t_sourcesTable&                 Sources();
-    t_matrix&                       Matrix();
-    t_nuclidesTable&                Nuclides();
-    t_coordSet&                     CoordSet();
-    t_terrainCorrectionsTable&      TerrainCorrections();
-    t_distancesTable&               Distances();
-    t_emissionsTable&               Emissions();
-    t_dilutionFactorsTable&         Dilutions();
-    const t_concentrationsTable&    Concentrations();
+    t_climateJournal&           ClimateJournal();
+    t_landscape&                Landscape();
+    t_image&                    Image();
+    t_sourcesTable&             Sources();
+    t_matrix&                   Matrix();
+    t_nuclidesTable&            Nuclides();
+    t_coordSet&                 CoordSet();
+    t_terrainCorrectionsTable&  TerrainCorrections();
+    t_distancesTable&           Distances();
+    t_emissionsTable&           Emissions();
+    t_dilutionFactorsTable&     Dilutions();
+    t_concentrationsTable&      Concentrations();
 
     // savers
     bool SaveMatrix(const QString& directory);

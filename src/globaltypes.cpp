@@ -249,3 +249,11 @@ double Concentrations::at(const size_t i)
     assert(m_emissionValue.getAnnual().has_value());
     return m_emissionValue.getAnnual().value() * m_dilutionFactors->at(i);
 }
+
+QTextStream &operator<<(QTextStream &os, const t_emission &em)
+{
+    os << "nuclide: " << em.nuclideName << ", emission: " << em.value.getAnnual().value()
+       << " GBq, source: "
+       << DataBase::GetInstance().Sources().find(em.source)->second.coordinates;
+    return os;
+}
