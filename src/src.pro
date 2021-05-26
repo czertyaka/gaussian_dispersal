@@ -26,6 +26,7 @@ SOURCES += \
     csvwriter.cpp \
     database.cpp \
     datainterface.cpp \
+    dilutionscalculator.cpp \
     geography.cpp \
     geospatialcsvparser.cpp \
     geospatialdataloader.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
     csvwriter.h \
     database.h \
     datainterface.h \
+    dilutionscalculator.h \
     geography.h \
     geospatialcsvparser.h \
     geospatialdataloader.h \

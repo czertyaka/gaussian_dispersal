@@ -419,6 +419,8 @@ namespace mt ///< my types
         const t_dilutionFactorsTable& m_dilutionsTable;
     };
 
+    typedef ConcentrationsTable t_concentrationsTable;
+
 } // namespace mt
 
 #endif // GLOBALTYPES_H

@@ -337,6 +337,7 @@ DataBase::t_sourcesTable& DataBase::Sources()
     return m_sources;
 }
 
-DataBase::DataBase()
+DataBase::DataBase() :
+    m_concentrationsTable(m_dilutionFactorsTable)
 {
 }

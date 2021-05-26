@@ -17,7 +17,9 @@ DataBase& DataBase::GetInstance()
     return self;
 }
 
-DataBase::DataBase() {}
+DataBase::DataBase() :
+    m_concentrationsTable(m_dilutionFactorsTable)
+{}
 
 DataBase::~DataBase() {}
 
