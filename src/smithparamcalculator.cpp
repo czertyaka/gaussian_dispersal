@@ -30,15 +30,15 @@ BaseCalculator::t_returnCode SmithParamCalculator::Execute()
     {
         switch (m_insolClass)
         {
-        case -3:   m_param = mt::cathG; break;
-        case -2:   m_param = mt::cathF; break;
-        case -1:   m_param = mt::cathF; break;
-        case 0:    m_param = mt::cathD; break;
-        case 1:    m_param = mt::cathC; break;
-        case 2:    m_param = mt::cathB; break;
-        case 3:    m_param = mt::cathA; break;
-        case 4:    m_param = mt::cathA; break;
-        case 5:    m_param = mt::cathA; break;
+        case -3:   m_param = mt::SP_G; break;
+        case -2:   m_param = mt::SP_F; break;
+        case -1:   m_param = mt::SP_F; break;
+        case 0:    m_param = mt::SP_D; break;
+        case 1:    m_param = mt::SP_C; break;
+        case 2:    m_param = mt::SP_B; break;
+        case 3:    m_param = mt::SP_A; break;
+        case 4:    m_param = mt::SP_A; break;
+        case 5:    m_param = mt::SP_A; break;
         default:    break;
         }
     }
@@ -46,15 +46,15 @@ BaseCalculator::t_returnCode SmithParamCalculator::Execute()
     {
         switch (m_insolClass)
         {
-        case -3:   m_param = mt::cathG; break;
-        case -2:   m_param = mt::cathF; break;
-        case -1:   m_param = mt::cathE; break;
-        case 0:    m_param = mt::cathD; break;
-        case 1:    m_param = mt::cathC; break;
-        case 2:    m_param = mt::cathB; break;
-        case 3:    m_param = mt::cathB; break;
-        case 4:    m_param = mt::cathA; break;
-        case 5:    m_param = mt::cathA; break;
+        case -3:   m_param = mt::SP_G; break;
+        case -2:   m_param = mt::SP_F; break;
+        case -1:   m_param = mt::SP_E; break;
+        case 0:    m_param = mt::SP_D; break;
+        case 1:    m_param = mt::SP_C; break;
+        case 2:    m_param = mt::SP_B; break;
+        case 3:    m_param = mt::SP_B; break;
+        case 4:    m_param = mt::SP_A; break;
+        case 5:    m_param = mt::SP_A; break;
         default: break;
         }
     }
@@ -62,15 +62,15 @@ BaseCalculator::t_returnCode SmithParamCalculator::Execute()
     {
         switch (m_insolClass)
         {
-        case -3:   m_param = mt::cathF; break;
-        case -2:   m_param = mt::cathF; break;
-        case -1:   m_param = mt::cathE; break;
-        case 0:    m_param = mt::cathD; break;
-        case 1:    m_param = mt::cathD; break;
-        case 2:    m_param = mt::cathC; break;
-        case 3:    m_param = mt::cathB; break;
-        case 4:    m_param = mt::cathB; break;
-        case 5:    m_param = mt::cathA; break;
+        case -3:   m_param = mt::SP_F; break;
+        case -2:   m_param = mt::SP_F; break;
+        case -1:   m_param = mt::SP_E; break;
+        case 0:    m_param = mt::SP_D; break;
+        case 1:    m_param = mt::SP_D; break;
+        case 2:    m_param = mt::SP_C; break;
+        case 3:    m_param = mt::SP_B; break;
+        case 4:    m_param = mt::SP_B; break;
+        case 5:    m_param = mt::SP_A; break;
         default: break;
         }
     }
@@ -78,15 +78,15 @@ BaseCalculator::t_returnCode SmithParamCalculator::Execute()
     {
         switch (m_insolClass)
         {
-        case -3:   m_param = mt::cathF; break;
-        case -2:   m_param = mt::cathE; break;
-        case -1:   m_param = mt::cathD; break;
-        case 0:    m_param = mt::cathD; break;
-        case 1:    m_param = mt::cathD; break;
-        case 2:    m_param = mt::cathC; break;
-        case 3:    m_param = mt::cathB; break;
-        case 4:    m_param = mt::cathB; break;
-        case 5:    m_param = mt::cathA; break;
+        case -3:   m_param = mt::SP_F; break;
+        case -2:   m_param = mt::SP_E; break;
+        case -1:   m_param = mt::SP_D; break;
+        case 0:    m_param = mt::SP_D; break;
+        case 1:    m_param = mt::SP_D; break;
+        case 2:    m_param = mt::SP_C; break;
+        case 3:    m_param = mt::SP_B; break;
+        case 4:    m_param = mt::SP_B; break;
+        case 5:    m_param = mt::SP_A; break;
         default: break;
         }
     }
@@ -94,15 +94,15 @@ BaseCalculator::t_returnCode SmithParamCalculator::Execute()
     {
         switch (m_insolClass)
         {
-        case -3:   m_param = mt::cathE; break;
-        case -2:   m_param = mt::cathE; break;
-        case -1:   m_param = mt::cathD; break;
-        case 0:    m_param = mt::cathD; break;
-        case 1:    m_param = mt::cathD; break;
-        case 2:    m_param = mt::cathC; break;
-        case 3:    m_param = mt::cathC; break;
-        case 4:    m_param = mt::cathB; break;
-        case 5:    m_param = mt::cathB; break;
+        case -3:   m_param = mt::SP_E; break;
+        case -2:   m_param = mt::SP_E; break;
+        case -1:   m_param = mt::SP_D; break;
+        case 0:    m_param = mt::SP_D; break;
+        case 1:    m_param = mt::SP_D; break;
+        case 2:    m_param = mt::SP_C; break;
+        case 3:    m_param = mt::SP_C; break;
+        case 4:    m_param = mt::SP_B; break;
+        case 5:    m_param = mt::SP_B; break;
         default: break;
         }
     }
@@ -110,15 +110,15 @@ BaseCalculator::t_returnCode SmithParamCalculator::Execute()
     {
         switch (m_insolClass)
         {
-        case -3:   m_param = mt::cathE; break;
-        case -2:   m_param = mt::cathD; break;
-        case -1:   m_param = mt::cathD; break;
-        case 0:    m_param = mt::cathD; break;
-        case 1:    m_param = mt::cathD; break;
-        case 2:    m_param = mt::cathC; break;
-        case 3:    m_param = mt::cathC; break;
-        case 4:    m_param = mt::cathC; break;
-        case 5:    m_param = mt::cathB; break;
+        case -3:   m_param = mt::SP_E; break;
+        case -2:   m_param = mt::SP_D; break;
+        case -1:   m_param = mt::SP_D; break;
+        case 0:    m_param = mt::SP_D; break;
+        case 1:    m_param = mt::SP_D; break;
+        case 2:    m_param = mt::SP_C; break;
+        case 3:    m_param = mt::SP_C; break;
+        case 4:    m_param = mt::SP_C; break;
+        case 5:    m_param = mt::SP_B; break;
         default: break;
         }
     }
@@ -126,21 +126,21 @@ BaseCalculator::t_returnCode SmithParamCalculator::Execute()
     {
         switch (m_insolClass)
         {
-        case -3:   m_param = mt::cathD; break;
-        case -2:   m_param = mt::cathD; break;
-        case -1:   m_param = mt::cathD; break;
-        case 0:    m_param = mt::cathD; break;
-        case 1:    m_param = mt::cathD; break;
-        case 2:    m_param = mt::cathD; break;
-        case 3:    m_param = mt::cathC; break;
-        case 4:    m_param = mt::cathC; break;
-        case 5:    m_param = mt::cathC; break;
+        case -3:   m_param = mt::SP_D; break;
+        case -2:   m_param = mt::SP_D; break;
+        case -1:   m_param = mt::SP_D; break;
+        case 0:    m_param = mt::SP_D; break;
+        case 1:    m_param = mt::SP_D; break;
+        case 2:    m_param = mt::SP_D; break;
+        case 3:    m_param = mt::SP_C; break;
+        case 4:    m_param = mt::SP_C; break;
+        case 5:    m_param = mt::SP_C; break;
         default: break;
         }
     }
     else if (m_obs.windSpeed >= 7.5)
     {
-       m_param = mt::cathD;
+       m_param = mt::SP_D;
     }
 
     return OK;

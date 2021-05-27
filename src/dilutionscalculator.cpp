@@ -62,6 +62,8 @@ BaseCalculator::t_returnCode DilutionsCalculator::Execute()
  */
 bool DilutionsCalculator::CalculateDilutions()
 {
+    bool result = true;
+
     double commonFactor = 2. * m_matrix.N / std::pow(2 * M_PI, 1.5);
     double coldFraction = static_cast<double>(m_matrix.MCold) / (m_matrix.MCold + m_matrix.MWarm);
     double warmFraction = 1 - coldFraction;
@@ -69,9 +71,11 @@ bool DilutionsCalculator::CalculateDilutions()
     mt::t_terrainCorrections& corrs = m_db.TerrainCorrections().find(m_sourceId)->second;
     mt::t_distances& distances = m_db.Distances().find(m_sourceId)->second;
 
-    for (size_t x = 0; x < m_xDim; ++x)
+    size_t x = 0;
+    size_t y = 0;
+    for (; x < m_xDim; ++x)
     {
-        for (size_t y = 0; y < m_yDim; ++y)
+        for (; y < m_yDim; ++y)
         {
             // skip if we're far too beyond gaussioan model
             if (!distances.mask.at(x, y))
@@ -81,8 +85,25 @@ bool DilutionsCalculator::CalculateDilutions()
 
             // / ( Rn * x ) from formula
             commonFactor /= ( corrs.at(x, y) * distances.value.at(x, y) );
+
+            // calculate diff parameter for current point
+            if (!CalculateDiffusionParameter())
+            {
+                result &= false;
+                break;
+            }
         }
     }
 
-    return true;
+    if (!result)
+    {
+        MY_LOG("failed to calculate dilution factor for " << m_db.Landscape().at(x, y).coord);
+    }
+
+    return result;
+}
+
+bool DilutionsCalculator::CalculateDiffusionParameter()
+{
+
 }

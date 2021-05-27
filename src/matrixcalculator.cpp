@@ -78,13 +78,13 @@ size_t MatrixCalculator::GetJ(const mt::t_smithParam smithParam, bool& result) c
 {
     switch (smithParam)
     {
-    case mt::cathA: return 0;
-    case mt::cathB: return 1;
-    case mt::cathC: return 2;
-    case mt::cathD: return 3;
-    case mt::cathE: return 4;
-    case mt::cathF: return 5;
-    case mt::cathG: return 6;
+    case mt::SP_A: return 0;
+    case mt::SP_B: return 1;
+    case mt::SP_C: return 2;
+    case mt::SP_D: return 3;
+    case mt::SP_E: return 4;
+    case mt::SP_F: return 5;
+    case mt::SP_G: return 6;
     default:
         MY_LOG("invalid smith param " << (int)smithParam);
         result = false;

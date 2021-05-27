@@ -50,13 +50,14 @@ namespace mt ///< my types
     ///< athmosphere stability categories
     enum t_smithParam : const int
     {
-        cathA = 1,
-        cathB = 2,
-        cathC = 3,
-        cathD = 4,
-        cathE = 5,
-        cathF = 6,
-        cathG = 7
+        SP_A = 1,
+        SP_B = 2,
+        SP_C = 3,
+        SP_D = 4,
+        SP_E = 5,
+        SP_F = 6,
+        SP_G = 7,
+        SP_COUNT
     };
 
     ///< obv, why nit just use Qt here?
