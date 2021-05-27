@@ -18,7 +18,8 @@ DataBase::~DataBase()
 
 bool DataBase::Init()
 {
-    return InitNuclides();
+    return InitNuclides() &&
+           InitConstData();
 }
 
 bool DataBase::InitNuclides()
@@ -64,6 +65,27 @@ bool DataBase::InitNuclides()
     return m_nuclidesTable.size() != 0;
 }
 
+bool DataBase::InitConstData()
+{
+    m_maxDiffusionParameter = {1600, 1200, 800, 400, 250, 200, 160}; // meters
+
+    m_roughness = {1, 1, 4, 10, 40, 100, 1}; // cm;
+
+    m_gCoeffs.a1 = {0.112, 0.130, 0.112, 0.098, 0.080, 0.0609, 0.0638};
+    m_gCoeffs.a2 = {5.38e-4, 6.52e-4, 9.05e-4, 1.35e-3, 1.58e-3, 1.96e-3, 1.36e-3};
+    m_gCoeffs.b1 = {1.06, 0.950, 0.920, 0.889, 0.892, 0.895, 0.783};
+    m_gCoeffs.b2 = {0.815, 0.755, 0.718, 0.688, 0.686, 0.684, 0.672};
+    // unitless
+
+    m_fCoeffs.c1 = {1.56, 1.56, 2.02, 2.72, 5.16, 7.37, 1.56};
+    m_fCoeffs.c2 = {6.25e-4, 6.25e-4, 7.76e-4, 0, 18.6, 4290, 6.25e-4};
+    m_fCoeffs.d1 = {0.048, 0.048, 0.0269, 0, -0.098, -0.0957, 0.048};
+    m_fCoeffs.d2 = {0.45, 0.45, 0.37, 0, -0.255, -0.60, 0.45};
+    // unitless
+
+    return true;;
+}
+
 mt::t_matrix &DataBase::Matrix()
 {
     return m_matrix;
@@ -102,6 +124,26 @@ DataBase::t_dilutionFactorsTable& DataBase::Dilutions()
 DataBase::t_concentrationsTable& DataBase::Concentrations()
 {
     return m_concentrationsTable;
+}
+
+const DataBase::t_diffusionParameter &DataBase::MaxDiffusionPatameters()
+{
+    return m_maxDiffusionParameter;
+}
+
+const DataBase::t_roughness &DataBase::Roughness()
+{
+    return m_roughness;
+}
+
+const DataBase::t_gCoeffs &DataBase::GCoeffs()
+{
+    return m_gCoeffs;
+}
+
+const DataBase::t_fCoeffs &DataBase::FCoeffs()
+{
+    return m_fCoeffs;
 }
 
 bool DataBase::SaveMatrix(const QString& directory)

@@ -69,7 +69,7 @@ bool DilutionsCalculator::CalculateDilutions()
     double warmFraction = 1 - coldFraction;
 
     mt::t_terrainCorrections& corrs = m_db.TerrainCorrections().find(m_sourceId)->second;
-    mt::t_distances& distances = m_db.Distances().find(m_sourceId)->second;
+    m_distances = &m_db.Distances().find(m_sourceId)->second;
 
     size_t x = 0;
     size_t y = 0;
@@ -78,16 +78,16 @@ bool DilutionsCalculator::CalculateDilutions()
         for (; y < m_yDim; ++y)
         {
             // skip if we're far too beyond gaussioan model
-            if (!distances.mask.at(x, y))
+            if (!m_distances->mask.at(x, y))
             {
                 continue;
             }
 
             // / ( Rn * x ) from formula
-            commonFactor /= ( corrs.at(x, y) * distances.value.at(x, y) );
+            commonFactor /= ( corrs.at(x, y) * m_distances->value.at(x, y) );
 
             // calculate diff parameter for current point
-            if (!CalculateDiffusionParameter())
+            if (!CalculateDiffusionParameter(x, y))
             {
                 result &= false;
                 break;
@@ -103,7 +103,44 @@ bool DilutionsCalculator::CalculateDilutions()
     return result;
 }
 
-bool DilutionsCalculator::CalculateDiffusionParameter()
+bool DilutionsCalculator::CalculateDiffusionParameter(const size_t x, const size_t y)
 {
+    m_sigma_z.fill(0);
 
+    const mt::t_diffusionParameter& max = m_db.MaxDiffusionPatameters();
+
+    // get current distance
+    double r = m_distances->value.at(x, y);
+
+    // and landscape type
+    mt::t_microrelief mr = m_db.Landscape().at(x, y).microrelief;
+
+    // aaand coeffs for f(z0, x)
+    const char rough = m_db.Roughness()[mr];
+    const double c1 = m_db.FCoeffs().c1[mr];
+    const double c2 = m_db.FCoeffs().c2[mr];
+    const double d1 = m_db.FCoeffs().d1[mr];
+    const double d2 = m_db.FCoeffs().d2[mr];
+
+    // calc f(z0, x)
+    const double f = rough <= 10 ?
+                std::log( c1 * std::pow(r, d1) / (1 + c2 * std::pow(r, d2) ) ) :
+                std::log( c1 * std::pow(r, d1) * (1 + 1 / ( c2 * std::pow(r, d2) ) ) );
+
+    // loop over smith parameters
+    for (size_t sp = mt::SP_A; sp < mt::SP_COUNT; ++sp)
+    {
+        // coeggs for g(x)
+        const double a1 = m_db.GCoeffs().a1[sp];
+        const double a2 = m_db.GCoeffs().a2[sp];
+        const double b1 = m_db.GCoeffs().b1[sp];
+        const double b2 = m_db.GCoeffs().b2[sp];
+
+        // calc g(x)
+        const double g = a1 * std::pow(r, b1) / (1 + a2 * std::pow(r, b2));
+
+        m_sigma_z[sp] = f * g < max[sp] ? f * g : max[sp];
+    }
+
+    return true;
 }

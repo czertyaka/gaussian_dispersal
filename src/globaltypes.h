@@ -48,19 +48,32 @@ namespace mt ///< my types
     t_windDir degree_to_dir(double degree);
 
     ///< athmosphere stability categories
-    enum t_smithParam : const int
+    enum t_smithParam : size_t
     {
-        SP_A = 1,
-        SP_B = 2,
-        SP_C = 3,
-        SP_D = 4,
-        SP_E = 5,
-        SP_F = 6,
-        SP_G = 7,
+        SP_A,
+        SP_B,
+        SP_C,
+        SP_D,
+        SP_E,
+        SP_F,
+        SP_G,
         SP_COUNT
     };
 
-    ///< obv, why nit just use Qt here?
+    ///< diffusion parameter, m
+    typedef std::array<double, mt::SP_COUNT> t_diffusionParameter;
+
+    ///< coefficients for g(x)
+    typedef struct gCoeffs
+    {
+        typedef std::array<double, SP_COUNT> t_vals;
+        t_vals a1;
+        t_vals a2;
+        t_vals b1;
+        t_vals b2;
+    } t_gCoeffs;
+
+    ///< obv, why not just use Qt here?
     enum month_t : const int
     {
         JAN = 1,
@@ -317,15 +330,29 @@ namespace mt ///< my types
     ///< microrelief types
     enum t_microrelief : unsigned short
     {
-        UNKNOWN,
-        SNOW,
-        SHORTGRASS,
-        TALLGRASS,
-        SCRUB_GROWTH,
-        FOREST,
-        BUILDINGS,
-        WATER
+        MR_SNOW,
+        MR_SHORTGRASS,
+        MR_TALLGRASS,
+        MR_SCRUB_GROWTH,
+        MR_FOREST,
+        MR_BUILDINGS,
+        MR_WATER,
+        MR_COUNT,
+        MR_UNKNOWN
     };
+
+    ///< roughness height, cm
+    typedef std::array<char, MR_COUNT> t_roughness;
+
+    ///< coefficients for f(z0, x)
+    typedef struct fCoeffs
+    {
+        typedef std::array<double, MR_COUNT> t_vals;
+        t_vals c1;
+        t_vals c2;
+        t_vals d1;
+        t_vals d2;
+    } t_fCoeffs;
 
     ///< struct for geospatial point info
     typedef struct point
@@ -377,7 +404,7 @@ namespace mt ///< my types
     ///< distances cache
     typedef struct distances
     {
-        vectorAsArray<double> value;
+        vectorAsArray<double> value; ///< meters
         vectorAsArray<char> mask; ///< true if corresponding point is within model
     } t_distances;
 
@@ -421,7 +448,6 @@ namespace mt ///< my types
     };
 
     typedef ConcentrationsTable t_concentrationsTable;
-
 } // namespace mt
 
 QTextStream& operator<<(QTextStream &os, const mt::t_emission &em);

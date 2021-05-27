@@ -24,6 +24,10 @@ public:
     typedef mt::t_emissionsTable            t_emissionsTable;
     typedef mt::t_dilutionFactorsTable      t_dilutionFactorsTable;
     typedef mt::t_concentrationsTable       t_concentrationsTable;
+    typedef mt::t_diffusionParameter        t_diffusionParameter;
+    typedef mt::t_roughness                 t_roughness;
+    typedef mt::t_gCoeffs                   t_gCoeffs;
+    typedef mt::t_fCoeffs                   t_fCoeffs;
 
     static DataBase& GetInstance();
     ~DataBase();
@@ -45,6 +49,12 @@ public:
     t_dilutionFactorsTable&     Dilutions();
     t_concentrationsTable&      Concentrations();
 
+    // const accessors (reference data)
+    const t_diffusionParameter& MaxDiffusionPatameters();
+    const t_roughness&          Roughness();
+    const t_gCoeffs&            GCoeffs();
+    const t_fCoeffs&            FCoeffs();
+
     // savers
     bool SaveMatrix(const QString& directory);
     bool SaveCorrections(const QString& directory);
@@ -52,6 +62,7 @@ public:
 private:
     DataBase();
     bool InitNuclides();
+    bool InitConstData();
 
     t_climateJournal            m_climateJournal; ///< журнал климатических измерений
     t_landscape                 m_landscape; ///< массив точек с высотами и типом местности
@@ -65,7 +76,10 @@ private:
     t_emissionsTable            m_emissionsTable; ///< emissions table
     t_dilutionFactorsTable      m_dilutionFactorsTable; ///< dilution factors
     t_concentrationsTable       m_concentrationsTable; ///< conecntration values
-
+    t_diffusionParameter        m_maxDiffusionParameter; ///< max diffusion parameters for smith parameter, m
+    t_roughness                 m_roughness; ///< roughness heights, cm
+    t_gCoeffs                   m_gCoeffs; ///< coefficinets for g(x)
+    t_fCoeffs                   m_fCoeffs; ///< coefficients for f(z0, x)
 };
 
 typedef DataBase db;

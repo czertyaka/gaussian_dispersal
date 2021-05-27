@@ -11,11 +11,12 @@ public:
      t_returnCode Execute() override;
 private:
      bool CalculateDilutions();
-     bool CalculateDiffusionParameter();
+     bool CalculateDiffusionParameter(const size_t x, const size_t y);
      mt::t_emissionId m_emissionId; ///< current emission
      mt::t_sourceId m_sourceId; ///< source of current emission
      mt::t_dilutionFactors m_dilutions; ///< current dilution values
-     double m_sigma_z[mt::SP_COUNT]; ///< current vertical diffusion parameter, m
+     mt::t_diffusionParameter m_sigma_z; ///< current vertical diffusion parameter, m
+     const mt::t_distances* m_distances; ///< current distances
 
      mt::t_matrix& m_matrix;
      size_t m_xDim;

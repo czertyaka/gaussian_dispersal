@@ -112,7 +112,7 @@ static inline double haversine_formula(const double lat1, const double lat2,
  *        calculate distance between two points on earth
  * @param p1 Firts point coordinates
  * @param p2 Second point coordinates
- * @return Distance beyween point 1 and point 2
+ * @return Distance between point 1 and point 2, meters
  */
 double calculate_distance(t_epsg4326coord p1, t_epsg4326coord p2)
 {

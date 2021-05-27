@@ -25,7 +25,7 @@ GeospatialCsvParser::t_lineStatus GeospatialCsvParser::ParseLine(const QString &
     m_point->elevation = m_list.at(2).toShort(&casting);
     m_point->microrelief = ParseMicrorelief(m_list.at(1), &casting);
 
-    if (!casting || m_point->microrelief == mt::UNKNOWN)
+    if (!casting || m_point->microrelief == mt::MR_UNKNOWN)
     {
         return INVALID;
     }
@@ -65,27 +65,27 @@ mt::t_microrelief GeospatialCsvParser::ParseMicrorelief(const QString &sValue, b
     short value = sValue.toUShort(ok);
     if (!(*ok))
     {
-        return mt::UNKNOWN;
+        return mt::MR_UNKNOWN;
     }
 
     switch (value)
     {
     case SNOW:
-        return mt::SNOW;
+        return mt::MR_SNOW;
     case GRASS:
     case THIN_VEGETATION:
     case MOSS:
-        return mt::SHORTGRASS;
+        return mt::MR_SHORTGRASS;
     case AGRICULTURE:
     case SWAMPS:
-        return mt::TALLGRASS;
+        return mt::MR_TALLGRASS;
     case SHRUB:
-        return mt::SCRUB_GROWTH;
+        return mt::MR_SCRUB_GROWTH;
     case BUILDINGS:
-        return mt::BUILDINGS;
+        return mt::MR_BUILDINGS;
     case WATER:
     case SEAS:
-        return mt::WATER;
+        return mt::MR_WATER;
     case FOREST_CLOSED_EVERGREEN_ACICULAR:
     case FOREST_CLOSED_EVERGREEN_BROADLEAVED:
     case FOREST_CLOSED_DECIDIOUS_ACICULAR:
@@ -98,13 +98,13 @@ mt::t_microrelief GeospatialCsvParser::ParseMicrorelief(const QString &sValue, b
     case FOREST_OPENED_DECIDIOUS_BROADLEAVED:
     case FOREST_OPENED_MIXED:
     case FOREST_OPENED_UNKNOWN:
-        return mt::FOREST;
+        return mt::MR_FOREST;
     case UNKNOWN:
-        return mt::UNKNOWN;
+        return mt::MR_UNKNOWN;
     default:
         *ok = false;
         MY_LOG("invalid microrelief type: \"" << sValue
                << "\"");
-        return mt::UNKNOWN;
+        return mt::MR_UNKNOWN;
     }
 }
