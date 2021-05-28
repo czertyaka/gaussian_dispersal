@@ -28,6 +28,7 @@ public:
     typedef mt::t_roughness                 t_roughness;
     typedef mt::t_gCoeffs                   t_gCoeffs;
     typedef mt::t_fCoeffs                   t_fCoeffs;
+    typedef mt::t_epsilon                   t_epsilon;
 
     static DataBase& GetInstance();
     ~DataBase();
@@ -54,6 +55,7 @@ public:
     const t_roughness&          Roughness();
     const t_gCoeffs&            GCoeffs();
     const t_fCoeffs&            FCoeffs();
+    const t_epsilon&            Epsilon();
 
     // savers
     bool SaveMatrix(const QString& directory);
@@ -80,6 +82,7 @@ private:
     t_roughness                 m_roughness; ///< roughness heights, cm
     t_gCoeffs                   m_gCoeffs; ///< coefficinets for g(x)
     t_fCoeffs                   m_fCoeffs; ///< coefficients for f(z0, x)
+    t_epsilon                   m_epsilon; ///< ε values for wind speed formula
 };
 
 typedef DataBase db;

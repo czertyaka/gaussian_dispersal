@@ -16,6 +16,8 @@ private:
      mt::t_sourceId m_sourceId; ///< source of current emission
      mt::t_dilutionFactors m_dilutions; ///< current dilution values
      mt::t_diffusionParameter m_sigma_z; ///< current vertical diffusion parameter, m
+     mt::t_windSpeedSP m_windSpeedSP; ///< average wind speeds for current point
+
      const mt::t_distances* m_distances; ///< current distances
 
      mt::t_matrix& m_matrix;

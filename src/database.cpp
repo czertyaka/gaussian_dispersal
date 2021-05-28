@@ -77,10 +77,19 @@ bool DataBase::InitConstData()
     m_gCoeffs.b2 = {0.815, 0.755, 0.718, 0.688, 0.686, 0.684, 0.672};
     // unitless
 
-    m_fCoeffs.c1 = {1.56, 1.56, 2.02, 2.72, 5.16, 7.37, 1.56};
-    m_fCoeffs.c2 = {6.25e-4, 6.25e-4, 7.76e-4, 0, 18.6, 4290, 6.25e-4};
-    m_fCoeffs.d1 = {0.048, 0.048, 0.0269, 0, -0.098, -0.0957, 0.048};
-    m_fCoeffs.d2 = {0.45, 0.45, 0.37, 0, -0.255, -0.60, 0.45};
+    m_fCoeffs.c1 = {1.56, 1.56, 1.56, 2.02, 2.72, 5.16, 7.37};
+    m_fCoeffs.c2 = {6.25e-4, 6.25e-4, 6.25e-4, 7.76e-4, 0, 18.6, 4290};
+    m_fCoeffs.d1 = {0.048, 0.048, 0.048, 0.0269, 0, -0.098, -0.0957};
+    m_fCoeffs.d2 = {0.45, 0.45, 0.45, 0.37, 0, -0.255, -0.60};
+    // unitless
+
+    m_epsilon.e[mt::SP_A] = {0.05, 0.05, 0.05, 0.06, 0.08, 0.15, 0.16};
+    m_epsilon.e[mt::SP_B] = {0.06, 0.06, 0.06, 0.07, 0.09, 0.16, 0.17};
+    m_epsilon.e[mt::SP_C] = {0.06, 0.06, 0.06, 0.08, 0.11, 0.14, 0.20};
+    m_epsilon.e[mt::SP_D] = {0.12, 0.12, 0.12, 0.13, 0.16, 0.20, 0.27};
+    m_epsilon.e[mt::SP_E] = {0.22, 0.22, 0.22, 0.22, 0.22, 0.25, 0.31};
+    m_epsilon.e[mt::SP_F] = {0.34, 0.34, 0.34, 0.34, 0.34, 0.35, 0.42};
+    m_epsilon.e[mt::SP_G] = {0.52, 0.52, 0.52, 0.52, 0.52, 0.55, 0.60};
     // unitless
 
     return true;;
@@ -144,6 +153,11 @@ const DataBase::t_gCoeffs &DataBase::GCoeffs()
 const DataBase::t_fCoeffs &DataBase::FCoeffs()
 {
     return m_fCoeffs;
+}
+
+const DataBase::t_epsilon &DataBase::Epsilon()
+{
+    return m_epsilon;
 }
 
 bool DataBase::SaveMatrix(const QString& directory)

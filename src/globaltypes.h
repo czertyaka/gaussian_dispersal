@@ -73,6 +73,9 @@ namespace mt ///< my types
         t_vals b2;
     } t_gCoeffs;
 
+    ///< average wind spreed for smith patameter
+    typedef std::array<double, mt::SP_COUNT> t_windSpeedSP;
+
     ///< obv, why not just use Qt here?
     enum month_t : const int
     {
@@ -330,13 +333,13 @@ namespace mt ///< my types
     ///< microrelief types
     enum t_microrelief : unsigned short
     {
-        MR_SNOW,
-        MR_SHORTGRASS,
-        MR_TALLGRASS,
-        MR_SCRUB_GROWTH,
-        MR_FOREST,
-        MR_BUILDINGS,
-        MR_WATER,
+        MR_SNOW,            // z0 = 1 cm
+        MR_SHORTGRASS,      // z0 = 1 cm
+        MR_WATER,           // z0 = 1 cm
+        MR_TALLGRASS,       // z0 = 4 cm
+        MR_SCRUB_GROWTH,    // z0 = 10 cm
+        MR_FOREST,          // z0 = 40 cm
+        MR_BUILDINGS,       // z0 = 100 cm
         MR_COUNT,
         MR_UNKNOWN
     };
@@ -353,6 +356,12 @@ namespace mt ///< my types
         t_vals d1;
         t_vals d2;
     } t_fCoeffs;
+
+    ///< ε values table for wind speed formula
+    typedef struct epsilon
+    {
+        std::array<double, MR_COUNT> e[SP_COUNT];
+    } t_epsilon;
 
     ///< struct for geospatial point info
     typedef struct point
