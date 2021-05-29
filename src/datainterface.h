@@ -10,6 +10,7 @@
 #include "sourcesloader.h"
 #include "imageloader.h"
 #include "matrixcalculator.h"
+#include "dilutionscalculator.h"
 
 class LandscapeCalculator;
 
@@ -34,6 +35,7 @@ signals:
     void UpdateSourcesStatusLabel(const bool ok);
     void MatrixDone(const bool ok);
     void TerrainDone(const bool ok);
+    void DilutionsDone(const bool ok);
 
 public slots:
     bool AddClimaticJournal(const QString& filename, ClimateCsvParser::t_format format);
@@ -56,6 +58,7 @@ private:
     SourcesLoader*                  m_sourcesLoader;
     MatrixCalculator*               m_matrixCalculator;
     LandscapeCalculator*            m_landscapeCalculator;
+    DilutionsCalculator*            m_dilutionsCalculator;
     DataBase&                       m_database;
 };
 

@@ -14,6 +14,7 @@ DataInterface::DataInterface(QObject *parent) :
     m_sourcesLoader(new SourcesLoader),
     m_matrixCalculator(new MatrixCalculator),
     m_landscapeCalculator(new LandscapeCalculator),
+    m_dilutionsCalculator(new DilutionsCalculator),
     m_database(DataBase::GetInstance())
 {
 
@@ -131,6 +132,20 @@ void DataInterface::OnStart()
         MY_LOG("terrain corrections calculation: error, "
                "aborting calculation");
         emit TerrainDone(false);
+        return;
+    }
+
+    MY_LOG("dilution factors and concentration calculation: start");
+    if (m_dilutionsCalculator->Execute() == BaseCalculator::OK)
+    {
+        MY_LOG("dilution factors and concentration calculation: done");
+        emit DilutionsDone(true);
+    }
+    else
+    {
+        MY_LOG("dilution factors and concentration calculation: error, "
+               "aborting calculation");
+        emit DilutionsDone(false);
         return;
     }
 }

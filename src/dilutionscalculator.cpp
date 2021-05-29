@@ -27,13 +27,18 @@ BaseCalculator::t_returnCode DilutionsCalculator::Execute()
         m_emissionId = iter->first;
         m_sourceId = iter->second.source;
 
+        // and source characteristics
+        m_sourceCoord = m_db.Sources().find(m_sourceId)->second.coordinates;
+        m_sourceHeight = m_db.Sources().find(m_sourceId)->second.height;
+
         // update vector
         m_dilutions.clear();
-        m_dilutions.resize(m_db.Landscape().size());
+        m_dilutions.Init(m_db.Landscape());
         std::fill(m_dilutions.begin(), m_dilutions.end(), 0);
 
-        // initalize wind speed cache
-        CaclulateWindSpeeds();
+        // initalize wind speed cache and decay rate
+        InitWindSpeedsCache();
+        InitDecayRate();
 
         // start calculation
         MY_LOG("starting calculation dilution factor for " << iter->second);
@@ -76,25 +81,42 @@ bool DilutionsCalculator::CalculateDilutions()
 
     size_t x = 0;
     size_t y = 0;
-    for (; x < m_xDim; ++x)
+    for (; y < m_yDim; ++y)
     {
-        for (; y < m_yDim; ++y)
+        for (; x < m_xDim; ++x)
         {
-            // skip if we're far too beyond gaussioan model
+            // skip if we're far too beyond gaussian model
             if (!m_distances->mask.at(x, y))
             {
                 continue;
             }
 
             // / ( Rn * x ) from formula
-            commonFactor /= ( corrs.at(x, y) * m_distances->value.at(x, y) );
+            m_distance = m_distances->value.at(x, y);
+            commonFactor /= ( corrs.at(x, y) * m_distance);
 
-            // calculate diff parameter for current point
+            // calculate diffusion parameter for current point
             if (!CalculateDiffusionParameter(x, y))
             {
                 result &= false;
                 break;
             }
+
+            // calculate depletion functions
+            CalculateDepletions(x, y);
+
+            // calculate sums
+            double coldSum = 0;
+            double warmSum = 0;
+
+            if (!CalculateSums(x, y, coldSum, warmSum))
+            {
+                result &= false;
+                break;
+            }
+
+            // finally...
+            m_dilutions.at(x, y) = commonFactor * (coldFraction * coldSum + warmFraction * warmSum);
         }
     }
 
@@ -148,9 +170,63 @@ bool DilutionsCalculator::CalculateDiffusionParameter(const size_t x, const size
     return true;
 }
 
-bool DilutionsCalculator::CaclulateWindSpeeds()
+bool DilutionsCalculator::CalculateDepletions(const size_t x, const size_t y)
 {
-    const double Hg = m_db.Sources().find(m_sourceId)->second.height;
+    mt::t_microrelief mr = m_db.Landscape().at(x, y).microrelief;
+
+    for (size_t sp = mt::SP_A; sp < mt::SP_COUNT; ++sp)
+    {
+        m_depletionsCold[sp] = std::exp( -m_decayRate * m_distance /
+            m_windSpeedsAtHeightCold.w[sp][mr] );
+        m_depletionsWarm[sp] = std::exp( -m_decayRate * m_distance /
+            m_windSpeedsAtHeightWarm.w[sp][mr] );
+    }
+
+    return true;
+}
+
+bool DilutionsCalculator::CalculateSums(const size_t x, const size_t y, double &coldSum, double& warmSum)
+{
+    double angle = CalculateAngle(x, y);
+    mt::t_microrelief mr = m_db.Landscape().at(x, y).microrelief;
+
+    coldSum = 0;
+    warmSum = 0;
+
+    for (size_t sp = mt::SP_A; sp < mt::SP_COUNT; ++sp)
+    {
+        for (size_t ws = 0; ws < m_db.Matrix().K; ++ws)
+        {
+            if (m_sigma_z[sp] * m_windSpeedsAtHeightCold.w[sp][mr] != 0)
+            {
+                coldSum += m_db.Matrix().interpCold[sp][ws](angle) / ( m_sigma_z[sp] *
+                    m_windSpeedsAtHeightCold.w[sp][mr] ) * m_depletionsCold[sp] *
+                    std::exp( - (m_sourceHeight * m_sourceHeight) / (2 * m_sigma_z[sp] *
+                    m_sigma_z[sp]) );
+            }
+            if (m_sigma_z[sp] * m_windSpeedsAtHeightWarm.w[sp][mr] != 0)
+            {
+                warmSum += m_db.Matrix().interpWarm[sp][ws](angle) / ( m_sigma_z[sp] *
+                    m_windSpeedsAtHeightWarm.w[sp][mr] ) * m_depletionsWarm[sp] *
+                    std::exp( - (m_sourceHeight * m_sourceHeight) / (2 * m_sigma_z[sp] *
+                    m_sigma_z[sp]) );
+            }
+        }
+    }
+
+    return true;
+}
+
+double DilutionsCalculator::CalculateAngle(const size_t x, const size_t y) const
+{
+    double deltaLon = m_db.Landscape().at(x, y).coord.lon - m_sourceCoord.lon;
+    double deltaLat = m_db.Landscape().at(x, y).coord.lat - m_sourceCoord.lat;
+    return DEG(std::atan2(deltaLat, deltaLon));
+}
+
+bool DilutionsCalculator::InitWindSpeedsCache()
+{
+    const double Hg = m_sourceHeight;
 
     for (size_t sp = mt::SP_A; sp < mt::SP_COUNT; ++sp)
     {
@@ -163,5 +239,13 @@ bool DilutionsCalculator::CaclulateWindSpeeds()
         }
     }
 
+    return true;
+}
+
+bool DilutionsCalculator::InitDecayRate()
+{
+    mt::t_nuclideName nuclide = m_db.Emissions().find(m_emissionId)->second.nuclideName;
+    ///< halflife in years, calculate decay rate in sec^-1
+    m_decayRate = std::log(2) / ( m_db.Nuclides().find(nuclide)->second.halflife * 3.154e+7);
     return true;
 }

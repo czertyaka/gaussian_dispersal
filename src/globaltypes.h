@@ -208,7 +208,7 @@ namespace mt ///< my types
     ///< nuclide info
     typedef struct nuclideInfo
     {
-        double halflife;
+        double halflife; ///< year
     } t_nuclideInfo;
 
     ///< nuclide identificator is it's name

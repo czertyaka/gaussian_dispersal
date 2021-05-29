@@ -33,6 +33,7 @@ BaseCalculator::t_returnCode MatrixCalculator::Execute()
     CalcSmithParamRepeatability();
     CalcAverageWindSpeedByCompPoint();
     CalcAverageWindSpeedBySmithParam();
+    CalcInterpolation();
 
     return OK;
 }
