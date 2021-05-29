@@ -427,7 +427,7 @@ namespace mt ///< my types
     ///< may not need it tho, if that's so, get rid of this shit
     typedef std::unordered_map<t_sourceId, t_distances> t_distancesTable;
 
-    ///< array of concentrations for source & nuclide combination
+    ///< array of concentrations for source & nuclide combination, s/m^3
     typedef vectorAsArray<double> t_dilutionFactors;
 
     ///< key here is hash of source & nuclide combination
@@ -449,6 +449,7 @@ namespace mt ///< my types
         t_emissionValueHandler m_emissionValue;
     };
 
+    ///< Bq/m^3
     typedef Concentrations t_concentrations;
 
     ///< and this is a table which set all the t_concentrations objects

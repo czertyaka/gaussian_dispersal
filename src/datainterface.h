@@ -49,6 +49,7 @@ public slots:
     void OnStart();
     void SaveClimate(const QString& directory);
     void SaveTerrain(const QString& directory);
+    void SaveDilutions(const QString& directory);
 
 private:
     explicit DataInterface(QObject *parent = nullptr);

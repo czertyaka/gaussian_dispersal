@@ -162,6 +162,14 @@ void DataInterface::SaveTerrain(const QString &directory)
 {
     if (!m_database.SaveCorrections(directory))
     {
-        MY_LOG("error saving terrain corrections")
+        MY_LOG("error saving terrain corrections");
+    }
+}
+
+void DataInterface::SaveDilutions(const QString &directory)
+{
+    if (!m_database.SaveDilutions(directory))
+    {
+        MY_LOG("error saving dilutions and concentrations");
     }
 }

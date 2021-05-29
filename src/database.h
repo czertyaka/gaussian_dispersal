@@ -60,6 +60,7 @@ public:
     // savers
     bool SaveMatrix(const QString& directory);
     bool SaveCorrections(const QString& directory);
+    bool SaveDilutions(const QString& directory);
 
 private:
     DataBase();

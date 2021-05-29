@@ -114,6 +114,7 @@ void MainWindow::CustomUiSettings()
 
     connect(m_ui->climateSaveButton, &QPushButton::clicked, this, &MainWindow::GetOutputDir);
     connect(m_ui->geoSaveButton, &QPushButton::clicked, this, &MainWindow::GetOutputDir);
+    connect(m_ui->sourceSaveButton, &QPushButton::clicked, this, &MainWindow::GetOutputDir);
 }
 
 void MainWindow::UpdateStatusLabel(QLabel *label, const bool result)

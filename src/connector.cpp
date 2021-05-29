@@ -65,6 +65,7 @@ Connector::Connector(MainWindow& window, DataInterface& data, QObject* parent)
     connect(UI->srcResetButton, &QPushButton::clicked, this, &Connector::UpdateStartButton);
     connect(m_data, &DataInterface::UpdateSourcesStatusLabel, m_window, &MainWindow::UpdateSourcesStatusLabel);
     connect(m_data, &DataInterface::DilutionsDone, m_window, &MainWindow::OnDilutionsDone);
+    connect(UI->sourceSaveButton, &QPushButton::clicked, m_data, [=](){ m_data->SaveDilutions(m_window->CurrentDirectory()); });
 
     // calculations
     connect(UI->startButton, &QPushButton::clicked, m_data, &DataInterface::OnStart);

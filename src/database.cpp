@@ -383,6 +383,45 @@ bool DataBase::SaveCorrections(const QString &directory)
     return true;
 }
 
+bool DataBase::SaveDilutions(const QString &directory)
+{
+    for (auto iter = m_dilutionFactorsTable.begin(); iter != m_dilutionFactorsTable.end(); ++iter)
+    {
+        auto concentrations = m_concentrationsTable.find(iter->first);
+
+        QString filename = directory + "/dilutions-and-concentrations-"
+                + QString::number(iter->first) + ".csv";
+        CsvWriter writer(filename, 4);
+        if (!writer.Init())
+        {
+            MY_LOG("error writing to " << filename);
+            return false;
+        }
+
+        QString buff;
+        QTextStream comment(&buff);
+        comment << "Dilution factors and concentrations for emission #" << iter->first <<
+                   " with coordiantes " << m_emissionsTable.find(iter->first)->second;
+        writer.AddComment(*comment.string());
+        writer.AddItem("Latitude");
+        writer.AddItem("Longitude");
+        writer.AddItem("Dilution factor, s/m^3");
+        writer.AddItem("Concentration, s/m^3");
+
+        for (size_t i = 0; i < iter->second.size(); ++i)
+        {
+            writer.AddItem(m_landscape.at(i).coord.lat);
+            writer.AddItem(m_landscape.at(i).coord.lon);
+            writer.AddItem(iter->second.at(i));
+            writer.AddItem(concentrations->second.at(i));
+        }
+
+        MY_LOG("finished writing to " << filename);
+    }
+
+    return true;
+}
+
 DataBase::t_climateJournal& DataBase::ClimateJournal()
 {
     return m_climateJournal;

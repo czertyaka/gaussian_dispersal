@@ -234,7 +234,8 @@ double Concentrations::at(const size_t x, const size_t y)
 {
     // TODO: add quarterly values
     assert(m_emissionValue.getAnnual().has_value());
-    return m_emissionValue.getAnnual().value() * m_dilutionFactors->at(x, y);
+    //                                        GBq->Bq  year->sec
+    return m_emissionValue.getAnnual().value() * 1e9 / 3.15e7 * m_dilutionFactors->at(x, y);
 }
 
 /**
