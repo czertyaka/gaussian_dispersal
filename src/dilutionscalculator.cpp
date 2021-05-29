@@ -32,6 +32,9 @@ BaseCalculator::t_returnCode DilutionsCalculator::Execute()
         m_dilutions.resize(m_db.Landscape().size());
         std::fill(m_dilutions.begin(), m_dilutions.end(), 0);
 
+        // initalize wind speed cache
+        CaclulateWindSpeeds();
+
         // start calculation
         MY_LOG("starting calculation dilution factor for " << iter->second);
         if (CalculateDilutions())
@@ -140,6 +143,24 @@ bool DilutionsCalculator::CalculateDiffusionParameter(const size_t x, const size
         const double g = a1 * std::pow(r, b1) / (1 + a2 * std::pow(r, b2));
 
         m_sigma_z[sp] = f * g < max[sp] ? f * g : max[sp];
+    }
+
+    return true;
+}
+
+bool DilutionsCalculator::CaclulateWindSpeeds()
+{
+    const double Hg = m_db.Sources().find(m_sourceId)->second.height;
+
+    for (size_t sp = mt::SP_A; sp < mt::SP_COUNT; ++sp)
+    {
+        for (size_t mr = mt::MR_SNOW; mr < mt::MR_COUNT; ++mr)
+        {
+            m_windSpeedsAtHeightCold.w[sp][mr] = m_db.Matrix().avWindSpBySPCold[sp] *
+                    std::pow(Hg / mt::h_f, m_db.Epsilon().e[sp][mr]);
+            m_windSpeedsAtHeightWarm.w[sp][mr] = m_db.Matrix().avWindSpBySPWarm[sp] *
+                    std::pow(Hg / mt::h_f, m_db.Epsilon().e[sp][mr]);
+        }
     }
 
     return true;

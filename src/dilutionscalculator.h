@@ -7,16 +7,19 @@
 class DilutionsCalculator : public BaseCalculator
 {
 public:
-    DilutionsCalculator();
+     DilutionsCalculator();
      t_returnCode Execute() override;
 private:
      bool CalculateDilutions();
      bool CalculateDiffusionParameter(const size_t x, const size_t y);
+     bool CaclulateWindSpeeds();
      mt::t_emissionId m_emissionId; ///< current emission
      mt::t_sourceId m_sourceId; ///< source of current emission
      mt::t_dilutionFactors m_dilutions; ///< current dilution values
      mt::t_diffusionParameter m_sigma_z; ///< current vertical diffusion parameter, m
-     mt::t_windSpeedSP m_windSpeedSP; ///< average wind speeds for current point
+     ///< wind speed at emission height cache for each j and z0
+     mt::t_windSpeedsAtHeight m_windSpeedsAtHeightCold;
+     mt::t_windSpeedsAtHeight m_windSpeedsAtHeightWarm;
 
      const mt::t_distances* m_distances; ///< current distances
 

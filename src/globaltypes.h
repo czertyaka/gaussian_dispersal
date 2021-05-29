@@ -22,6 +22,9 @@
 
 namespace mt ///< my types
 {
+    ///< weathercock height, m
+    const double h_f = 10;
+
     ///< wind directions
     enum t_windDir : const size_t
     {
@@ -72,9 +75,6 @@ namespace mt ///< my types
         t_vals b1;
         t_vals b2;
     } t_gCoeffs;
-
-    ///< average wind spreed for smith patameter
-    typedef std::array<double, mt::SP_COUNT> t_windSpeedSP;
 
     ///< obv, why not just use Qt here?
     enum month_t : const int
@@ -131,7 +131,7 @@ namespace mt ///< my types
     struct Matrix
     {
         static const int N = WIND_DIR_COUNT; ///< количество интервалов направления ветра
-        static const int J = 7; ///< количество интервалов категорий устойчивости атмосферы
+        static const int J = SP_COUNT; ///< количество интервалов категорий устойчивости атмосферы
         static const int K = 8; ///< количество интервалов скорости ветра
 
         static constexpr double windDirVals[N] = {90, 112.5, 135, 157.5, 180, 202.5, 225,
@@ -362,6 +362,12 @@ namespace mt ///< my types
     {
         std::array<double, MR_COUNT> e[SP_COUNT];
     } t_epsilon;
+
+    ///< wind speeds at emission height, m/s
+    typedef struct windSpeedsAtHeight
+    {
+        std::array<double, MR_COUNT> w[SP_COUNT];
+    } t_windSpeedsAtHeight;
 
     ///< struct for geospatial point info
     typedef struct point
