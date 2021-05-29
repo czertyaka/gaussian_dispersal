@@ -41,6 +41,7 @@ public slots:
     void UpdateSourcesStatusLabel(const bool ok);
     void OnClimateDone(const bool ok);
     void OnTerrainDone(const bool ok);
+    void OnDilutionsDone(const bool ok);
 
 private slots:
     void ResetSpinBoxes();

@@ -78,6 +78,11 @@ void MainWindow::OnTerrainDone(const bool ok)
     m_ui->geoSaveButton->setEnabled(ok);
 }
 
+void MainWindow::OnDilutionsDone(const bool ok)
+{
+    m_ui->sourceSaveButton->setEnabled(ok);
+}
+
 /**
  * @brief MainWindow::CustomUiSettings All the setups and connections within GUI only
  */
@@ -243,6 +248,7 @@ void MainWindow::AddSource()
     {
         QDoubleSpinBox* spinBox = new QDoubleSpinBox;
         QDoubleSpinBox* prev = qobject_cast<QDoubleSpinBox*>(table->itemAtPosition(m_row - 1, column)->widget());
+        spinBox->setEnabled(prev->isEnabled());
         spinBox->setMaximum(prev->maximum());
         spinBox->setMinimum(prev->minimum());
         spinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);

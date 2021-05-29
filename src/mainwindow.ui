@@ -20,8 +20,14 @@
       <property name="enabled">
        <bool>true</bool>
       </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="climateTab">
        <attribute name="title">
@@ -154,44 +160,36 @@
             </property>
            </widget>
           </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="Line" name="climateLine">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QGridLayout" name="climateOutputLayout">
-          <item row="0" column="1">
+          <item>
            <widget class="QPushButton" name="climateSaveButton">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
             <property name="text">
              <string>Save as...</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QGraphicsView" name="climateGraphics"/>
-          </item>
-          <item row="0" column="0">
-           <spacer name="climateOutputSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>408</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
          </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -403,31 +401,7 @@
             </property>
            </widget>
           </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="Line" name="geoLine">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QGridLayout" name="geoOutputLayout">
-          <item row="0" column="0">
-           <spacer name="geoOutputSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>408</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="1">
+          <item>
            <widget class="QPushButton" name="geoSaveButton">
             <property name="enabled">
              <bool>false</bool>
@@ -437,10 +411,20 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QGraphicsView" name="geoGraphics"/>
-          </item>
          </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -784,23 +768,6 @@
           </item>
          </layout>
         </item>
-        <item>
-         <widget class="Line" name="imageLine">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGraphicsView" name="imageGraphics">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="sourcesTab">
@@ -1117,6 +1084,9 @@
                 </item>
                 <item row="1" column="5">
                  <widget class="QDoubleSpinBox" name="tempSpinBox">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="buttonSymbols">
                    <enum>QAbstractSpinBox::NoButtons</enum>
                   </property>
@@ -1342,22 +1312,19 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QPushButton" name="sourceSaveButton">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Save as...</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
          </layout>
-        </item>
-        <item>
-         <widget class="QGraphicsView" name="sourcesGraphics">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::WheelFocus</enum>
-          </property>
-         </widget>
         </item>
        </layout>
       </widget>
@@ -1374,7 +1341,7 @@
     <item>
      <widget class="QPlainTextEdit" name="logPlainText">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+       <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -1382,7 +1349,7 @@
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>70</height>
+        <height>16777215</height>
        </size>
       </property>
       <property name="readOnly">
@@ -1431,98 +1398,18 @@
  <resources/>
  <connections>
   <connection>
-   <sender>climatePresetsRadioButton</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>climatePresetsComboBox</receiver>
-   <slot>setEnabled(bool)</slot>
+   <sender>startButton</sender>
+   <signal>clicked()</signal>
+   <receiver>progressBar</receiver>
+   <slot>reset()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>994</x>
-     <y>82</y>
+     <x>52</x>
+     <y>647</y>
     </hint>
     <hint type="destinationlabel">
-     <x>994</x>
-     <y>111</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>climateLoadRadioButton</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>climateLineEdit</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>224</x>
-     <y>73</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>181</x>
-     <y>100</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>climateLoadRadioButton</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>climateBrowseButton</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>286</x>
-     <y>74</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>503</x>
-     <y>110</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>geoLoadRadioButton</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>geoLineEdit</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>169</x>
-     <y>72</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>156</x>
-     <y>130</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>geoLoadRadioButton</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>geoBrowseButton</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>243</x>
-     <y>82</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>340</x>
-     <y>129</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>geoProfileradioButton</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>geoElevationComboBox</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>499</x>
-     <y>75</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>471</x>
-     <y>130</y>
+     <x>212</x>
+     <y>647</y>
     </hint>
    </hints>
   </connection>
@@ -1543,18 +1430,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>geoProfileradioButton</sender>
+   <sender>imageCustomizeRadioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>geoSurfaceLabel</receiver>
+   <receiver>southSpinBox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>700</x>
-     <y>82</y>
+     <x>601</x>
+     <y>121</y>
     </hint>
     <hint type="destinationlabel">
-     <x>700</x>
-     <y>101</y>
+     <x>776</x>
+     <y>215</y>
     </hint>
    </hints>
   </connection>
@@ -1575,18 +1462,98 @@
    </hints>
   </connection>
   <connection>
-   <sender>geoProfileradioButton</sender>
+   <sender>geoLoadRadioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>youChoseGeoProfileLabel</receiver>
-   <slot>setVisible(bool)</slot>
+   <receiver>geoBrowseButton</receiver>
+   <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>637</x>
+     <x>243</x>
+     <y>82</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>340</x>
+     <y>129</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>climateLoadRadioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>climateLineEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>224</x>
      <y>73</y>
     </hint>
     <hint type="destinationlabel">
-     <x>794</x>
-     <y>116</y>
+     <x>181</x>
+     <y>100</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>geoLoadRadioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>geoLineEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>169</x>
+     <y>72</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>156</x>
+     <y>130</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>climateResetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>climateLineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>994</x>
+     <y>141</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>216</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>imageCustomizeRadioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>eastSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>601</x>
+     <y>126</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>829</x>
+     <y>186</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>climateLoadRadioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>climateBrowseButton</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>286</x>
+     <y>74</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>503</x>
+     <y>110</y>
     </hint>
    </hints>
   </connection>
@@ -1623,6 +1590,22 @@
    </hints>
   </connection>
   <connection>
+   <sender>geoProfileradioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>geoElevationComboBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>499</x>
+     <y>75</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>471</x>
+     <y>130</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>imageCustomizeRadioButton</sender>
    <signal>toggled(bool)</signal>
    <receiver>westSpinBox</receiver>
@@ -1639,66 +1622,34 @@
    </hints>
   </connection>
   <connection>
-   <sender>imageCustomizeRadioButton</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>southSpinBox</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>601</x>
-     <y>121</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>776</x>
-     <y>215</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>imageCustomizeRadioButton</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>northSpinBox</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>601</x>
-     <y>112</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>776</x>
-     <y>157</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>imageCustomizeRadioButton</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>eastSpinBox</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>601</x>
-     <y>126</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>829</x>
-     <y>186</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>geoProfileradioButton</sender>
    <signal>toggled(bool)</signal>
-   <receiver>imageAutomaticallyRadioButton</receiver>
-   <slot>setChecked(bool)</slot>
+   <receiver>youChoseGeoProfileLabel</receiver>
+   <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>637</x>
      <y>73</y>
     </hint>
     <hint type="destinationlabel">
-     <x>637</x>
-     <y>93</y>
+     <x>794</x>
+     <y>116</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>imageResetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>imageLineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>994</x>
+     <y>246</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>191</x>
+     <y>153</y>
     </hint>
    </hints>
   </connection>
@@ -1719,34 +1670,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>startButton</sender>
-   <signal>clicked()</signal>
-   <receiver>progressBar</receiver>
-   <slot>reset()</slot>
+   <sender>imageCustomizeRadioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>northSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>52</x>
-     <y>647</y>
+     <x>601</x>
+     <y>112</y>
     </hint>
     <hint type="destinationlabel">
-     <x>212</x>
-     <y>647</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>climateResetButton</sender>
-   <signal>clicked()</signal>
-   <receiver>climateLineEdit</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>994</x>
-     <y>141</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>216</x>
-     <y>101</y>
+     <x>776</x>
+     <y>157</y>
     </hint>
    </hints>
   </connection>
@@ -1767,26 +1702,58 @@
    </hints>
   </connection>
   <connection>
-   <sender>imageResetButton</sender>
-   <signal>clicked()</signal>
-   <receiver>imageLineEdit</receiver>
-   <slot>clear()</slot>
+   <sender>climatePresetsRadioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>climatePresetsComboBox</receiver>
+   <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>994</x>
-     <y>246</y>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
-     <x>191</x>
-     <y>153</y>
+     <x>994</x>
+     <y>111</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>geoProfileradioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>geoSurfaceLabel</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>700</x>
+     <y>82</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>700</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>geoProfileradioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>imageAutomaticallyRadioButton</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>637</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>637</x>
+     <y>93</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_2"/>
-  <buttongroup name="BoundariesButtonGroup"/>
   <buttongroup name="imageButtonGroup"/>
+  <buttongroup name="BoundariesButtonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>
