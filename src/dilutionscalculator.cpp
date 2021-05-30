@@ -72,28 +72,31 @@ bool DilutionsCalculator::CalculateDilutions()
 {
     bool result = true;
 
-    double commonFactor = 2. * m_matrix.N / std::pow(2 * M_PI, 1.5);
     double coldFraction = static_cast<double>(m_matrix.MCold) / (m_matrix.MCold + m_matrix.MWarm);
     double warmFraction = 1 - coldFraction;
 
     mt::t_terrainCorrections& corrs = m_db.TerrainCorrections().find(m_sourceId)->second;
     m_distances = &m_db.Distances().find(m_sourceId)->second;
 
-    size_t x = 0;
-    size_t y = 0;
-    for (; y < m_yDim; ++y)
+    size_t errorX = 0;
+    size_t errorY = 0;
+    for (size_t y = 0; y < m_yDim; ++y)
     {
-        for (; x < m_xDim; ++x)
+        for (size_t x = 0; x < m_xDim; ++x)
         {
-            // skip if we're far too beyond gaussian model
-            if (!m_distances->mask.at(x, y))
+            errorX = x;
+            errorY = y;
+
+            // skip if we're far too beyond gaussian model or in the source!
+            double distance = m_distances->at(x, y);
+            if (distance > gaussian_model_limit || distance == 0)
             {
                 continue;
             }
 
             // / ( Rn * x ) from formula
-            m_distance = m_distances->value.at(x, y);
-            commonFactor /= ( corrs.at(x, y) * m_distance);
+            m_distance = m_distances->at(x, y);
+            double commonFactor = 2. * m_matrix.N / ( std::pow(2 * M_PI, 1.5) * corrs.at(x, y) * m_distance );
 
             // calculate diffusion parameter for current point
             if (!CalculateDiffusionParameter(x, y))
@@ -122,7 +125,7 @@ bool DilutionsCalculator::CalculateDilutions()
 
     if (!result)
     {
-        MY_LOG("failed to calculate dilution factor for " << m_db.Landscape().at(x, y).coord);
+        MY_LOG("failed to calculate dilution factor for " << m_db.Landscape().at(errorX, errorY).coord);
     }
 
     return result;
@@ -135,7 +138,7 @@ bool DilutionsCalculator::CalculateDiffusionParameter(const size_t x, const size
     const mt::t_diffusionParameter& max = m_db.MaxDiffusionPatameters();
 
     // get current distance
-    double r = m_distances->value.at(x, y);
+    double r = m_distances->at(x, y);
 
     // and landscape type
     mt::t_microrelief mr = m_db.Landscape().at(x, y).microrelief;

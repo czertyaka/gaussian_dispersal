@@ -417,11 +417,7 @@ namespace mt ///< my types
     typedef std::unordered_map<t_sourceId, t_terrainCorrections> t_terrainCorrectionsTable;
 
     ///< distances cache
-    typedef struct distances
-    {
-        vectorAsArray<double> value; ///< meters
-        vectorAsArray<char> mask; ///< true if corresponding point is within model
-    } t_distances;
+    typedef vectorAsArray<double> t_distances;
 
     ///< array of distances from source to point, some kind of cache
     ///< may not need it tho, if that's so, get rid of this shit

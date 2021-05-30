@@ -47,8 +47,7 @@ BaseCalculator::t_returnCode LandscapeCalculator::Execute()
 
         // allocate new array of distance mask for current source
         mt::t_distances distances;
-        distances.value.Init(m_db.Landscape());
-        distances.mask.Init(m_db.Landscape());
+        distances.Init(m_db.Landscape());
 
         // calculate distances
         CalculateDistances(iter->first, distances);
@@ -82,8 +81,7 @@ void LandscapeCalculator::CalculateDistances(const size_t srcId, mt::t_distances
             const mt::t_point& point = m_db.Landscape().at(x, y);
             double distance = calculate_distance(m_db.Sources().find(srcId)->second.coordinates, point.coord);
 
-            distances.value.at(x, y) = distance;
-            distances.mask.at(x, y) = distance < gaussian_model_limit;
+            distances.at(x, y) = distance;
         }
     }
 }

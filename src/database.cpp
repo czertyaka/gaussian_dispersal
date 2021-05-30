@@ -350,9 +350,9 @@ bool DataBase::SaveCorrections(const QString &directory)
         {
             ++counter;
 
-            QString filename = directory + "/distance-mask-src-"
+            QString filename = directory + "/distances-src-"
                     + QString::number(counter) + ".csv";
-            CsvWriter writer(filename, 3);
+            CsvWriter writer(filename, 4);
             if (!writer.Init())
             {
                 MY_LOG("error writing to " << filename);
@@ -361,19 +361,21 @@ bool DataBase::SaveCorrections(const QString &directory)
 
             QString buff;
             QTextStream comment(&buff);
-            comment << "Disatnce mask for source #" << counter <<
+            comment << "Disatnces for source #" << counter <<
                        " with coordiantes " << m_sources.find(iter->first)->second.coordinates;
             writer.AddComment(*comment.string());
             writer.AddComment("1 if distance between source and point is less than 30 km, 0 if vice versa");
             writer.AddItem("Latitude");
             writer.AddItem("Longitude");
+            writer.AddItem("Distance, m");
             writer.AddItem("Mask");
 
-            for (size_t i = 0; i < iter->second.mask.size(); ++i)
+            for (size_t i = 0; i < iter->second.size(); ++i)
             {
                 writer.AddItem(m_landscape.at(i).coord.lat);
                 writer.AddItem(m_landscape.at(i).coord.lon);
-                writer.AddItem(static_cast<bool>(iter->second.mask.at(i)));
+                writer.AddItem(iter->second.at(i));
+                writer.AddItem(iter->second.at(i) < gaussian_model_limit);
             }
 
             MY_LOG("finished writing to " << filename);
