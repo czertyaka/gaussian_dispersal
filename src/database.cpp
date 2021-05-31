@@ -387,12 +387,31 @@ bool DataBase::SaveCorrections(const QString &directory)
 
 bool DataBase::SaveDilutions(const QString &directory)
 {
-    for (auto iter = m_dilutionFactorsTable.begin(); iter != m_dilutionFactorsTable.end(); ++iter)
-    {
-        auto concentrations = m_concentrationsTable.find(iter->first);
+    std::multimap<mt::t_nuclideName, mt::t_emissionId> map;
+    std::set<mt::t_nuclideName> nuclides;
 
-        QString filename = directory + "/dilutions-and-concentrations-"
-                + QString::number(iter->first) + ".csv";
+    // init map
+    for (auto emIt = m_emissionsTable.begin(); emIt != m_emissionsTable.end(); ++emIt)
+    {
+        map.insert(std::make_pair(emIt->second.nuclideName, emIt->first));
+        nuclides.insert(emIt->second.nuclideName);
+    }
+
+    // save for each nuclide
+    for (auto nuclide = nuclides.begin(); nuclide != nuclides.end(); ++nuclide)
+    {
+        auto range = map.equal_range(*nuclide);
+
+        std::vector<const mt::t_dilutionFactors*> dilutions;
+        std::vector<const mt::t_concentrations*> concentrations;
+        for (auto it = range.first; it != range.second; ++it)
+        {
+            dilutions.push_back( &(m_dilutionFactorsTable.find(it->second)->second) );
+            concentrations.push_back( &(m_concentrationsTable.find(it->second)->second) );
+        }
+
+        // summary
+        QString filename = directory + "/dilutions-and-concentrations-" + *nuclide + "-sum.csv";
         CsvWriter writer(filename, 4);
         if (!writer.Init())
         {
@@ -400,25 +419,72 @@ bool DataBase::SaveDilutions(const QString &directory)
             return false;
         }
 
-        QString buff;
-        QTextStream comment(&buff);
-        comment << "Dilution factors and concentrations for emission #" << iter->first <<
-                   " with coordiantes " << m_emissionsTable.find(iter->first)->second;
-        writer.AddComment(*comment.string());
+        writer.AddComment("Summary dilution factors and concentrations");
         writer.AddItem("Latitude");
         writer.AddItem("Longitude");
         writer.AddItem("Dilution factor, s/m^3");
-        writer.AddItem("Concentration, s/m^3");
+        writer.AddItem("Concentration, Bq/m^3");
 
-        for (size_t i = 0; i < iter->second.size(); ++i)
+        for (size_t i = 0; i < m_landscape.size(); ++i)
         {
             writer.AddItem(m_landscape.at(i).coord.lat);
             writer.AddItem(m_landscape.at(i).coord.lon);
-            writer.AddItem(iter->second.at(i));
-            writer.AddItem(concentrations->second.at(i));
+            double sumDilut = 0;
+            for (auto emIt = dilutions.begin(); emIt != dilutions.end(); ++emIt)
+            {
+                sumDilut += (*emIt)->at(i);
+            }
+            double sumConc = 0;
+            for (auto concIt = concentrations.begin(); concIt != concentrations.end(); ++concIt)
+            {
+                sumConc += (*concIt)->at(i);
+            }
+            writer.AddItem(sumDilut);
+            writer.AddItem(sumConc);
         }
 
         MY_LOG("finished writing to " << filename);
+
+        // by sources
+        size_t srcCounter = 0;
+        if (std::distance(range.first, range.second) > 1)
+        {
+            for (auto it = range.first; it != range.second; ++it)
+            {
+                srcCounter++;
+                QString srcFilename = directory + "/dilutions-and-concentrations-" + *nuclide +
+                        "-" + QString::number(srcCounter) + "-sum.csv";
+                CsvWriter writer(srcFilename, 4);
+                if (!writer.Init())
+                {
+                    MY_LOG("error writing to " << filename);
+                    return false;
+                }
+
+                QString buff;
+                QTextStream comment(&buff);
+                const mt::t_source& src = m_sources.find( m_emissionsTable.find(it->second)->second.source )->second;
+                comment << "Dilution factors and concentrations for source #" << srcCounter <<
+                           " with coordiantes " << src.coordinates;
+                writer.AddItem("Latitude");
+                writer.AddItem("Longitude");
+                writer.AddItem("Dilution factor, s/m^3");
+                writer.AddItem("Concentration, Bq/m^3");
+
+                const mt::t_dilutionFactors& dilution = m_dilutionFactorsTable.find(it->second)->second;
+                const mt::t_concentrations& concentration = m_concentrationsTable.find(it->second)->second;
+
+                for (size_t i = 0; i < m_landscape.size(); ++i)
+                {
+                    writer.AddItem(m_landscape.at(i).coord.lat);
+                    writer.AddItem(m_landscape.at(i).coord.lon);
+                    writer.AddItem(dilution.at(i));
+                    writer.AddItem(concentration.at(i));
+                }
+
+                MY_LOG("finished writing to " << srcFilename);
+            }
+        }
     }
 
     return true;

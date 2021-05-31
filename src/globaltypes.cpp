@@ -230,7 +230,7 @@ void ConcentrationsTable::Update()
  * @param y
  * @return
  */
-double Concentrations::at(const size_t x, const size_t y)
+double Concentrations::at(const size_t x, const size_t y) const
 {
     // TODO: add quarterly values
     assert(m_emissionValue.getAnnual().has_value());
@@ -244,7 +244,7 @@ double Concentrations::at(const size_t x, const size_t y)
  * @param y
  * @return
  */
-double Concentrations::at(const size_t i)
+double Concentrations::at(const size_t i) const
 {
     // TODO: add quarterly values
     assert(m_emissionValue.getAnnual().has_value());

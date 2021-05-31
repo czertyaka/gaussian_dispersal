@@ -437,8 +437,8 @@ namespace mt ///< my types
     class Concentrations
     {
     public:
-        double at(const size_t x, const size_t y);
-        double at(const size_t i);
+        double at(const size_t x, const size_t y) const;
+        double at(const size_t i) const;
         friend ConcentrationsTable;
     private:
         const t_dilutionFactors* m_dilutionFactors;
