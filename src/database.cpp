@@ -69,7 +69,7 @@ bool DataBase::InitConstData()
 {
     m_maxDiffusionParameter = {1600, 1200, 800, 400, 250, 200, 160}; // meters
 
-    m_roughness = {1, 1, 4, 10, 40, 100, 1}; // cm;
+    m_roughness = {1, 1, 1, 4, 10, 40, 100}; // cm;
 
     m_gCoeffs.a1 = {0.112, 0.130, 0.112, 0.098, 0.080, 0.0609, 0.0638};
     m_gCoeffs.a2 = {5.38e-4, 6.52e-4, 9.05e-4, 1.35e-3, 1.58e-3, 1.96e-3, 1.36e-3};
@@ -453,7 +453,7 @@ bool DataBase::SaveDilutions(const QString &directory)
             {
                 srcCounter++;
                 QString srcFilename = directory + "/dilutions-and-concentrations-" + *nuclide +
-                        "-" + QString::number(srcCounter) + "-sum.csv";
+                        "-" + QString::number(srcCounter) + ".csv";
                 CsvWriter writer(srcFilename, 4);
                 if (!writer.Init())
                 {
@@ -466,6 +466,7 @@ bool DataBase::SaveDilutions(const QString &directory)
                 const mt::t_source& src = m_sources.find( m_emissionsTable.find(it->second)->second.source )->second;
                 comment << "Dilution factors and concentrations for source #" << srcCounter <<
                            " with coordiantes " << src.coordinates;
+                writer.AddComment(*comment.string());
                 writer.AddItem("Latitude");
                 writer.AddItem("Longitude");
                 writer.AddItem("Dilution factor, s/m^3");

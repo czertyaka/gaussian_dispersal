@@ -33,6 +33,7 @@ bool GeospatialDataLoader::AddFromFile(const QString &filename)
     }
 
     mt::t_landscape& landscape = m_db.Landscape();
+    landscape.clear();
 
     std::set<mt::t_point> landscapeSet;
 

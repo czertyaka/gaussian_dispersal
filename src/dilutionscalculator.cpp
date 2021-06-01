@@ -119,7 +119,8 @@ bool DilutionsCalculator::CalculateDilutions()
             }
 
             // finally...
-            m_dilutions.at(x, y) = commonFactor * (coldFraction * coldSum + warmFraction * warmSum);
+            double value = commonFactor * (coldFraction * coldSum + warmFraction * warmSum);
+            m_dilutions.at(x, y) = value;
         }
     }
 
