@@ -58,8 +58,7 @@ bool MatrixCalculator::AddObservation(const mt::t_observation &obs)
         return false;
     }
 
-    if ((obs.dateTime.date().month() >= mt::APR && obs.dateTime.date().day() > 15)
-            || (obs.dateTime.date().month() <= mt::OCT && obs.dateTime.date().day() <= 15))
+    if (obs.temper > 0)
     {
         m_matrix.mWarm[n][j][k]++;
         m_matrix.MWarm++;
@@ -326,10 +325,10 @@ void MatrixCalculator::CalcAverageWindSpeedByCompPoint()
 
         // calc speeds
         m_matrix.avWindSpByCPCold[n] = m_matrix.MCold != 0 ?
-                                 static_cast<double>(sumCold) / static_cast<double>(m_matrix.MCold) :
+                                 static_cast<double>(sumCold * m_matrix.N) / static_cast<double>(m_matrix.MCold) :
                                  0;
         m_matrix.avWindSpByCPWarm[n] = m_matrix.MCold != 0 ?
-                                 static_cast<double>(sumWarm) / static_cast<double>(m_matrix.MWarm) :
+                                 static_cast<double>(sumWarm * m_matrix.N) / static_cast<double>(m_matrix.MWarm) :
                                  0;
     }
 }
@@ -350,10 +349,10 @@ void MatrixCalculator::CalcAverageWindSpeedBySmithParam()
 
         // calc speeds
         m_matrix.avWindSpBySPCold[j] = m_matrix.MCold != 0 ?
-                                 static_cast<double>(sumCold) / static_cast<double>(m_matrix.MCold) :
+                                 static_cast<double>(sumCold * m_matrix.J) / static_cast<double>(m_matrix.MCold) :
                                  0;
         m_matrix.avWindSpBySPWarm[j] = m_matrix.MWarm != 0 ?
-                                 static_cast<double>(sumWarm) / static_cast<double>(m_matrix.MWarm) :
+                                 static_cast<double>(sumWarm * m_matrix.J) / static_cast<double>(m_matrix.MWarm) :
                                  0;
     }
 }
